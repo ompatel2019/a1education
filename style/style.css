@@ -350,6 +350,8 @@
 
             .icon-tabs {
                 grid-template-columns: 1fr 1fr;
+                padding-left: 2rem;
+                padding-top: 1rem;
             }
             
             .icon {
