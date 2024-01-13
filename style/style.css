@@ -251,7 +251,6 @@
             font-style: italic;
         }
 
-
         .icon p {
             background-color: white;
         }
@@ -312,6 +311,15 @@
         @media (max-width: 1920px) {
             .icon-tabs {
                 grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 1300px) {
+            .icon {
+
+                width: 14.5rem;
+                height: 12rem;
+
             }
         }
 
@@ -711,6 +719,12 @@
             transform: scaleX(1);
             transform-origin: left;
         } 
+
+        @media (max-width: 1300px) {
+            .pricing-button {
+                width: 90%;
+            }
+        }
 
         @media (max-width: 960px) {
             .pricing-tab {
