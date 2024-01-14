@@ -545,6 +545,8 @@
 
 
           .testimonial-container p {
+            font-family: 'Sarabun', sans-serif;
+            font-size: 18px;
             color: black;
             text-align: center;
             font-size: 0.9em;

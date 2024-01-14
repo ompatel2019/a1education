@@ -167,6 +167,12 @@
     //Testimonial Data
 const testimonials = [
     {
+        name: "Sansita Verma",
+        rank: "Rank 1 with a trial mark of 97/100 - Cumberland High School",
+        img: "132352648716276482833764.svg",
+        testimonial: "I was not the best at answering short answer questions and structuring essays but my tutor’s method of pedantic marking allowed me to be more perspective of my responses and write better under time pressure. He is also a responsive person and tries to get back to me as soon as he can. Highly recommend considering A1 Education because they are brilliant !!!!"
+    },
+    {
         name: "Jet Loiselle",
         rank: "Rank 1 - Hawkesbury High School",
         img: "132352648716276482833764.svg",
@@ -219,3 +225,18 @@ const testimonials = [
     `;
   };
   window.onload = displayTestimonial;
+
+
+  function addRedirectToButton(buttonClass, url) {
+    var button = document.querySelector(buttonClass);
+    if (button) {
+        button.addEventListener('click', function() {
+            window.open(url, '_blank');
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    addRedirectToButton('.pricing-button', 'https://forms.gle/7nriZV2wFZpeRwa6A');
+    addRedirectToButton('.button-link', 'https://forms.gle/7nriZV2wFZpeRwa6A');
+});
