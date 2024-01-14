@@ -163,3 +163,59 @@
 
         observer.observe(section);
     });
+
+    //Testimonial Data
+const testimonials = [
+    {
+        name: "Jet Loiselle",
+        rank: "Rank 1 - Hawkesbury High School",
+        img: "132352648716276482833764.svg",
+        testimonial: "I thoroughly enjoy Karan's teaching style, going through syllabus topics and testing my knowledge afterwards through past paper questions. I find his teaching style to be engaging and as an outcome, my HSC economics knowledge has drastically improved."
+    },
+    {
+        name: "Srujana Yerramsetty",
+        rank: "Band 6 - Penrith High School",
+        img: "132352648716276482833764.svg",
+        testimonial: "My tutor Karan can clearly and concisely explain complex ideas, and he genuinely cares about his pupils’ academic progress and goes to incredible lengths to ensure it. In addition, he is very responsive and makes an effort to help as quickly as possible. "
+    }, 
+    {
+       name: "Anthony Su",
+       rank: "Over 40% improvement from Year 11 to Year 12",
+       img: "132352648716276482833764.svg",
+       testimonial: "A1 education’s tutoring services are the most valued tutoring sessions I have ever signed up for. My Economics tutor has provided me with quality tutoring sessions and services such as fast and detailed responses to my questions both in and out of sessions. Karan provides numerous band 6 exemplar essays and resources which helped me maximise my results. "
+    },
+    {
+        name: "Jay Patel",
+        rank: "Over 30% improvement in HSC - Cherrybrook High School",
+        img: "132352648716276482833764.svg",
+        testimonial: "Through A1 education, from the very first lesson, Karan has been very organised with his material and lesson structure. He has the ability to explain complex topics in an understandable manner which has helped boost my confidence in Economics. "
+    },
+];
+  
+  //Current Slide
+  let i = 0;
+  //Total Slides
+  let j = testimonials.length;
+  
+  let testimonialContainer = document.getElementById("testimonial-container");
+  let nextBtn = document.getElementById("next");
+  let prevBtn = document.getElementById("prev");
+  
+  nextBtn.addEventListener("click", () => {
+    i = (j + i + 1) % j;
+    displayTestimonial();
+  });
+  prevBtn.addEventListener("click", () => {
+    i = (j + i - 1) % j;
+    displayTestimonial();
+  });
+  
+  let displayTestimonial = () => {
+    testimonialContainer.innerHTML = `
+      <p>${testimonials[i].testimonial}</p>
+      <img src=images/${testimonials[i].img}>
+      <h3>${testimonials[i].name}</h3>
+      <h6>${testimonials[i].rank}</h6>
+    `;
+  };
+  window.onload = displayTestimonial;
