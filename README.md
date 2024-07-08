@@ -98,4 +98,3 @@ a1education/
 
 ---
 
-Thank you for visiting A1 Education! If there are any questions or feedback, please feel free to contact us.
