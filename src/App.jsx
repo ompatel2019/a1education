@@ -11,14 +11,11 @@ import Fallback from './tools/Fallback';
 
 // Lazy load pages
 const HomePage = lazy(() => import('./pages/HomePage'));
-const ServicesPage = lazy(() => import('./pages/ServicesPage'));
+const SpecialtyPage = lazy(() => import('./pages/SpecialtyPage'));
 const WhyChooseUsPage = lazy(() => import('./pages/WhyChooseUsPage'));
 const AboutUsPage = lazy(() => import('./pages/AboutUsPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
-const BlogsPage = lazy(() => import('./pages/BlogsPage'));
-const Blog1 = lazy(() => import('./pages/blogs/Blog1'));
-const Blog2 = lazy(() => import('./pages/blogs/Blog2'));
-const Blog3 = lazy(() => import('./pages/blogs/Blog3'));
+const PricingPage = lazy(() => import('./pages/PricingPage'));
 
 // ─── Router Configuration ───────────────────────────────────────────────
 const router = createBrowserRouter(
@@ -27,10 +24,10 @@ const router = createBrowserRouter(
       <Route index element={<HomePage />} />
 
       <Route
-        path="services"
+        path="specialty"
         element={
           <Suspense fallback={<Fallback />}>
-            <ServicesPage />
+            <SpecialtyPage />
           </Suspense>
         }
       />
@@ -63,37 +60,10 @@ const router = createBrowserRouter(
       />
 
       <Route
-        path="blogs"
+        path="pricing"
         element={
           <Suspense fallback={<Fallback />}>
-            <BlogsPage />
-          </Suspense>
-        }
-      />
-
-      <Route
-        path="blogs/1"
-        element={
-          <Suspense fallback={<Fallback />}>
-            <Blog1 />
-          </Suspense>
-        }
-      />
-
-      <Route
-        path="blogs/2"
-        element={
-          <Suspense fallback={<Fallback />}>
-            <Blog2 />
-          </Suspense>
-        }
-      />
-
-      <Route
-        path="blogs/3"
-        element={
-          <Suspense fallback={<Fallback />}>
-            <Blog3 />
+            <PricingPage />
           </Suspense>
         }
       />

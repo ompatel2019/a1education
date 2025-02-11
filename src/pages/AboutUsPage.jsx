@@ -1,6 +1,6 @@
 // pages/AboutUsPage.jsx
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import SeoHelmet from '../components/SeoHelmet';
 
 // ─── Components for About Us Page ─────────────────────────────────────
 import AboutUs from '../components/AboutUs';
@@ -20,13 +20,11 @@ const AboutUsPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>About Us - Business Name</title>
-        <meta name="description" content="Learn more about Business Name, our values, and our team." />
-        <script type="application/ld+json">
-          {JSON.stringify(jsonLdAboutUsPage)}
-        </script>
-      </Helmet>
+      <SeoHelmet
+        title="About Us - Business Name"
+        description="Learn more about our business."
+        jsonSchema={jsonLdAboutUsPage}
+      />
 
       {/* ─── Sections ───────────────────────────────────────────── */}
       <AboutUs />

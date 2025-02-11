@@ -1,9 +1,10 @@
 // pages/ContactPage.jsx
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import SeoHelmet from '../components/SeoHelmet';
 
 // ─── Components for Contact Page ─────────────────────────────────────
 import ContactForm from '../components/ContactForm';
+import WhatWeOffer from '../components/WhatWeOffer';
 import Faqs from '../components/Faqs';
 import CTA from '../components/CTA';
 
@@ -19,16 +20,15 @@ const ContactPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Contact - Business Name</title>
-        <meta name="description" content="Get in touch with Business Name for inquiries and support." />
-        <script type="application/ld+json">
-          {JSON.stringify(jsonLdContactPage)}
-        </script>
-      </Helmet>
+      <SeoHelmet
+        title="Home - Business Name"
+        description="Welcome to Business Name. Customize your homepage description here."
+        jsonSchema={jsonLdContactPage}
+      />
 
       {/* ─── Sections ───────────────────────────────────────────── */}
       <ContactForm />
+      <WhatWeOffer/>
       <Faqs />
       <CTA />
     </>
