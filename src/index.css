@@ -9,9 +9,9 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  background-color: #fafafa;
 }
 
-/* Example .responsivePad class from your code */
 .responsivePad {
   @apply 2xl:px-[200px] xl:px-[120px] lg:px-[96px] sm:px-[64px] min-[480px]:px-[32px] max-sm:px-[16px];
 }
@@ -41,5 +41,3 @@ html {
 .p {
   @apply text-base xl:text-lg;
 }
-
-/* Other responsive text classes, etc. */

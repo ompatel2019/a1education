@@ -9,13 +9,39 @@ import Footer from '../components/Footer';
 import ScrollToTop from '../tools/ScrollToTop';
 
 const MainLayout = () => {
+  const navbarLinks = [
+    {
+      name: "Home", 
+      to: "/"
+    }, 
+    {
+      name: "Specialty", 
+      to: "/specialty"
+    }, 
+    {
+      name: "Why Choose Us", 
+      to: "/whychooseus"
+    }, 
+    {
+      name: "About Us", 
+      to: "/aboutus"
+    }, 
+    {
+      name: "Pricing", 
+      to: "/pricing"
+    }, 
+    {
+      name: "Enrol Now", 
+      to: "/contact"
+    }, 
+  ]
   return (
     <>
       {/* ─── Topbar Section ───────────────────────────────────────── */}
       <Topbar />
 
       {/* ─── Navigation Bar Section ───────────────────────────────── */}
-      <Navbar />
+      <Navbar navbarLinks={navbarLinks} />
 
       <ScrollToTop /> 
 

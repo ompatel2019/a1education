@@ -11,7 +11,7 @@ import Pricing from '../components/Pricing'
 import Testimonials from '../components/Testimonials';
 import Faqs from '../components/Faqs';
 
-const HomePage = () => {
+const HomePage = ({section, sectionName, sectionSubheading, sectionDescriptionHeading, sectionText}) => {
   // ─── Schema for Home Page ──────────────────────────────────────────────
   const jsonLdHomePage = {
     "@context": "https://schema.org",
@@ -31,12 +31,53 @@ const HomePage = () => {
 
       {/* ─── Sections ───────────────────────────────────────────── */}
       <Hero />
-      <Specialty />
-      <WhyChooseUs />
-      <AboutUs />
-      <Pricing />
-      <Testimonials />
-      <Faqs />
+      <Specialty 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
+
+      <WhyChooseUs 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
+
+      <AboutUs 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
+
+      <Pricing 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
+
+      <Testimonials 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
+
+      <Faqs 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
     </>
   );
 };

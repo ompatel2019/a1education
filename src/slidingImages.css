@@ -1,0 +1,115 @@
+/* slidingImages.css */
+
+.sliding-images-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;     /* Hide images as they slide out of view */
+  margin-top: 2rem;     /* Optional top spacing */
+}
+
+.sliding-images-track {
+  display: flex;
+  align-items: center;
+  gap: 1rem;               /* Some spacing between images */
+  /* We duplicate the images, so total width is set to 200% */
+  width: 200%;
+  animation: scroll-large 25s linear infinite; /* default for large screens */
+}
+
+/* 
+   Base image style (will be overridden by media queries):
+   - flex-shrink: 0; ensures each image doesn't shrink 
+   - object-fit: cover (or 'contain', if preferred)
+*/
+.sliding-image {
+  flex-shrink: 0;
+  max-width: 300px;
+  height: auto;
+  object-fit: cover;
+}
+
+/* ANIMATION:
+   One full cycle moves -50% so that the second “set” of images
+   continues seamlessly.
+*/
+@keyframes scroll-large {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* --------------------------------
+   RESPONSIVE BREAKPOINTS
+   Tailwind's 2XL is min-width: 1536px
+   Adjust as needed if your project 
+   uses different breakpoints
+---------------------------------- */
+
+/* Extra large and above (2XL): bigger images, faster speed */
+@media (min-width: 1536px) {
+  .sliding-image {
+    max-width: 400px; 
+  }
+  .sliding-images-track {
+    animation: scroll-2xl 15s linear infinite; /* Faster on very large screens */
+  }
+
+  @keyframes scroll-2xl {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* Medium-to-Large screens (≥768px up to <1536px) → the default we set above 
+   so no special rule is strictly needed unless you want a separate speed. */
+
+/* Small screens (≥640px and <768px) */
+@media (max-width: 767px) {
+  .sliding-image {
+    max-width: 250px;  /* Slightly smaller */
+  }
+  .sliding-images-track {
+    animation: scroll-med 10s linear infinite; /* Slow it down a bit */
+  }
+
+  @keyframes scroll-med {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* Extra small screens (<640px, typical phone) */
+@media (max-width: 639px) {
+  .sliding-image {
+    max-width: 200px;
+  }
+  .sliding-images-track {
+    animation: scroll-small 5s linear infinite; /* Even slower on phones */
+  }
+
+  @keyframes scroll-small {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* OPTIONAL: Pause on hover for debugging or user convenience 
+.sliding-images-track:hover {
+  animation-play-state: paused;
+}
+*/
