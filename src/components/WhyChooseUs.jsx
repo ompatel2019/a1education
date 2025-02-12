@@ -29,14 +29,14 @@ const WhyChooseUs = ({section, sectionName, sectionSubheading, sectionDescriptio
             {name.toUpperCase()}
           </h3>
 
-          <h4 className={`${sectionSubheading} col-span-2 bg-primary-0 2xl:p-16 lg:p-12 md:p-8 p-4 rounded-lg text-white-0 hover:translate-y-[-10px] hover:invert transition-all hover:bg-black-0`}>
+          <h4 className={`${sectionSubheading} col-span-2 bg-primary-0 2xl:p-16 lg:p-12 md:p-8 p-4 rounded-lg text-white-0 hover:translate-y-[-10px] transition-all`}>
             {subheading}
           </h4>
         </div>
 
         <div className='grid grid-cols-3 2xl:gap-8 lg:gap-6 gap-4 max-lg:grid-cols-2 max-sm:grid-cols-1'>
           {stats.map((stat, index) => (
-            <div key={index} className='bg-primary-0 text-white-0 2xl:p-10 lg:p-8 md:p-6 p-4 rounded-md 2xl:space-y-8 lg:space-y-6 space-y-4 hover:translate-y-[-10px] hover:invert transition-all hover:bg-black-0'> 
+            <div key={index} className='bg-primary-0 text-white-0 2xl:p-10 lg:p-8 md:p-6 p-4 rounded-md 2xl:space-y-8 lg:space-y-6 space-y-4 hover:translate-y-[-10px] transition-all'> 
               <p className={`${sectionText} font-generalSans-medium`}>{stat.statName}</p>
               <h5 className={`h3 text-right max-md:text-4xl`}>{stat.stat}</h5>
               <p className='border-t-[3px] border-t-white-0 pt-4 mt-4 text-right'>

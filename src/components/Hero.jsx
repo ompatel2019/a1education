@@ -6,7 +6,7 @@ import placeholder from '../assets/placeholder.png';
 const Hero = () => {
   const heroTopText = 'On-campus / Online Years 11-12 Economics Tutoring';
   const heroHeading = 'HSC Economics Specialists In Sydney';
-  const heroSubText = 'Unlock your potential in HSC Economics with Sydney’s leading experts...';
+  const heroSubText = 'Unlock your potential in HSC Economics with Sydney’s leading experts. Our focused, interactive online and on-campus classes ensure deep understanding and outstanding results.';
 
   const threeSteps = [
     {
@@ -49,9 +49,9 @@ const Hero = () => {
             <h1 className='h1 font-generalSans-bold 2xl:px-[200px]'>
               {heroHeading}
             </h1>
-            <p className='h6 max-md:hidden'>
+            {/* <p className='h6 max-md:hidden'>
               {heroSubText}
-            </p>
+            </p> */}
             {/* Numbered steps */}
             <div className='flex space-x-4 h7 max-md:space-x-4'>
               {threeSteps.map((step, index) => (

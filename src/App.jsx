@@ -21,7 +21,7 @@ const PricingPage = lazy(() => import('./pages/PricingPage'));
 const section = 'responsivePad 2xl:py-[120px] lg:py-[96px] md:py-[64px] sm:py-[48px] py-[32px] 2xl:space-y-12 lg:space-y-10 md:space-y-8 sm:space-y-6 space-y-4 font-generalSans-medium';
 const sectionName = 'h4 font-generalSans-semibold';
 const sectionSubheading = 'h5';
-const sectionDescriptionHeading = 'h5'
+const sectionDescriptionHeading = 'h7'
 const sectionText = 'p'
 
 // ─── Router Configuration ───────────────────────────────────────────────
