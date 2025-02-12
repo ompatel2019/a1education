@@ -110,11 +110,11 @@ const Pricing = ({ section, sectionName, sectionSubheading }) => {
               </div>
             ))}
 
-            <div className={`cursor-pointer text-center w-full rounded-md p-3 ${index === 0 ? 'bg-primary-0 text-white-0' : 'bg-white-0 text-black-0'}`}>
-              <HashLink smooth to='/contact'>
-                Get Started
-              </HashLink>
-            </div>
+            <HashLink smooth to='/contact'>
+              <div className={`mt-5 cursor-pointer text-center w-full rounded-md p-2 ${index === 0 ? 'bg-primary-0 text-white-0' : 'bg-white-0 text-black-0'}`}>
+                  Get Started
+              </div>
+            </HashLink>
           </div>
         ))}
       </div>
