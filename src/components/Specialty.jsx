@@ -63,7 +63,7 @@ const Specialty = ({section, sectionName, sectionSubheading, sectionDescriptionH
         </h4>
 
         <div className='grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-8 lg:gap-6 gap-4'>
-          <div className='col-span-1 space-y-4'>
+          <div className='flex flex-col max-md:flex-row max-md:space-x-4 max-sm:flex-col max-sm:space-x-0 max-sm:space-y-4 md:space-y-4'>
             {
               specialties.map((specialty, index) => (
                 <div key={index} className='2xl:p-10 lg:p-8 md:p-6 p-4 border-2 border-black-0 rounded-md 2xl:space-y-8 lg:space-y-6 space-y-4 flex flex-col'>
