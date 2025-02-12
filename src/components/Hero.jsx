@@ -46,7 +46,7 @@ const Hero = () => {
             <h5 className='h5 font-generalSans-semibold'>
               {heroTopText}
             </h5>
-            <h1 className='h1 font-generalSans-bold text-white-0 2xl:px-[200px]'>
+            <h1 className='h1 font-generalSans-bold 2xl:px-[200px]'>
               {heroHeading}
             </h1>
             <p className='h6 max-md:hidden'>

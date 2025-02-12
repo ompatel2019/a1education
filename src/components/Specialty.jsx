@@ -62,7 +62,7 @@ const Specialty = ({section, sectionName, sectionSubheading, sectionDescriptionH
           {subheading}
         </h4>
 
-        <div className='grid grid-cols-3 gap-4 max-md:flex max-md:flex-col'>
+        <div className='grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-8 lg:gap-6 gap-4'>
           <div className='col-span-1 space-y-4'>
             {
               specialties.map((specialty, index) => (
@@ -78,7 +78,7 @@ const Specialty = ({section, sectionName, sectionSubheading, sectionDescriptionH
                     {specialty.desc}
                   </div>
 
-                  <HashLink smooth to='/contact' className='lg:px-6 px-4 p-2 bg-black-0 text-white-0 hover:bg-purple-400 hover:text-white-0 w-fit transitiona-all rounded-sm'>Enrol Now</HashLink>
+                  <HashLink smooth to='/contact' className='lg:px-6 px-4 p-2 bg-black-0 text-white-0 hover:bg-purple-400 hover:px-8 hover:text-white-0 w-fit transition-all rounded-sm'>Enrol Now</HashLink>
 
                 </div>
               ))
