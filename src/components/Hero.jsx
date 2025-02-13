@@ -24,10 +24,10 @@ const Hero = () => {
 
   // Sample images
   const slidingImages = [
-    { image: hero1, imageAlt: 'Image #1', imageClass: '' },
-    { image: hero2, imageAlt: 'Image #2', imageClass: '' },
-    { image: hero3, imageAlt: 'Image #3', imageClass: '' },
-    { image: hero4, imageAlt: 'Image #4', imageClass: '' },
+    { image: hero1, imageAlt: 'Image #1' },
+    { image: hero2, imageAlt: 'Image #2' },
+    { image: hero3, imageAlt: 'Image #3' },
+    { image: hero4, imageAlt: 'Image #4' },
   ];
 
   return (
@@ -43,8 +43,8 @@ const Hero = () => {
             <h1 className='h1 font-generalSans-bold 2xl:px-[200px]'>
               {heroHeading}
             </h1>
-            {/* Example subtext if you want it visible */}
-            {/* <p className='h6 max-md:hidden'>
+            {/* Example subtext if you want it visible
+            <p className='h6 max-md:hidden'>
               {heroSubText}
             </p> */}
 
@@ -75,27 +75,29 @@ const Hero = () => {
           </div>
 
           {/* Sliding images conveyor belt */}
-          <div className="testimonial-container mt-8">
-            <div className="testimonial-track">
+          <div className="hero-slider-container overflow-hidden w-full mt-8">
+            <div className="hero-slider-track flex gap-8 hero-slider-animation">
+              {/* Original set of images */}
               {slidingImages.map((item, index) => (
                 <img
                   key={index}
                   src={item.image}
                   alt={item.imageAlt}
-                  className={`heroImage-item ${item.imageClass}`}
+                  className="hero-slide-img"
                 />
               ))}
-              {/* Duplicate images for seamless loop */}
+              {/* Duplicate set for seamless looping */}
               {slidingImages.map((item, index) => (
                 <img
                   key={`dup-${index}`}
                   src={item.image}
                   alt={item.imageAlt}
-                  className={`heroImage-item ${item.imageClass}`}
+                  className="hero-slide-img"
                 />
               ))}
             </div>
           </div>
+
         </div>
       </section>
     </>

@@ -1,5 +1,4 @@
 import React from 'react'
-import SlidingSchools from './SlidingSchools';
 
 const Testimonials = ({ section, sectionName, sectionSubheading }) => {
   const name = 'Testimonials';
@@ -43,7 +42,6 @@ const Testimonials = ({ section, sectionName, sectionSubheading }) => {
     }
   ];
   
-
   return (
     <>
       <section
@@ -57,12 +55,18 @@ const Testimonials = ({ section, sectionName, sectionSubheading }) => {
           <h4 className={sectionSubheading}>{subheading}</h4>
         </div>
 
-        {/* Separate container/tracks for testimonials */}
-        <div className="testimonial-container mt-8">
-          <div className="testimonial-track text-left">
+        {/*
+          We want a smooth horizontal slider with each testimonial 480x370 on 1440px screen, 
+          with 64px padding, stars at the top, etc. 
+          We'll do the same duplication trick.
+        */}
+        <div className="testimonials-slider-container overflow-hidden w-full mt-8">
+          <div className="testimonials-slider-track flex testimonials-slider-animation gap-8">
+            {/* Original set */}
             {testimonials.map((item, index) => (
               <div
-                className="testimonial-item bg-white-0 text-black-0 rounded-lg 2xl:p-8 lg:p-6 p-4 space-y-2 md:space-y-4 lg:space-y-6 2xl:space-y-8"
+                className="testimonial-card bg-white-0 text-black-0 flex-shrink-0
+                           rounded-lg space-y-2 md:space-y-4 lg:space-y-6 2xl:space-y-8"
                 key={index}
               >
                 <div className="space-x-1">
@@ -80,11 +84,11 @@ const Testimonials = ({ section, sectionName, sectionSubheading }) => {
                 </div>
               </div>
             ))}
-
-            {/* Duplicate for seamless loop */}
+            {/* Duplicate set */}
             {testimonials.map((item, index) => (
               <div
-                className="testimonial-item bg-white-0 text-black-0 rounded-lg 2xl:p-8 lg:p-6 p-4 space-y-2 md:space-y-4 lg:space-y-6 2xl:space-y-8"
+                className="testimonial-card bg-white-0 text-black-0 flex-shrink-0
+                           rounded-lg space-y-2 md:space-y-4 lg:space-y-6 2xl:space-y-8"
                 key={`dup-${index}`}
               >
                 <div className="space-x-1">

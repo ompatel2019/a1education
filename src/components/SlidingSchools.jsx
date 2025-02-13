@@ -6,6 +6,7 @@ import school4 from '../assets/school4.png'
 import school5 from '../assets/school5.png'
 import school6 from '../assets/school6.png'
 import school7 from '../assets/school7.png'
+import school8 from '../assets/school8.png'
 
 const SlidingSchools = ({sectionName, sectionSubheading}) => {
   const schools = [
@@ -44,6 +45,11 @@ const SlidingSchools = ({sectionName, sectionSubheading}) => {
           schoolName: "Parramatta High School",
           alt: 'Parramatta High School logo'
       },
+      {
+          school: school8,
+          schoolName: "St Marys Senior High School",
+          alt: 'St Marys Senior High School logo'
+      },
   ]
 
   const name = 'We have students from';
@@ -60,20 +66,28 @@ const SlidingSchools = ({sectionName, sectionSubheading}) => {
           <h3 className={sectionName}>{name.toUpperCase()}</h3>
         </div>
 
-        <div className="testimonial-container mt-8">
-          {/* Notice we re-use the container style but have our own .schools-track */}
-          <div className="testimonial-track text-center h7">
+        {/* Smooth slider with bigger gap */}
+        <div className="schools-slider-container overflow-hidden w-full mt-8">
+          <div className="schools-slider-track flex schools-slider-animation gap-16 justify-center items-center p">
+            {/* Original set */}
             {schools.map((item, index) => (
-              <div key={index} className='space-y-4 '>
-                <img src={item.school} alt={item.alt} />
+              <div key={index} className='flex-shrink-0 space-y-4 text-center'>
+                <img
+                  src={item.school}
+                  alt={item.alt}
+                  className="school-logo-img mx-auto"
+                />
                 <p>{item.schoolName}</p>
               </div>
             ))}
-
-            {/* Duplicate for seamless loop */}
+            {/* Duplicate set */}
             {schools.map((item, index) => (
-              <div key={`dup-${index}`} className='space-y-4'>
-                <img src={item.school} alt={item.alt} />
+              <div key={`dup-${index}`} className='flex-shrink-0 space-y-4 text-center'>
+                <img
+                  src={item.school}
+                  alt={item.alt}
+                  className="school-logo-img mx-auto"
+                />
                 <p>{item.schoolName}</p>
               </div>
             ))}
