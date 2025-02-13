@@ -26,7 +26,11 @@ const SpecialtyPage = ({section, sectionName, sectionSubheading, sectionDescript
       />
 
       {/* ─── Sections ───────────────────────────────────────────── */}
-      <PageTitle />
+      <PageTitle 
+        heading={'Specialty'}
+        subheading={'Explore our Specialty with the leading Economics tutors in Sydney, offering tailored programs that prepare students for HSC success'}
+        route={'Home / Specialty'}
+        />
       <Specialty 
           section={section}
           sectionName={sectionName}

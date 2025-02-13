@@ -31,7 +31,7 @@ const WhyChooseUs = ({section, sectionName, sectionSubheading, sectionDescriptio
           </h3>
 
           <div className='col-span-2 bg-primary-0 2xl:p-10 lg:p-8 md:p-6 p-4 rounded-lg text-white-0 hover:translate-y-[-10px] transition-all space-y-4'>
-            <h4 className={`h7 font-generalSans-medium-italic`}>
+            <h4 className={`h7 font-generalSans-medium`}>
               {subheading}
             </h4>
             <p className='p font-generalSans-bold'>

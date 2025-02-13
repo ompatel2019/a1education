@@ -142,41 +142,41 @@ const Faqs = ({section, sectionName, sectionSubheading}) => {
         </h4>
       </div>
 
-      {faqCategories.map((cat, catIndex) => (
-        <div key={`category-${catIndex}`} className="mb-8">
-          <h5 className="h5 font-generalSans-semibold text-lg mb-4">{cat.categoryTitle}</h5>
-
-          {cat.items.map((faqItem, itemIndex) => {
-            const uniqueKey = `${catIndex}-${itemIndex}`;
-            const isOpen = openFaq === uniqueKey;
-
-            return (
-              <div key={uniqueKey} className="mb-4 border-b pb-2">
-                {/* Header row with question */}
-                <div className="flex justify-between items-center cursor-pointer p"
-                     onClick={() => handleToggle(uniqueKey)}>
-                  <p className="font-medium">
-                    {faqItem.questionNumber}. {faqItem.question}
-                  </p>
-                  {/* Toggle icon */}
-                  {isOpen ? (
-                    <i className="bi bi-dash-circle text-xl"></i>
-                  ) : (
-                    <i className="bi bi-plus-circle text-xl"></i>
+      <div className='flex flex-col space-y-12'>
+        {faqCategories.map((cat, catIndex) => (
+          <div key={`category-${catIndex}`} className="responsivePad">
+            <h5 className="h5 font-generalSans-semibold text-lg mb-4">{cat.categoryTitle}</h5>
+            {cat.items.map((faqItem, itemIndex) => {
+              const uniqueKey = `${catIndex}-${itemIndex}`;
+              const isOpen = openFaq === uniqueKey;
+              return (
+                <div key={uniqueKey} className="mb-4 border-b pb-2">
+                  {/* Header row with question */}
+                  <div className="flex justify-between items-center cursor-pointer p"
+                       onClick={() => handleToggle(uniqueKey)}>
+                    <p className="font-medium">
+                      {faqItem.questionNumber}. {faqItem.question}
+                    </p>
+                    {/* Toggle icon */}
+                    {isOpen ? (
+                      <i className="bi bi-dash-circle text-xl"></i>
+                    ) : (
+                      <i className="bi bi-plus-circle text-xl"></i>
+                    )}
+                  </div>
+        
+                  {/* Answer shown if open */}
+                  {isOpen && (
+                    <div className="mt-2 text-gray-700">
+                      {faqItem.answer}
+                    </div>
                   )}
                 </div>
-                
-                {/* Answer shown if open */}
-                {isOpen && (
-                  <div className="mt-2 text-gray-700">
-                    {faqItem.answer}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      ))}
+              );
+            })}
+          </div>
+        ))}
+      </div>
 
       {/* Example final CTA */}
       <div className="text-center mt-10">

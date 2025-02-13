@@ -4,7 +4,7 @@ import logo from '../assets/logo.svg'
 
 const Footer = () => {
   return (
-    <footer className="bg-white-0 text-white-0 2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] pt-6 pb-4">
+    <footer className="bg-white-0 text-white-0 2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] pt-6 pb-4 font-generalSans-medium">
       <div className='bg-primary-0 rounded-lg responsivePad 2xl:py-12 lg:py-10 md:py-8 py-6 2xl:space-y-12 lg:space-y-10 md:space-y-8 space-y-6'>
         <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
           {/* Left: Logo */}
@@ -12,7 +12,7 @@ const Footer = () => {
             <img src={logo} alt="Logo" className="h-8 w-auto" />
           </div>
           {/* Center: Nav Links */}
-          <nav className="flex md:space-x-6 max-md:flex-col max-md:space-y-2 max-md:items-center">
+          <nav className="flex sm:space-x-6 max-sm:flex-col max-sm:space-y-2 max-sm:items-center">
             <HashLink to="/home" smooth className="p hover:underline">
               Home
             </HashLink>

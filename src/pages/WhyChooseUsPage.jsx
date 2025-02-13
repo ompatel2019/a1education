@@ -3,6 +3,7 @@ import React from 'react';
 import SeoHelmet from '../components/SeoHelmet';
 
 // ─── Components for Why Choose Us Page ──────────────────────────────────
+import PageTitle from '../components/PageTitle';
 import WhyChooseUs from '../components/WhyChooseUs';
 import WhatWeOffer from '../components/WhatWeOffer';
 import Testimonials from '../components/Testimonials';
@@ -28,6 +29,14 @@ const WhyChooseUsPage = ({section, sectionName, sectionSubheading, sectionDescri
       />
 
       {/* ─── Sections ───────────────────────────────────────────── */}
+
+      <PageTitle 
+        heading={'Why Choose Us'}
+        subheading={'Choose the best Economics tutors in Sydney; our track record of high student success rates speaks volumes about our teaching efficacy.'}
+        route={'Home / Why Choose Us'}
+        />
+
+
       <WhyChooseUs 
           section={section}
           sectionName={sectionName}
@@ -36,7 +45,14 @@ const WhyChooseUsPage = ({section, sectionName, sectionSubheading, sectionDescri
           sectionText={sectionText}
       />
       
-      <WhatWeOffer />
+      <WhatWeOffer 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
+
       <Testimonials 
           section={section}
           sectionName={sectionName}

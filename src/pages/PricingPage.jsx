@@ -27,7 +27,12 @@ const PricingPage = ({section, sectionName, sectionSubheading, sectionDescriptio
       />
 
       {/* ─── Sections ───────────────────────────────────────────── */}
-      <PageTitle />
+      <PageTitle 
+        heading={'Pricing'}
+        subheading={'Explore affordable options with top Economics tutors in Sydney, ensuring quality education that delivers measurable improvements.'}
+        route={'Home / Pricing'}
+      />
+      
       <Pricing 
           section={section}
           sectionName={sectionName}

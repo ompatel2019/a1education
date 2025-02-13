@@ -3,6 +3,8 @@ import React from 'react';
 import SeoHelmet from '../components/SeoHelmet';
 
 // ─── Components for About Us Page ─────────────────────────────────────
+import PageTitle from '../components/PageTitle';
+import BlankSpace from '../components/BlankSpace';
 import AboutUs from '../components/AboutUs';
 import Testimonials from '../components/Testimonials';
 import SlidingSchools from '../components/SlidingSchools';
@@ -28,6 +30,14 @@ const AboutUsPage = ({section, sectionName, sectionSubheading, sectionDescriptio
       />
 
       {/* ─── Sections ───────────────────────────────────────────── */}
+      <PageTitle
+        heading={'About Us'}
+        subheading={'Discover how our Economics tutors in Sydney have built a reputation for excellence, transforming students into leaders in economic thinking.'}
+        route={'Home / About Us'}
+      />
+
+      <BlankSpace/>
+
       <AboutUs 
           section={section}
           sectionName={sectionName}

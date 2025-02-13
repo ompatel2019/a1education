@@ -3,6 +3,7 @@ import React from 'react';
 import SeoHelmet from '../components/SeoHelmet';
 
 // ─── Components for Contact Page ─────────────────────────────────────
+import PageTitle from '../components/PageTitle';
 import ContactForm from '../components/ContactForm';
 import WhatWeOffer from '../components/WhatWeOffer';
 import Faqs from '../components/Faqs';
@@ -27,8 +28,28 @@ const ContactPage = ({section, sectionName, sectionSubheading, sectionDescriptio
       />
 
       {/* ─── Sections ───────────────────────────────────────────── */}
-      <ContactForm />
-      <WhatWeOffer/>
+      <PageTitle 
+        heading={'Contact Us'}
+        subheading={'Reach out to Sydney’s top Economics tutors at A1 Education and book a trial lesson on us.'}
+        route={'Home / Contact'}
+      />
+
+      <ContactForm 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
+      
+      <WhatWeOffer 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
+
       <Faqs 
           section={section}
           sectionName={sectionName}
