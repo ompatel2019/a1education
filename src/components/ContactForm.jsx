@@ -60,8 +60,8 @@ const ContactForm = ({section, sectionName, sectionSubheading}) => {
 
   return (
     <section className={section}>
-      <div class="grid grid-cols-3 max-md:grid-cols-1 2xl:gap-16 lg:gap-12 md:gap-8 gap-6">
-        <div className="flex flex-col justify-between">
+      <div class="grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-16 lg:gap-12 md:gap-8 gap-6">
+        <div className="flex flex-col justify-between max-md:order-2">
           <div className="space-y-8">
             {contacts.map((i, k) => (
               <div className="flex space-x-4 items-start p">
