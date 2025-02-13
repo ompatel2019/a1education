@@ -12,7 +12,7 @@ html {
 }
 
 .responsivePad {
-  @apply 2xl:px-[200px] xl:px-[120px] lg:px-[96px] sm:px-[64px] min-[480px]:px-[32px] max-sm:px-[16px];
+  @apply 2xl:px-[200px] xl:px-[120px] lg:px-[96px] sm:px-[64px] min-[480px]:px-[24px] max-sm:px-[8px];
 }
 
 /* Headings */
