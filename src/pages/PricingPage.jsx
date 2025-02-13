@@ -8,7 +8,7 @@ import Pricing from '../components/Pricing';
 import Faqs from '../components/Faqs';
 import CTA from '../components/CTA';
 
-const PricingPage = () => {
+const PricingPage = ({section, sectionName, sectionSubheading, sectionDescriptionHeading, sectionText}) => {
   // ─── Schema for Pricing Page ──────────────────────────────────────────────
   const jsonLdPricingPage = {
     "@context": "https://schema.org",
@@ -28,8 +28,22 @@ const PricingPage = () => {
 
       {/* ─── Sections ───────────────────────────────────────────── */}
       <PageTitle />
-      <Pricing />
-      <Faqs />
+      <Pricing 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
+
+
+      <Faqs 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
       <CTA />
     </>
   );

@@ -8,7 +8,7 @@ import WhatWeOffer from '../components/WhatWeOffer';
 import Faqs from '../components/Faqs';
 import CTA from '../components/CTA';
 
-const ContactPage = () => {
+const ContactPage = ({section, sectionName, sectionSubheading, sectionDescriptionHeading, sectionText}) => {
   // ─── Schema for Contact Page ─────────────────────────────────────────
   const jsonLdContactPage = {
     "@context": "https://schema.org",
@@ -29,7 +29,13 @@ const ContactPage = () => {
       {/* ─── Sections ───────────────────────────────────────────── */}
       <ContactForm />
       <WhatWeOffer/>
-      <Faqs />
+      <Faqs 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
       <CTA />
     </>
   );

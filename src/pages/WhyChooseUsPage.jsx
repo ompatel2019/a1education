@@ -6,9 +6,10 @@ import SeoHelmet from '../components/SeoHelmet';
 import WhyChooseUs from '../components/WhyChooseUs';
 import WhatWeOffer from '../components/WhatWeOffer';
 import Testimonials from '../components/Testimonials';
+import SlidingSchools from '../components/SlidingSchools';
 import CTA from '../components/CTA';
 
-const WhyChooseUsPage = () => {
+const WhyChooseUsPage = ({section, sectionName, sectionSubheading, sectionDescriptionHeading, sectionText}) => {
   // ─── Schema for Why Choose Us Page ─────────────────────────────────────
   const jsonLdWhyChooseUsPage = {
     "@context": "https://schema.org",
@@ -27,9 +28,30 @@ const WhyChooseUsPage = () => {
       />
 
       {/* ─── Sections ───────────────────────────────────────────── */}
-      <WhyChooseUs />
+      <WhyChooseUs 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
+      
       <WhatWeOffer />
-      <Testimonials />
+      <Testimonials 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
+
+      <SlidingSchools 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
       <CTA />
     </>
   );

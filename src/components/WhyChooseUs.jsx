@@ -38,7 +38,6 @@ const WhyChooseUs = ({section, sectionName, sectionSubheading, sectionDescriptio
               Sansita Verma - Rank 1, Trial Mark: 97/100, ATAR: 97.80 - Cumberland High School
             </p>
           </div>
-
         </div>
 
         <div className='grid grid-cols-3 2xl:gap-8 lg:gap-6 gap-4 max-lg:grid-cols-2 max-sm:grid-cols-1'>

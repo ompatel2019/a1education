@@ -7,7 +7,7 @@ import PageTitle from '../components/PageTitle';
 import Specialty from '../components/Specialty';
 import CTA from '../components/CTA';
 
-const SpecialtyPage = () => {
+const SpecialtyPage = ({section, sectionName, sectionSubheading, sectionDescriptionHeading, sectionText}) => {
   // ─── Schema for Specialty Page ──────────────────────────────────────────────
   const jsonLdSpecialtyPage = {
     "@context": "https://schema.org",
@@ -27,7 +27,13 @@ const SpecialtyPage = () => {
 
       {/* ─── Sections ───────────────────────────────────────────── */}
       <PageTitle />
-      <Specialty />
+      <Specialty 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
       <CTA />
     </>
   );

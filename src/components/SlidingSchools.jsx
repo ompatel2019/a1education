@@ -68,7 +68,7 @@ const SlidingSchools = ({sectionName, sectionSubheading}) => {
 
         {/* Smooth slider with bigger gap */}
         <div className="schools-slider-container overflow-hidden w-full mt-8">
-          <div className="schools-slider-track flex schools-slider-animation gap-16 justify-center items-center p">
+          <div className="schools-slider-track flex schools-slider-animation gap-16 justify-center items-center p font-generalSans-semibold">
             {/* Original set */}
             {schools.map((item, index) => (
               <div key={index} className='flex-shrink-0 space-y-4 text-center'>
