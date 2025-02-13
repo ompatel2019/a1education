@@ -97,7 +97,7 @@ const Pricing = ({ section, sectionName, sectionSubheading }) => {
       {/* Pricing Cards */}
       <div className='grid grid-cols-2 max-md:grid-cols-1 gap-8 mt-6 h7 2xl:px-[200px] lg:px-[120px] md:px-[64px] sm:px-[32px]'>
         {pricingTab.map((tab, index) => (
-          <div key={index} className={`2xl:p-10 lg:p-8 p-6 border-black-0 border-2 rounded-lg space-y-4 ${index === 1 ? 'bg-primary-0 text-white-0 border-primary-0' : 'bg-white-0 text-black-0'}`}>
+          <div key={index} className={`2xl:p-10 lg:p-8 p-6 border-black-0 border-2 rounded-lg space-y-4 ${index === 1 ? 'bg-primary-0 text-white-0 border-primary-0' : 'bg-white-0 text-black-0'} hover:2xl:py-12 hover:lg:py-10 hover:py-8 transition-all`}>
             <h6 className='h6'>{tab.header}</h6>
             <h5 className={`h3 font-generalSans-semibold pb-5 border-b-2 ${index === 0 ? 'border-black-0' : 'border-white-0'}`}>
               {tab.price}
@@ -114,7 +114,7 @@ const Pricing = ({ section, sectionName, sectionSubheading }) => {
               <div className={`mt-5 cursor-pointer text-center w-full rounded-md p-2 ${index === 0 ? 'bg-primary-0 text-white-0' : 'bg-white-0 text-black-0'}`}>
                   Get Started
               </div>
-            </HashLink>
+            </HashLink> 
           </div>
         ))}
       </div>
