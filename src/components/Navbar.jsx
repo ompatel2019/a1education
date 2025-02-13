@@ -17,7 +17,7 @@ const Navbar = ({navbarLinks}) => {
         className={`2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] py-4 flex justify-between font-generalSans-medium items-center sticky top-0 z-50 ${showMenu ? 'bg-gray-0 max-md:justify-end' : 'bg-white-0'}`}
       >
         {!showMenu &&
-          <HashLink smooth to='/'><img src={logo} alt="A1 Education Logo" className='w-[120px] h-[48px]'/></HashLink>
+          <HashLink smooth to='/'><img src={logo} alt="A1 Education Logo" className='w-[152px] h-[64px]'/></HashLink>
         }
 
         {/* Desktop Navigation */}

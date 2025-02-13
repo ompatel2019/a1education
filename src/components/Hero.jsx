@@ -1,10 +1,9 @@
 import React from 'react'
 import { HashLink } from 'react-router-hash-link';
-import placeholder from '../assets/placeholder.png';
-import hero1 from '../assets/hero1.jpg'
-import hero2 from '../assets/hero2.jpg'
-import hero3 from '../assets/hero3.png'
-import hero4 from '../assets/hero4.jpg'
+import hero1 from '../assets/hero1.webp'
+import hero2 from '../assets/hero2.webp'
+import hero3 from '../assets/hero3.webp'
+import hero4 from '../assets/hero4.webp'
 
 const Hero = () => {
   const heroTopText = 'On-campus / Online Years 11-12 Economics Tutoring';

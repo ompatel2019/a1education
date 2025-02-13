@@ -1,5 +1,5 @@
 import React from 'react'
-import placeholder from '../assets/hero4.jpg'
+import placeholder from '../assets/hero4.webp'
 
 const AboutUs = ({section, sectionName, sectionSubheading, sectionDescriptionHeading, sectionText}) => {
   const name = 'About Us'; 

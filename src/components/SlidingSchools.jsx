@@ -1,12 +1,12 @@
 import React from 'react'
-import school1 from '../assets/school1.png'
-import school2 from '../assets/school2.png'
-import school3 from '../assets/school3.png'
-import school4 from '../assets/school4.png'
-import school5 from '../assets/school5.png'
-import school6 from '../assets/school6.png'
-import school7 from '../assets/school7.png'
-import school8 from '../assets/school8.png'
+import school1 from '../assets/school1.webp'
+import school2 from '../assets/school2.webp'
+import school3 from '../assets/school3.webp'
+import school4 from '../assets/school4.webp'
+import school5 from '../assets/school5.webp'
+import school6 from '../assets/school6.webp'
+import school7 from '../assets/school7.webp'
+import school8 from '../assets/school8.webp'
 
 const SlidingSchools = ({sectionName, sectionSubheading}) => {
   const schools = [
