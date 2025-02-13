@@ -1,7 +1,10 @@
 import React from 'react'
 import { HashLink } from 'react-router-hash-link';
 import placeholder from '../assets/placeholder.png';
-
+import hero1 from '../assets/hero1.jpg'
+import hero2 from '../assets/hero2.jpg'
+import hero3 from '../assets/hero3.png'
+import hero4 from '../assets/hero4.jpg'
 
 const Hero = () => {
   const heroTopText = 'On-campus / Online Years 11-12 Economics Tutoring';
@@ -9,18 +12,9 @@ const Hero = () => {
   const heroSubText = 'Unlock your potential in HSC Economics with Sydney’s leading experts. Our focused, interactive online and on-campus classes ensure deep understanding and outstanding results.';
 
   const threeSteps = [
-    {
-      numberIcon: <i className="bi bi-1-square-fill h6 max-md:text-2xl"></i>,
-      step: 'Learn'
-    },
-    {
-      numberIcon: <i className="bi bi-2-square-fill h6 max-md:text-2xl"></i>,
-      step: 'Apply'
-    },
-    {
-      numberIcon: <i className="bi bi-3-square-fill h6 max-md:text-2xl"></i>,
-      step: 'Master'
-    },
+    { numberIcon: <i className="bi bi-1-square-fill h6 max-md:text-2xl"></i>, step: 'Learn' },
+    { numberIcon: <i className="bi bi-2-square-fill h6 max-md:text-2xl"></i>, step: 'Apply' },
+    { numberIcon: <i className="bi bi-3-square-fill h6 max-md:text-2xl"></i>, step: 'Master' },
   ];
 
   const buttons = [
@@ -30,18 +24,18 @@ const Hero = () => {
 
   // Sample images
   const slidingImages = [
-    { image: placeholder, imageAlt: 'Image #1', imageClass: '' },
-    { image: placeholder, imageAlt: 'Image #2', imageClass: '' },
-    { image: placeholder, imageAlt: 'Image #3', imageClass: '' },
-    { image: placeholder, imageAlt: 'Image #4', imageClass: '' },
-    { image: placeholder, imageAlt: 'Image #5', imageClass: '' },
-    { image: placeholder, imageAlt: 'Image #6', imageClass: '' },
+    { image: hero1, imageAlt: 'Image #1', imageClass: '' },
+    { image: hero2, imageAlt: 'Image #2', imageClass: '' },
+    { image: hero3, imageAlt: 'Image #3', imageClass: '' },
+    { image: hero4, imageAlt: 'Image #4', imageClass: '' },
   ];
 
   return (
     <>
       <section className='2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] text-white-0 font-generalSans'>
-        <div className='bg-gradient-to-b 2xl:rounded-[32px] lg:rounded-[24px] md:rounded-[16px] rounded-[8px] flex flex-col space-y-10 2xl:py-[96px] lg:py-[72px] md:py-[48px] py-[24px] text-center items-center'>
+        <div className='bg-gradient-to-b 2xl:rounded-[32px] lg:rounded-[24px] md:rounded-[16px] rounded-[8px]
+                       flex flex-col space-y-10 2xl:py-[96px] lg:py-[72px] md:py-[48px] py-[24px]
+                       text-center items-center'>
           <div className="responsivePad flex flex-col 2xl:space-y-10 lg:space-y-8 space-y-6 text-center items-center font-generalSans-medium">
             <h5 className='h5 font-generalSans-semibold'>
               {heroTopText}
@@ -49,9 +43,11 @@ const Hero = () => {
             <h1 className='h1 font-generalSans-bold 2xl:px-[200px]'>
               {heroHeading}
             </h1>
+            {/* Example subtext if you want it visible */}
             {/* <p className='h6 max-md:hidden'>
               {heroSubText}
             </p> */}
+
             {/* Numbered steps */}
             <div className='flex space-x-4 h7 max-md:space-x-4'>
               {threeSteps.map((step, index) => (
@@ -61,8 +57,9 @@ const Hero = () => {
                 </div>
               ))}
             </div>
+
             {/* Buttons */}
-            <div className='flex space-x-4 p'>
+            <div className='flex space-x-4'>
               {buttons.map((button, index) => (
                 <HashLink
                   key={index}
@@ -78,23 +75,23 @@ const Hero = () => {
           </div>
 
           {/* Sliding images conveyor belt */}
-          <div className="sliding-images-container">
-            <div className="sliding-images-track">
+          <div className="testimonial-container mt-8">
+            <div className="testimonial-track">
               {slidingImages.map((item, index) => (
                 <img
                   key={index}
                   src={item.image}
                   alt={item.imageAlt}
-                  className={`sliding-image ${item.imageClass}`}
+                  className={`heroImage-item ${item.imageClass}`}
                 />
               ))}
-              {/** Duplicate the images to create the seamless loop */}
+              {/* Duplicate images for seamless loop */}
               {slidingImages.map((item, index) => (
                 <img
                   key={`dup-${index}`}
                   src={item.image}
                   alt={item.imageAlt}
-                  className={`sliding-image ${item.imageClass}`}
+                  className={`heroImage-item ${item.imageClass}`}
                 />
               ))}
             </div>

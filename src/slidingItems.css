@@ -1,0 +1,230 @@
+/* ----------------------------------------
+   1) Hero Images (Fixed Smooth Loop)
+----------------------------------------- */
+.slidingItems-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.slidingItems-track {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 200%; 
+  /* Adjusted durations for perfect sync with translateX(-50%) */
+  animation: heroScroll 5s linear infinite;
+}
+
+.heroImage-item {
+  flex-shrink: 0;
+  height: 400px;
+  width: auto;
+  object-fit: cover;
+}
+
+@keyframes heroScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* Matches 200% track width */
+}
+
+/* Large screens (≥1536px) */
+@media (min-width: 1536px) {
+  .slidingItems-track { animation-duration: 5s; }
+}
+
+/* Small screens (<768px) */
+@media (max-width: 767px) {
+  .heroImage-item { height: 300px; }
+  .slidingItems-track { animation-duration: 5s; } /* Slower for fewer items */
+}
+
+/* Extra small (<640px) */
+@media (max-width: 639px) {
+  .heroImage-item { height: 250px; }
+  .slidingItems-track { animation-duration: 3s; }
+}
+
+/* ----------------------------------------
+   2) Testimonials (Smooth Loop Fix)
+----------------------------------------- */
+.testimonial-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.testimonial-track {
+  display: flex;
+  gap: 1rem;
+  width: 200%;
+  animation: testimonialScroll 5s linear infinite; /* Slower = smoother */
+}
+
+.testimonial-item {
+  flex-shrink: 0;
+  width: 320px;
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center text vertically if there's free space */
+  padding: 2rem 2rem 1rem 2rem;
+  background-color: #fff;  /* or .bg-white-0 if using Tailwind classes */
+  border-radius: 8px;
+  color: #000;
+}
+
+@keyframes testimonialScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Large screens (≥1280px) */
+@media (min-width: 1280px) {
+  .testimonial-item { width: 400px; height: 320px; }
+  .testimonial-track { animation-duration: 40s; }
+}
+
+/* ----------------------------------------
+   3) Schools (New Section)
+   - Height: 230px on MacBook (1536px)
+   - Responsive adjustments
+----------------------------------------- */
+.schools-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 2rem 0;
+}
+
+.schools-track {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* Larger gap for logos */
+  width: 200%;
+  animation: schoolScroll 25s linear infinite;
+}
+
+.school-item {
+  flex-shrink: 0;
+  height: 230px; /* MacBook default */
+  width: auto; /* Width adjusts to maintain aspect ratio */
+  object-fit: contain;
+}
+
+@keyframes schoolScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Adjust height for smaller screens */
+@media (max-width: 1535px) {
+  .school-item { height: 200px; }
+}
+
+@media (max-width: 767px) {
+  .school-item { height: 150px; }
+  .schools-track { gap: 1rem; animation-duration: 35s; }
+}
+
+/* ----------------------------------------
+   Critical Fix for All Sections:
+   Ensure HTML has duplicated items!
+----------------------------------------- */
+
+/* ----------------------------------------
+   3) Schools
+----------------------------------------- */
+
+/* 
+   This is for narrower items like school logos.
+   On MacBook: each item ~230px tall, width auto, 
+   then scale up/down on other screens as needed.
+*/
+
+.schools-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.schools-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  white-space: nowrap;
+  width: 200%;
+  animation: schoolsScroll 25s linear infinite;
+}
+
+.school-item {
+  flex: none;
+  height: 230px;    /* MacBook default */
+  width: auto;      /* let width adjust accordingly */
+  object-fit: contain;
+}
+
+/* Keyframes for schools */
+@keyframes schoolsScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Larger screens (≥1536px): maybe 280px tall or so */
+@media (min-width: 1536px) {
+  .school-item {
+    height: 280px;
+  }
+  .schools-track {
+    animation: schoolsScroll-2xl 15s linear infinite;
+  }
+  @keyframes schoolsScroll-2xl {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* For smaller screens, you can reduce height further */
+@media (max-width: 767px) {
+  .school-item {
+    height: 180px;
+  }
+  .schools-track {
+    animation: schoolsScroll-med 20s linear infinite;
+  }
+  @keyframes schoolsScroll-med {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@media (max-width: 639px) {
+  .school-item {
+    height: 150px;
+  }
+  .schools-track {
+    animation: schoolsScroll-small 15s linear infinite;
+  }
+  @keyframes schoolsScroll-small {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}

@@ -10,6 +10,7 @@ import AboutUs from '../components/AboutUs';
 import Pricing from '../components/Pricing'
 import Testimonials from '../components/Testimonials';
 import Faqs from '../components/Faqs';
+import SlidingSchools from '../components/SlidingSchools';
 
 const HomePage = ({section, sectionName, sectionSubheading, sectionDescriptionHeading, sectionText}) => {
   // ─── Schema for Home Page ──────────────────────────────────────────────
@@ -64,6 +65,14 @@ const HomePage = ({section, sectionName, sectionSubheading, sectionDescriptionHe
       />
 
       <Testimonials 
+          section={section}
+          sectionName={sectionName}
+          sectionSubheading={sectionSubheading}
+          sectionDescriptionHeading={sectionDescriptionHeading}
+          sectionText={sectionText}
+      />
+
+      <SlidingSchools 
           section={section}
           sectionName={sectionName}
           sectionSubheading={sectionSubheading}
