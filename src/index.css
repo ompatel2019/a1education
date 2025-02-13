@@ -1,4 +1,3 @@
-/* index.css or tailwind.css */
 @import url('general-sans.css');
 
 @tailwind base;
@@ -41,4 +40,3 @@ html {
 .p {
   @apply text-base leading-normal xl:text-lg xl:leading-normal;
 }
-

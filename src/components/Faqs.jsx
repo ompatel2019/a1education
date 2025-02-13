@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
 
-/*
-  Faqs Component with Categories:
-  - Each category has a title and an array of items.
-  - Each item has { questionNumber, question, answer }.
-  - Clicking on the plus/minus icon toggles open/closed for each item.
-*/
-
-const Faqs = ({section, sectionName, sectionSubheading}) => {
-  // The FAQ data, grouped by category
+const Faqs = ({ section, sectionName, sectionSubheading }) => {
   const faqCategories = [
     {
       categoryTitle: 'Fees & Payment',
@@ -17,9 +9,10 @@ const Faqs = ({section, sectionName, sectionSubheading}) => {
         {
           questionNumber: 'Q1',
           question: 'How does your payment work?',
-          answer: 'Our classes operate on a pre-paid, per-term basis. You can complete your payment securely online.'
-        },
-      ],
+          answer:
+            'Our classes operate on a pre-paid, per-term basis. You can complete your payment securely online.'
+        }
+      ]
     },
     {
       categoryTitle: 'Free Trial & Enrollment',
@@ -27,24 +20,28 @@ const Faqs = ({section, sectionName, sectionSubheading}) => {
         {
           questionNumber: 'Q2',
           question: 'Is there a free trial?',
-          answer: 'Yes! We offer a free trial lesson for new students, no commitment required.'
+          answer:
+            'Yes! We offer a free trial lesson for new students, no commitment required.'
         },
         {
           questionNumber: 'Q3',
           question: 'What happens during the free trial?',
-          answer: 'During the trial, you attend a full lesson, experience our teaching style, and get access to materials.'
+          answer:
+            'During the trial, you attend a full lesson, experience our teaching style, and get access to materials.'
         },
         {
           questionNumber: 'Q4',
           question: 'How do I enrol?',
-          answer: 'You can enrol by clicking [Enrol Link], calling 0402 097 284, or emailing contact@a1education.com.au.'
+          answer:
+            'You can enrol by clicking [Enrol Link], calling 0402 097 284, or emailing contact@a1education.com.au.'
         },
         {
           questionNumber: 'Q5',
           question: 'Where can I find the Terms and Conditions?',
-          answer: 'You can access our Terms and Conditions [here] and our Privacy Policy [here].'
-        },
-      ],
+          answer:
+            'You can access our Terms and Conditions [here] and our Privacy Policy [here].'
+        }
+      ]
     },
     {
       categoryTitle: 'Resources & Support',
@@ -52,19 +49,21 @@ const Faqs = ({section, sectionName, sectionSubheading}) => {
         {
           questionNumber: 'Q6',
           question: 'Do you provide resources?',
-          answer: 'Absolutely. We have notes, practice questions, and exam tips that helped many students score 90+ in HSC.'
+          answer:
+            'Absolutely. We have notes, practice questions, and exam tips that helped many students score 90+ in HSC.'
         },
         {
           questionNumber: 'Q7',
           question: 'Do you provide marking and feedback?',
-          answer: 'Yes! We offer free marking and personalised feedback on assignments, essays, and practice exams.'
+          answer:
+            'Yes! We offer free marking and personalised feedback on assignments, essays, and practice exams.'
         },
         {
           questionNumber: 'Q8',
           question: 'Do you provide homework?',
           answer: 'Yes. We provide weekly homework to reinforce key concepts.'
-        },
-      ],
+        }
+      ]
     },
     {
       categoryTitle: 'Classes & Scheduling',
@@ -72,7 +71,8 @@ const Faqs = ({section, sectionName, sectionSubheading}) => {
         {
           questionNumber: 'Q9',
           question: 'How long are the lessons?',
-          answer: 'Each lesson is 2 hours, allowing time to cover content, reinforce understanding, and tackle exam questions.'
+          answer:
+            'Each lesson is 2 hours, allowing time to cover content, reinforce understanding, and tackle exam questions.'
         },
         {
           questionNumber: 'Q10',
@@ -82,12 +82,14 @@ const Faqs = ({section, sectionName, sectionSubheading}) => {
         {
           questionNumber: 'Q11',
           question: 'Do you offer one-on-one tutoring?',
-          answer: 'Right now, we primarily offer group classes to maintain a collaborative learning environment.'
+          answer:
+            'Right now, we primarily offer group classes to maintain a collaborative learning environment.'
         },
         {
           questionNumber: 'Q12',
           question: 'Where are the classes held?',
-          answer: 'We hold in-person classes at 207/30 Campbell St, Blacktown NSW 2148, plus online sessions.'
+          answer:
+            'We hold in-person classes at 207/30 Campbell St, Blacktown NSW 2148, plus online sessions.'
         },
         {
           questionNumber: 'Q13',
@@ -97,14 +99,15 @@ const Faqs = ({section, sectionName, sectionSubheading}) => {
         {
           questionNumber: 'Q14',
           question: 'What if I miss a class?',
-          answer: 'You can watch the recorded session or arrange a makeup class if available.'
+          answer:
+            'You can watch the recorded session or arrange a makeup class if available.'
         },
         {
           questionNumber: 'Q15',
           question: 'Can I switch between in-person and online?',
           answer: 'Yes, just let us know in advance.'
-        },
-      ],
+        }
+      ]
     },
     {
       categoryTitle: 'Tutors & Expertise',
@@ -112,64 +115,59 @@ const Faqs = ({section, sectionName, sectionSubheading}) => {
         {
           questionNumber: 'Q16',
           question: 'Who are the tutors?',
-          answer: 'Our tutors are high-achieving graduates with top HSC and ATAR results.'
-        },
-      ],
-    },
+          answer:
+            'Our tutors are high-achieving graduates with top HSC and ATAR results.'
+        }
+      ]
+    }
   ];
 
-  // State to track which question is open
-  // We'll store a unique key for each FAQ item (categoryIndex-itemIndex)
   const [openFaq, setOpenFaq] = useState(null);
 
-  // Toggle function
   const handleToggle = (uniqueKey) => {
     if (openFaq === uniqueKey) {
-      setOpenFaq(null); // close if it's already open
+      setOpenFaq(null);
     } else {
-      setOpenFaq(uniqueKey); // open the newly clicked FAQ
+      setOpenFaq(uniqueKey);
     }
   };
 
   return (
     <section className={section}>
       <div className="text-center mb-8">
-        <h3 className={sectionName}>
-          FAQs
-        </h3>
+        <h3 className={sectionName}>FAQs</h3>
         <h4 className={sectionSubheading}>
           Commonly asked questions students ask time to time.
         </h4>
       </div>
 
-      <div className='flex flex-col space-y-12'>
+      <div className="flex flex-col space-y-12">
         {faqCategories.map((cat, catIndex) => (
           <div key={`category-${catIndex}`} className="responsivePad">
-            <h5 className="h5 font-generalSans-semibold text-lg mb-4">{cat.categoryTitle}</h5>
+            <h5 className="h5 font-generalSans-semibold text-lg mb-4">
+              {cat.categoryTitle}
+            </h5>
             {cat.items.map((faqItem, itemIndex) => {
               const uniqueKey = `${catIndex}-${itemIndex}`;
               const isOpen = openFaq === uniqueKey;
               return (
                 <div key={uniqueKey} className="mb-4 border-b pb-2">
-                  {/* Header row with question */}
-                  <div className="flex justify-between items-center cursor-pointer p"
-                       onClick={() => handleToggle(uniqueKey)}>
+                  <div
+                    className="flex justify-between items-center cursor-pointer p"
+                    onClick={() => handleToggle(uniqueKey)}
+                  >
                     <p className="font-medium">
                       {faqItem.questionNumber}. {faqItem.question}
                     </p>
-                    {/* Toggle icon */}
                     {isOpen ? (
                       <i className="bi bi-dash-circle text-xl"></i>
                     ) : (
                       <i className="bi bi-plus-circle text-xl"></i>
                     )}
                   </div>
-        
-                  {/* Answer shown if open */}
+
                   {isOpen && (
-                    <div className="mt-2 text-gray-700">
-                      {faqItem.answer}
-                    </div>
+                    <div className="mt-2 text-gray-700">{faqItem.answer}</div>
                   )}
                 </div>
               );
@@ -181,7 +179,7 @@ const Faqs = ({section, sectionName, sectionSubheading}) => {
       {/* Example final CTA */}
       <div className="text-center mt-10">
         <p className="mb-4">Got a question we missed?</p>
-        <HashLink smooth to='/contact'>
+        <HashLink smooth to="/contact">
           <button className="bg-primary-0 text-white px-4 py-2 rounded-sm text-white-0 hover:bg-purple-400 transition-all">
             Contact Us
           </button>

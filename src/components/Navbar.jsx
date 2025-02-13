@@ -2,30 +2,33 @@ import React, { useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { FiMenu } from 'react-icons/fi';
 import { RxCross2 } from 'react-icons/rx';
-import logo from '../assets/logo.svg'
+import logo from '../assets/logo.svg';
 
-const Navbar = ({navbarLinks}) => {
+const Navbar = ({ navbarLinks }) => {
   const [showMenu, setShowMenu] = useState(false);
 
-  // Toggles the menu open/closed
   const toggleMenu = () => setShowMenu(prev => !prev);
 
   return (
     <>
-      {/* Desktop + Mobile Navbar */}
       <header
-        className={`2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] py-4 flex justify-between font-generalSans-medium items-center sticky top-0 z-50 ${showMenu ? 'bg-gray-0 max-md:justify-end' : 'bg-white-0'}`}
+        className={`2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] py-4 flex justify-between font-generalSans-medium items-center sticky top-0 z-50 ${
+          showMenu ? 'bg-gray-0 max-md:justify-end' : 'bg-white-0'
+        }`}
       >
-        {!showMenu &&
-          <HashLink smooth to='/'><img src={logo} alt="A1 Education Logo" className='w-[152px] h-[64px]'/></HashLink>
-        }
+        {!showMenu && (
+          <HashLink smooth to="/">
+            <img
+              src={logo}
+              alt="A1 Education main logo"
+              className="w-[152px] h-[64px]"
+              loading="lazy"
+            />
+          </HashLink>
+        )}
 
         {/* Desktop Navigation */}
-        <nav 
-          role="navigation"
-          aria-label="Primary"
-          className="hidden md:flex"
-        >
+        <nav role="navigation" aria-label="Primary" className="hidden md:flex">
           <ul className="flex space-x-3 items-center">
             {navbarLinks.map((link, index) =>
               link.name !== 'Enrol Now' ? (
@@ -37,8 +40,10 @@ const Navbar = ({navbarLinks}) => {
               ) : (
                 <li key={index}>
                   <HashLink smooth to={link.to}>
-                    <div className="px-4 py-2 bg-primary-0 hover:px-8 text-white-0 rounded-sm 
-                                    hover:bg-blue-500 transition-all duration-200">
+                    <div
+                      className="px-4 py-2 bg-primary-0 hover:px-8 text-white-0 rounded-sm 
+                        hover:bg-blue-500 transition-all duration-200"
+                    >
                       {link.name}
                     </div>
                   </HashLink>

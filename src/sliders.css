@@ -2,198 +2,181 @@
    HERO IMAGES SLIDER
    (super fast: 5s loop)
    ============================ */
-.hero-slider-animation {
-  animation: heroSlider 5s linear infinite;
-  animation-play-state: running;
-}
-@keyframes heroSlider {
-  0% {
-    transform: translateX(0);
+   .hero-slider-animation {
+    animation: heroSlider 5s linear infinite;
+    animation-play-state: running;
   }
-  100% {
-    transform: translateX(-50%); /* with 2 identical sets in track */
+  @keyframes heroSlider {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%); /* with 2 identical sets in track */
+    }
   }
-}
-
-/* 
-   Hero images:
-   - 400px tall at ≥1440px 
-   - Gradually scale down between 1280px, 1024px, 768px, 640px
-   - a bit bigger on smaller screens so it’s still visible
-*/
-.hero-slide-img {
-  object-fit: cover;
-  width: auto;
-  flex-shrink: 0;
-}
-
-/* base (smallest) – phone-ish */
-.hero-slide-img {
-  height: 280px; 
-}
-@media (min-width: 640px) {
+  
+  /* 
+     Hero images:
+     - 400px tall at ≥1440px 
+     - Gradually scale down between 1280px, 1024px, 768px, 640px
+  */
   .hero-slide-img {
-    height: 320px;
+    object-fit: cover;
+    width: auto;
+    flex-shrink: 0;
   }
-}
-@media (min-width: 768px) {
-  .hero-slide-img { 
-    height: 360px;
-  }
-}
-@media (min-width: 1024px) {
+  
+  /* base (smallest) – phone-ish */
   .hero-slide-img {
-    height: 380px;
+    height: 280px; 
   }
-}
-@media (min-width: 1280px) {
-  .hero-slide-img {
-    height: 400px;
+  @media (min-width: 640px) {
+    .hero-slide-img {
+      height: 320px;
+    }
   }
-}
-@media (min-width: 1440px) {
-  .hero-slide-img {
-    height: 400px; /* same at 1440+ */
+  @media (min-width: 768px) {
+    .hero-slide-img { 
+      height: 360px;
+    }
   }
-}
-
-/* ============================
-   TESTIMONIALS SLIDER
-   (faster: 12s loop)
-   ============================ */
-.testimonials-slider-animation {
-  animation: testimonialsSlider 12s linear infinite;
-  animation-play-state: running;
-}
-@keyframes testimonialsSlider {
-  0% {
-    transform: translateX(0);
+  @media (min-width: 1024px) {
+    .hero-slide-img {
+      height: 380px;
+    }
   }
-  100% {
-    transform: translateX(-50%);
+  @media (min-width: 1280px) {
+    .hero-slide-img {
+      height: 400px;
+    }
   }
-}
-
-/* 
-   We want multiple breakpoints so each testimonial 
-   is sized well on each screen. 
-*/
-.testimonial-card {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  text-align: left;
-  background-color: #fff;
-  color: #000;
-  border-radius: 8px;
-  box-sizing: border-box;
-  /* Let’s define each breakpoint carefully */
-}
-
-/* phone-ish default: nearly full width, moderate height */
-.testimonial-card {
-  width: 85vw; 
-  padding: 24px;
-  height: auto;
-}
-
-/* bigger than ~640px */
-@media (min-width: 640px) {
+  @media (min-width: 1440px) {
+    .hero-slide-img {
+      height: 400px;
+    }
+  }
+  
+  /* ============================
+     TESTIMONIALS SLIDER
+     (faster: 12s loop)
+     ============================ */
+  .testimonials-slider-animation {
+    animation: testimonialsSlider 12s linear infinite;
+    animation-play-state: running;
+  }
+  @keyframes testimonialsSlider {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  /* 
+     Testimonial card sizing
+  */
   .testimonial-card {
-    width: 60vw;
-    padding: 32px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: left;
+    background-color: #fff;
+    color: #000;
+    border-radius: 8px;
+    box-sizing: border-box;
   }
-}
-
-/* bigger than ~768px */
-@media (min-width: 768px) {
+  
   .testimonial-card {
-    width: 45vw;
-    padding: 36px;
+    width: 85vw; 
+    padding: 24px;
+    height: auto;
   }
-}
-
-/* bigger than ~1024px */
-@media (min-width: 1024px) {
-  .testimonial-card {
-    width: 40vw;
-    padding: 36px;
+  @media (min-width: 640px) {
+    .testimonial-card {
+      width: 60vw;
+      padding: 32px;
+    }
   }
-}
-
-/* bigger than ~1280px */
-@media (min-width: 1280px) {
-  .testimonial-card {
-    width: 35vw;
-    padding: 40px;
+  @media (min-width: 768px) {
+    .testimonial-card {
+      width: 45vw;
+      padding: 36px;
+    }
   }
-}
-
-/* at 1440px, your “classic” 480×370 w/ ~48px padding */
-@media (min-width: 1440px) {
-  .testimonial-card {
-    width: 480px;
-    height: 370px;
-    padding: 48px;
+  @media (min-width: 1024px) {
+    .testimonial-card {
+      width: 40vw;
+      padding: 36px;
+    }
   }
-}
-
-/* ============================
-   SCHOOLS LOGOS SLIDER
-   (faster: 12s loop)
-   ============================ */
-.schools-slider-animation {
-  animation: schoolsSlider 12s linear infinite;
-  animation-play-state: running;
-}
-@keyframes schoolsSlider {
-  0% {
-    transform: translateX(0);
+  @media (min-width: 1280px) {
+    .testimonial-card {
+      width: 35vw;
+      padding: 40px;
+    }
   }
-  100% {
-    transform: translateX(-50%);
+  @media (min-width: 1440px) {
+    .testimonial-card {
+      width: 480px;
+      height: 370px;
+      padding: 48px;
+    }
   }
-}
-
-/* 
-   School logos:
-   - 200px tall at ≥1440px
-   - Gradually smaller breakpoints
-   - Keep it bigger on phone so it’s still visible
-*/
-.school-logo-img {
-  object-fit: cover;
-  width: auto;
-  flex-shrink: 0;
-}
-
-/* phone-ish default */
-.school-logo-img {
-  height: 120px;
-}
-@media (min-width: 640px) {
+  
+  /* ============================
+     SCHOOLS LOGOS SLIDER
+     (faster: 12s loop)
+     ============================ */
+  .schools-slider-animation {
+    animation: schoolsSlider 12s linear infinite;
+    animation-play-state: running;
+  }
+  @keyframes schoolsSlider {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  /* 
+     School logos
+  */
   .school-logo-img {
-    height: 140px;
+    object-fit: cover;
+    width: auto;
+    flex-shrink: 0;
   }
-}
-@media (min-width: 768px) {
+  
   .school-logo-img {
-    height: 150px;
+    height: 120px;
   }
-}
-@media (min-width: 1024px) {
-  .school-logo-img {
-    height: 160px;
+  @media (min-width: 640px) {
+    .school-logo-img {
+      height: 140px;
+    }
   }
-}
-@media (min-width: 1280px) {
-  .school-logo-img {
-    height: 180px;
+  @media (min-width: 768px) {
+    .school-logo-img {
+      height: 150px;
+    }
   }
-}
-@media (min-width: 1440px) {
-  .school-logo-img {
-    height: 200px;
+  @media (min-width: 1024px) {
+    .school-logo-img {
+      height: 160px;
+    }
   }
-}
+  @media (min-width: 1280px) {
+    .school-logo-img {
+      height: 180px;
+    }
+  }
+  @media (min-width: 1440px) {
+    .school-logo-img {
+      height: 200px;
+    }
+  }
+  

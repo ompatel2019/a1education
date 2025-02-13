@@ -1,57 +1,57 @@
-// pages/PricingPage.jsx
-import React from 'react'
+import React from 'react';
 import SeoHelmet from '../components/SeoHelmet';
 
-// ─── Sections ───────────────────────────────────────────────────────────
+// Sections
 import PageTitle from '../components/PageTitle';
 import Pricing from '../components/Pricing';
 import Faqs from '../components/Faqs';
 import CTA from '../components/CTA';
 
-const PricingPage = ({section, sectionName, sectionSubheading, sectionDescriptionHeading, sectionText}) => {
-  // ─── Schema for Pricing Page ──────────────────────────────────────────────
+const PricingPage = ({
+  section,
+  sectionName,
+  sectionSubheading,
+  sectionDescriptionHeading,
+  sectionText
+}) => {
   const jsonLdPricingPage = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Pricing - Business Name",
-    "description": "Customize your homepage description here.",
-    "url": "https://example.com/"
+    "name": "Pricing - A1 Education",
+    "description": "Explore affordable rates for top Year 11 & 12 Economics tutoring in Sydney.",
+    "url": "https://a1education.com.au/pricing"
   };
 
   return (
     <>
       <SeoHelmet
-        title="Pricing - Business Name"
-        description="Customize your homepage description here."
+        title="Pricing - A1 Education"
+        description="Explore our competitive pricing for Year 11 & 12 HSC Economics tutoring in Sydney."
         jsonSchema={jsonLdPricingPage}
       />
 
-      {/* ─── Sections ───────────────────────────────────────────── */}
-      <PageTitle 
-        heading={'Pricing'}
-        subheading={'Explore affordable options with top Economics tutors in Sydney, ensuring quality education that delivers measurable improvements.'}
-        route={'Home / Pricing'}
-      />
-      
-      <Pricing 
-          section={section}
-          sectionName={sectionName}
-          sectionSubheading={sectionSubheading}
-          sectionDescriptionHeading={sectionDescriptionHeading}
-          sectionText={sectionText}
+      <PageTitle
+        heading="Pricing"
+        subheading="Explore affordable options with top Economics tutors in Sydney, ensuring quality education that delivers measurable improvements."
+        route="Home / Pricing"
       />
 
+      <Pricing
+        section={section}
+        sectionName={sectionName}
+        sectionSubheading={sectionSubheading}
+        sectionDescriptionHeading={sectionDescriptionHeading}
+        sectionText={sectionText}
+      />
 
-      <Faqs 
-          section={section}
-          sectionName={sectionName}
-          sectionSubheading={sectionSubheading}
-          sectionDescriptionHeading={sectionDescriptionHeading}
-          sectionText={sectionText}
+      <Faqs
+        section={section}
+        sectionName={sectionName}
+        sectionSubheading={sectionSubheading}
       />
       <CTA />
     </>
   );
 };
 
-export default PricingPage
+export default PricingPage;
