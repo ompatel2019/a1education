@@ -5,7 +5,6 @@ const AboutUs = ({
   sectionName,
   sectionSubheading,
   sectionDescriptionHeading,
-  sectionText,
   placeholder
 }) => {
   const name = 'About Us';

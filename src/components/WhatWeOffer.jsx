@@ -50,7 +50,7 @@ const WhatWeOffer = ({section, sectionName, sectionSubheading}) => {
 
           <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 text-white-0 2xl:gap-8 lg:gap-6 md:gap-4 gap-2'>
             {perks.map((i, k) => (
-              <div key={k} className='bg-primary-0 2xl:p-10 lg:p-8 md:p-6 p-6 flex flex-col 2xl:space-y-8 lg:space-y-6 md:space-y-4 space-y-2 rounded-lg'>
+              <div key={k} className='bg-gradient-to-b-1 2xl:p-10 lg:p-8 md:p-6 p-6 flex flex-col 2xl:space-y-8 lg:space-y-6 md:space-y-4 space-y-2 rounded-lg'>
 
                 <div className='h5'>
                   {i.icon}

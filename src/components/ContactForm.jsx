@@ -95,7 +95,7 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
           </div>
         </div>
 
-        <div className="col-span-2 max-md:col-span-2 bg-primary-0 rounded-lg text-white-0 2xl:p-14 lg:p-12 md:p-10 p-8">
+        <div className="col-span-2 max-md:col-span-2 bg-gradient-to-b-1 rounded-lg text-white-0 2xl:p-14 lg:p-12 md:p-10 p-8">
           <div className="text-left mb-8 space-y-2">
             <div className="space-y-1">
               <h3 className={sectionName}>{name}</h3>

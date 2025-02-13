@@ -6,7 +6,6 @@ const Specialty = ({
   sectionName,
   sectionSubheading,
   sectionDescriptionHeading,
-  sectionText
 }) => {
   const specialties = [
     {
@@ -59,50 +58,47 @@ const Specialty = ({
     'At A1 Education, we focus exclusively on Year 11–12 Economics in Sydney. Our weekly 2-hour lessons go beyond rote learning, with a max of 12 students per class. We focus on critical thinking, essay writing, and real-world applications. Ready to see the difference?';
 
   return (
-    <section className={section}>
-      <h3 className={sectionName}>{name.toUpperCase()}</h3>
-      <h4 className={sectionSubheading}>{subheading}</h4>
-
-      <div className="grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-8 lg:gap-6 gap-4">
-        <div className="flex flex-col max-md:flex-row max-md:space-x-4 max-sm:flex-col max-sm:space-x-0 max-sm:space-y-4 md:space-y-4">
-          {specialties.map((specialty, index) => (
-            <div
-              key={index}
-              className="2xl:p-10 lg:p-8 md:p-6 p-4 border-2 border-black-0 rounded-md 2xl:space-y-8 lg:space-y-6 space-y-4 flex flex-col"
-            >
-              <div className="p-4 border-l-primary-0 border-l-4">
-                <div className={sectionDescriptionHeading}>{specialty.name}</div>
-              </div>
-              <div>{specialty.desc}</div>
-
-              <HashLink
-                smooth
-                to="/contact"
-                className="lg:px-6 px-4 p-2 bg-black-0 text-white-0 hover:bg-purple-400 hover:px-8 hover:text-white-0 w-fit transition-all rounded-sm"
+      <section className={section}>
+        <h3 className={sectionName}>{name.toUpperCase()}</h3>
+        <h4 className={sectionSubheading}>{subheading}</h4>
+        <div className="grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-8 lg:gap-6 gap-4">
+          <div className="flex flex-col max-md:flex-row max-md:space-x-4 max-sm:flex-col max-sm:space-x-0 max-sm:space-y-4 md:space-y-4">
+            {specialties.map((specialty, index) => (
+              <div
+                key={index}
+                className="2xl:p-10 lg:p-8 md:p-6 p-4 border-2 border-black-0 rounded-md 2xl:space-y-8 lg:space-y-6 space-y-4 flex flex-col"
               >
-                Enrol Now
-              </HashLink>
-            </div>
-          ))}
-        </div>
-
-        <div
-          className="col-span-2 bg-primary-0 rounded-lg text-white-0
-          2xl:p-10 lg:p-8 md:p-6 p-4 p flex flex-col justify-between max-md:space-y-6
-          lg:grid-cols-2 lg:grid lg:gap-8 lg:place-content-around"
-        >
-          {perks.map((perk, index) => (
-            <div key={index} className="flex flex-col space-y-2">
-              <div className="flex space-x-2 items-center">
-                {perk.number}
-                <p>{perk.name}</p>
+                <div className="p-4 border-l-primary-0 border-l-4">
+                  <div className={sectionDescriptionHeading}>{specialty.name}</div>
+                </div>
+                <div>{specialty.desc}</div>
+                <HashLink
+                  smooth
+                  to="/contact"
+                  className="lg:px-6 px-4 p-2 bg-black-0 text-white-0 hover:bg-purple-400 hover:px-8 hover:text-white-0 w-fit transition-all rounded-sm"
+                >
+                  Enrol Now
+                </HashLink>
               </div>
-              <p>{perk.desc}</p>
-            </div>
-          ))}
+            ))}
+          </div>
+          <div
+            className="col-span-2 bg-gradient-to-b-1 rounded-lg text-white-0
+            2xl:p-10 lg:p-8 md:p-6 p-4 p flex flex-col justify-between max-md:space-y-6
+            lg:grid-cols-2 lg:grid lg:gap-8 lg:place-content-around"
+          >
+            {perks.map((perk, index) => (
+              <div key={index} className="flex flex-col space-y-2">
+                <div className="flex space-x-2 items-center">
+                  {perk.number}
+                  <p>{perk.name}</p>
+                </div>
+                <p>{perk.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
   );
 };
 

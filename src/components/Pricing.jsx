@@ -88,7 +88,7 @@ const Pricing = ({ section, sectionName, sectionSubheading }) => {
           <div
             key={index}
             className={`2xl:p-10 lg:p-8 p-6 border-black-0 border-2 rounded-lg space-y-4 ${
-              index === 1 ? 'bg-primary-0 text-white-0 border-primary-0' : 'bg-white-0 text-black-0'
+              index === 1 ? 'bg-gradient-to-b-1 text-white-0 border-primary-0' : 'bg-white-0 text-black-0'
             } hover:2xl:py-12 hover:lg:py-10 hover:py-8 transition-all`}
           >
             <h6 className="h6">{tab.header}</h6>

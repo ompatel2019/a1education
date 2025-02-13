@@ -2,7 +2,6 @@ import React from 'react';
 
 const SlidingSchools = ({
   sectionName,
-  sectionSubheading,
   schoolsData
 }) => {
   const name = 'We have students from';

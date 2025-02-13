@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Testimonials = ({
-  section,
   sectionName,
   sectionSubheading,
   testimonialsData
