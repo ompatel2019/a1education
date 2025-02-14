@@ -7,7 +7,7 @@ const CTA = () => {
     "Jumpstart your success with A1 Education’s expert tutoring. Enhance your understanding and boost your scores with our tailored support. Ready to excel? Join us now and see the difference.";
 
   return (
-    <section className="2xl:p-[48px] lg:p-[32px] md:p-[16px] p-[4px] text-white-0 font-generalSans-medium">
+    <section className="2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] text-white-0 font-generalSans-medium">
       <div
         className="bg-primary-0 rounded-lg
           flex flex-col space-y-10 2xl:py-[96px] lg:py-[72px] md:py-[48px] py-[24px]

@@ -180,3 +180,6 @@
     }
   }
   
+.sliding-images-track:hover {
+  animation-play-state: paused;
+}

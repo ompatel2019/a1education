@@ -66,16 +66,16 @@ const Specialty = ({
             {specialties.map((specialty, index) => (
               <div
                 key={index}
-                className="2xl:p-10 lg:p-8 md:p-6 p-4 border-2 border-black-0 rounded-md 2xl:space-y-8 lg:space-y-6 space-y-4 flex flex-col"
+                className="2xl:p-10 lg:p-8 md:p-6 p-4 border-2 border-black-0 rounded-md 2xl:space-y-8 lg:space-y-6 space-y-4 flex flex-col hover:invert transition-all bg-white-0"
               >
-                <div className="p-4 border-l-primary-0 border-l-4">
+                <div className="p-4 border-l-black-0 border-l-4">
                   <div className={sectionDescriptionHeading}>{specialty.name}</div>
                 </div>
                 <div>{specialty.desc}</div>
                 <HashLink
                   smooth
                   to="/contact"
-                  className="lg:px-6 px-4 p-2 bg-black-0 text-white-0 hover:bg-purple-400 hover:px-8 hover:text-white-0 w-fit transition-all rounded-sm"
+                  className="lg:px-6 px-4 p-2 bg-black-0 text-white-0 hover:px-8 hover:text-white-0 w-fit transition-all rounded-sm hover:bg-black-0"
                 >
                   Enrol Now
                 </HashLink>
@@ -83,7 +83,7 @@ const Specialty = ({
             ))}
           </div>
           <div
-            className="col-span-2 bg-gradient-to-b-1 rounded-lg text-white-0
+            className="col-span-2 bg-primary-0 rounded-lg text-white-0
             2xl:p-10 lg:p-8 md:p-6 p-4 p flex flex-col justify-between max-md:space-y-6
             lg:grid-cols-2 lg:grid lg:gap-8 lg:place-content-around"
           >

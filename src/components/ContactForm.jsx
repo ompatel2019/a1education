@@ -6,8 +6,8 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
       icon: <i className="bi bi-envelope"></i>,
       contactType: 'Email',
       contactDesc: 'Send us an email and we will get back to you.',
-      contactInformation: 'hello@a1education.com.au',
-      contactRedirect: 'mailto:hello@a1education.com.au'
+      contactInformation: 'contact@a1education.com.au',
+      contactRedirect: 'mailto:contact@a1education.com.au'
     },
     {
       icon: <i className="bi bi-geo"></i>,
@@ -31,7 +31,7 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
     event.preventDefault();
     setResult('Sending...');
     const formData = new FormData(event.target);
-    formData.append('access_key', '86cbc215-f37c-4ddd-b825-06ae44bc7193');
+    formData.append('access_key', 'b9a14700-64c8-410a-b58b-9f5fc49ee6ad');
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
@@ -60,7 +60,7 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
 
   return (
     <section className={section}>
-      <div className="grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-16 lg:gap-12 md:gap-8 gap-6">
+      <div className="grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-24 lg:gap-16 md:gap-12 gap-8">
         <div className="flex flex-col justify-between max-md:order-2">
           <div className="space-y-8">
             {contacts.map((i, k) => (
@@ -68,11 +68,11 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
                 <div className="h5 rounded-sm border-gray-500">{i.icon}</div>
 
                 <div className="space-y-2">
-                  <p>{i.contactType}</p>
+                  <p className='font-generalSans-semibold'>{i.contactType}</p>
                   <p className="font-generalSans-medium">{i.contactDesc}</p>
 
                   <a target="_blank" rel="noreferrer" href={i.contactRedirect}>
-                    <p className="mt-2 font-generalSans-semibold">
+                    <p className="mt-2 font-generalSans-bold">
                       {i.contactInformation}
                     </p>
                   </a>
@@ -81,21 +81,9 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
             ))}
           </div>
 
-          <div className="flex space-x-5 h6 max-md:hidden">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i className="bi bi-instagram"></i>
-            </a>
-            <a href="https://google.com" target="_blank" rel="noopener noreferrer">
-              <i className="bi bi-google"></i>
-            </a>
-          </div>
         </div>
 
-        <div className="col-span-2 max-md:col-span-2 bg-gradient-to-b-1 rounded-lg text-white-0 2xl:p-14 lg:p-12 md:p-10 p-8">
+        <div className="col-span-2 max-md:col-span-2 bg-primary-0 rounded-xl text-white-0 2xl:p-20 lg:p-16 md:p-12 p-10">
           <div className="text-left mb-8 space-y-2">
             <div className="space-y-1">
               <h3 className={sectionName}>{name}</h3>
@@ -168,7 +156,7 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
                 id="message"
                 name="message"
                 className="2xl:p-3 bg-transparent rounded-md border-2 border-c4-0 py-2 px-4 w-full text-c4-0 text-base transition-all hover:pl-8"
-                placeholder="I'd love a blueprint for my studies!"
+                placeholder="I'd love to get a free trial for Year 12 Economics!"
                 rows={8}
                 required
                 autoComplete="off"

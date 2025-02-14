@@ -22,6 +22,9 @@ import school5 from './assets/school5.webp'
 import school6 from './assets/school6.webp'
 import school7 from './assets/school7.webp'
 import school8 from './assets/school8.webp'
+import school9 from './assets/school9.jpg'
+import school10 from './assets/school10.png'
+import school11 from './assets/school11.png'
 
 // -- Lazy loaded pages --
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -137,6 +140,21 @@ const schoolsData = [
     school: school8,
     schoolName: 'St Marys Senior High School',
     alt: 'St Marys Senior High School logo',
+  },
+  {
+    school: school9,
+    schoolName: 'William Clarke College',
+    alt: 'William Clarke College logo',
+  },
+  {
+    school: school10,
+    schoolName: 'William Clarke College',
+    alt: 'William Clarke College logo',
+  },
+  {
+    school: school11,
+    schoolName: 'Penrith High School',
+    alt: 'Penrith High School logo',
   },
 ];
 

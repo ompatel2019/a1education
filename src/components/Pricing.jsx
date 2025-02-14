@@ -25,24 +25,14 @@ const Pricing = ({ section, sectionName, sectionSubheading }) => {
       price: '$30/hour',
       perks: ['$600 p/term', ...commonPerks]
     },
-    {
-      header: 'Billed Yearly (Save 10%)',
-      price: '$27/hour',
-      perks: ['$540 p/term', ...commonPerks]
-    }
   ];
 
   const year12pricing = [
     {
       header: 'Billed Termly',
       price: '$35/hour',
-      perks: ['$700 p/term', ...commonPerks]
+      perks: ['$700 p/term', 'Regular Assessments with feedback', ...commonPerks]
     },
-    {
-      header: 'Billed Yearly (Save 11%)',
-      price: '$31/hour',
-      perks: ['$630 p/term', ...commonPerks]
-    }
   ];
 
   useEffect(() => {
@@ -83,7 +73,7 @@ const Pricing = ({ section, sectionName, sectionSubheading }) => {
       </div>
 
       {/* Pricing Cards */}
-      <div className="grid grid-cols-2 max-md:grid-cols-1 gap-8 mt-6 h7 2xl:px-[200px] lg:px-[120px] md:px-[64px] sm:px-[32px]">
+      <div className="max-md:grid-cols-1 gap-8 mt-6 h7 2xl:px-[480px] lg:px-[320px] md:px-[196px]">
         {pricingTab.map((tab, index) => (
           <div
             key={index}
@@ -109,7 +99,7 @@ const Pricing = ({ section, sectionName, sectionSubheading }) => {
 
             <HashLink smooth to="/contact">
               <div
-                className={`mt-5 cursor-pointer text-center w-full rounded-md p-2 ${
+                className={`mt-5 cursor-pointer text-center w-full rounded-md p-3 ${
                   index === 0 ? 'bg-primary-0 text-white-0' : 'bg-white-0 text-black-0'
                 }`}
               >

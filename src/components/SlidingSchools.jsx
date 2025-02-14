@@ -8,7 +8,7 @@ const SlidingSchools = ({
 
   return (
     <section
-      className={`bg-primary-0 text-center text-white-0
+      className={`bg-white-0 text-center text-black-0
         2xl:py-[120px] lg:py-[96px] md:py-[64px] sm:py-[48px] py-[32px]
         2xl:space-y-12 lg:space-y-10 md:space-y-8 sm:space-y-6 space-y-4
         font-generalSans-medium`}

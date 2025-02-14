@@ -23,7 +23,7 @@ const Navbar = ({ navbarLinks }) => {
               <img
                 src={logo}
                 alt="A1 Education main logo"
-                className="w-[152px] h-[64px]"
+                className="lg:w-[152px] lg:h-[64px] md:w-[96px] md:h-[40px] w-[64px] h-[26px]"
                 loading="lazy"
               />
             </HashLink>

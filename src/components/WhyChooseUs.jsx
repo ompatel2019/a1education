@@ -25,11 +25,11 @@ const WhyChooseUs = ({section, sectionName, sectionText}) => {
   return (
     <>
         <section className={section}>
-          <div className='sm:grid sm:grid-cols-3 max-sm:space-y-4 2xl:gap-8 lg:gap-6 gap-4'>
-            <h3 className={`${sectionName} col-span-1`}>
+          <div className='grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 max-sm:space-y-4 2xl:gap-8 lg:gap-6 gap-4'>
+            <h3 className={`${sectionName}`}>
               {name.toUpperCase()}
             </h3>
-            <div className='col-span-2 bg-gradient-to-b-1 2xl:p-10 lg:p-8 md:p-6 p-4 rounded-lg text-white-0 hover:translate-y-[-10px] transition-all space-y-4'>
+            <div className='col-span-2 max-lg:col-span-1 bg-primary-0 2xl:p-10 lg:p-8 md:p-6 p-4 rounded-lg text-white-0 space-y-4'>
               <h4 className={`h7 font-generalSans-medium`}>
                 {subheading}
               </h4>
@@ -40,7 +40,7 @@ const WhyChooseUs = ({section, sectionName, sectionText}) => {
           </div>
           <div className='grid grid-cols-3 2xl:gap-8 lg:gap-6 gap-4 max-lg:grid-cols-2 max-sm:grid-cols-1'>
             {stats.map((stat, index) => (
-              <div key={index} className='md:text-right text-left bg-primary-0 text-white-0 2xl:p-10 lg:p-8 md:p-6 p-4 rounded-md 2xl:space-y-8 lg:space-y-6 space-y-4 hover:translate-y-[-10px] transition-all'>
+              <div key={index} className='md:text-right text-left bg-primary-0 text-white-0 2xl:p-10 lg:p-8 md:p-6 p-4 rounded-md 2xl:space-y-8 lg:space-y-6 space-y-4'>
                 <p className={`${sectionText} font-generalSans-medium`}>{stat.statName}</p>
                 <h5 className={`h3 max-md:text-4xl`}>{stat.stat}</h5>
                 <p className='border-t-[3px] border-t-white-0 pt-4 mt-4'>
