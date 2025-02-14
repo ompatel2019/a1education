@@ -11,7 +11,7 @@
     display: flex;
     gap: 2rem; /* equivalent to gap-8 */
     width: max-content; /* force width to content size */
-    animation: heroSlider 3.75s linear infinite;  /* 25% quicker */
+    animation: heroSlider 7.5s linear infinite;  /* 25% quicker */
   }
   @keyframes heroSlider {
     0% {
