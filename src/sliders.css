@@ -112,7 +112,7 @@
      (now 9s loop)
      ============================ */
   .schools-slider-animation {
-    animation: schoolsSlider 9s linear infinite;  /* 25% quicker */
+    animation: schoolsSlider 10s linear infinite;  /* 25% quicker */
     animation-play-state: running;
   }
   @keyframes schoolsSlider {
@@ -160,7 +160,7 @@
   }
   .logos-slide {
     display: inline-block;
-    animation: marquee 10s linear infinite;  /* 25% quicker */
+    animation: marquee 13s linear infinite;  /* 25% quicker */
   }
   @keyframes marquee {
     0% {
