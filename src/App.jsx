@@ -25,6 +25,7 @@ import school8 from './assets/school8.webp'
 import school9 from './assets/school9.jpg'
 import school10 from './assets/school10.png'
 import school11 from './assets/school11.png'
+import placeholder from './assets/placeholder.png'
 
 // -- Lazy loaded pages --
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -46,11 +47,18 @@ const sectionText = 'p';
 // ─── Data Arrays & Props ───────────────────────────────────────────────
 
 // Hero images
+// const heroImages = [
+//   { image: hero1, imageAlt: 'High school students engaged in study #1' },
+//   { image: hero2, imageAlt: 'High school students engaged in study #2' },
+//   { image: hero3, imageAlt: 'High school students engaged in study #3' },
+//   { image: hero4, imageAlt: 'High school students engaged in study #4' },
+// ];
+
 const heroImages = [
-  { image: hero1, imageAlt: 'High school students engaged in study #1' },
-  { image: hero2, imageAlt: 'High school students engaged in study #2' },
-  { image: hero3, imageAlt: 'High school students engaged in study #3' },
-  { image: hero4, imageAlt: 'High school students engaged in study #4' },
+  { image: placeholder, imageAlt: 'High school students engaged in study #1' },
+  { image: placeholder, imageAlt: 'High school students engaged in study #2' },
+  { image: placeholder, imageAlt: 'High school students engaged in study #3' },
+  { image: placeholder, imageAlt: 'High school students engaged in study #4' },
 ];
 
 // Testimonials

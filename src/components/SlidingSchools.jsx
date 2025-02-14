@@ -28,6 +28,7 @@ const SlidingSchools = ({ sectionName, schoolsData }) => {
                 src={item.school}
                 alt={item.alt}
                 loading="lazy"
+                className='lg:h-[176px] md:h-[120px] h-[96px]'
               />
               <p>{item.schoolName}</p>
             </div>
@@ -40,6 +41,7 @@ const SlidingSchools = ({ sectionName, schoolsData }) => {
                 src={item.school}
                 alt={item.alt}
                 loading="lazy"
+                className='lg:h-[176px] md:h-[120px] h-[96px]'
               />
               <p>{item.schoolName}</p>
             </div>

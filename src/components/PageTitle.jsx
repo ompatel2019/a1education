@@ -13,7 +13,7 @@ const PageTitle = ({ heading, subheading, route }) => {
             <h5 className="h5 font-generalSans-semibold">{route}</h5>
             <h1 className="h1 font-generalSans-bold 2xl:px-[200px]">{heading}</h1>
           </div>
-          <p className="p">{subheading}</p>
+          <p className="h6">{subheading}</p>
         </div>
       </div>
     </section>

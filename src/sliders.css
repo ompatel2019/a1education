@@ -1,81 +1,82 @@
 /* ============================
    HERO IMAGES SLIDER
-   (super fast: 5s loop)
+   (now 3.75s loop; pause on hover)
    ============================ */
-   .hero-slider-animation {
-    animation: heroSlider 5s linear infinite;
-    animation-play-state: running;
+   .hero-slider-container {
+    overflow: hidden;
+    width: 100%;
+    margin-top: 8px; /* same as before */
+  }
+  .hero-slider-track {
+    display: flex;
+    gap: 2rem; /* equivalent to gap-8 */
+    width: max-content; /* force width to content size */
+    animation: heroSlider 3.75s linear infinite;  /* 25% quicker */
   }
   @keyframes heroSlider {
     0% {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%); /* with 2 identical sets in track */
+      transform: translateX(-50%); /* moves exactly one set of images */
     }
   }
+  /* Pause hero slider on hover */
+  .hero-slider-container:hover .hero-slider-track {
+    animation-play-state: paused;
+  }
   
-  /* 
-     Hero images:
-     - 400px tall at ≥1440px 
-     - Gradually scale down between 1280px, 1024px, 768px, 640px
-  */
   .hero-slide-img {
     object-fit: cover;
     width: auto;
     flex-shrink: 0;
-  }
-  
-  /* base (smallest) – phone-ish */
-  .hero-slide-img {
-    height: 280px; 
+    /* sizing (unchanged) */
+    height: 280px;
   }
   @media (min-width: 640px) {
-    .hero-slide-img {
-      height: 320px;
-    }
+    .hero-slide-img { height: 320px; }
   }
   @media (min-width: 768px) {
-    .hero-slide-img { 
-      height: 360px;
-    }
+    .hero-slide-img { height: 360px; }
   }
   @media (min-width: 1024px) {
-    .hero-slide-img {
-      height: 380px;
-    }
+    .hero-slide-img { height: 380px; }
   }
   @media (min-width: 1280px) {
-    .hero-slide-img {
-      height: 400px;
-    }
+    .hero-slide-img { height: 400px; }
   }
   @media (min-width: 1440px) {
-    .hero-slide-img {
-      height: 400px;
-    }
+    .hero-slide-img { height: 400px; }
   }
   
   /* ============================
      TESTIMONIALS SLIDER
-     (faster: 12s loop)
+     (now 11.25s loop)
      ============================ */
-  .testimonials-slider-animation {
-    animation: testimonialsSlider 12s linear infinite;
-    animation-play-state: running;
+  .testimonials-slider-container {
+    overflow: hidden;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .testimonials-slider-track {
+    display: flex;
+    gap: 2rem;
+    width: max-content; /* based on rendered content */
+    animation: testimonialsSlider 11.25s linear infinite; /* 25% quicker */
   }
   @keyframes testimonialsSlider {
     0% {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%);
+      transform: translateX(-50%); /* moves one full set */
     }
   }
+  .testimonials-slider-container:hover .testimonials-slider-track { 
+    animation-play-state: paused;
+  }
   
-  /* 
-     Testimonial card sizing
-  */
+  /* Testimonial card sizing (unchanged) */
   .testimonial-card {
     flex-shrink: 0;
     display: flex;
@@ -86,51 +87,32 @@
     color: #000;
     border-radius: 8px;
     box-sizing: border-box;
-  }
-  
-  .testimonial-card {
     width: 85vw; 
     padding: 24px;
     height: auto;
   }
   @media (min-width: 640px) {
-    .testimonial-card {
-      width: 60vw;
-      padding: 32px;
-    }
+    .testimonial-card { width: 60vw; padding: 32px; }
   }
   @media (min-width: 768px) {
-    .testimonial-card {
-      width: 45vw;
-      padding: 36px;
-    }
+    .testimonial-card { width: 45vw; padding: 36px; }
   }
   @media (min-width: 1024px) {
-    .testimonial-card {
-      width: 40vw;
-      padding: 36px;
-    }
+    .testimonial-card { width: 40vw; padding: 36px; }
   }
   @media (min-width: 1280px) {
-    .testimonial-card {
-      width: 35vw;
-      padding: 40px;
-    }
+    .testimonial-card { width: 35vw; padding: 40px; }
   }
   @media (min-width: 1440px) {
-    .testimonial-card {
-      width: 480px;
-      height: 370px;
-      padding: 48px;
-    }
+    .testimonial-card { width: 480px; padding: 48px; }
   }
   
   /* ============================
      SCHOOLS LOGOS SLIDER
-     (faster: 12s loop)
+     (now 9s loop)
      ============================ */
   .schools-slider-animation {
-    animation: schoolsSlider 12s linear infinite;
+    animation: schoolsSlider 9s linear infinite;  /* 25% quicker */
     animation-play-state: running;
   }
   @keyframes schoolsSlider {
@@ -141,93 +123,68 @@
       transform: translateX(-50%);
     }
   }
-  
-  /* 
-     School logos
-  */
   .school-logo-img {
     object-fit: cover;
     width: auto;
     flex-shrink: 0;
-  }
-  
-  .school-logo-img {
     height: 120px;
   }
   @media (min-width: 640px) {
-    .school-logo-img {
-      height: 140px;
-    }
+    .school-logo-img { height: 140px; }
   }
   @media (min-width: 768px) {
-    .school-logo-img {
-      height: 150px;
-    }
+    .school-logo-img { height: 150px; }
   }
   @media (min-width: 1024px) {
-    .school-logo-img {
-      height: 160px;
-    }
+    .school-logo-img { height: 160px; }
   }
   @media (min-width: 1280px) {
-    .school-logo-img {
-      height: 180px;
-    }
+    .school-logo-img { height: 180px; }
   }
   @media (min-width: 1440px) {
-    .school-logo-img {
-      height: 200px;
-    }
+    .school-logo-img { height: 200px; }
   }
   
-.sliding-images-track:hover {
-  animation-play-state: paused;
-}
-
-/* We rename to 'marquee' for clarity, but you can keep 'slide' if you want. */
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
+  .sliding-images-track:hover {
+    animation-play-state: paused;
   }
-  /* Shift half of the total width, so the second set lines up exactly */
-  100% {
-    transform: translateX(-50%);
+  
+  /* ============================
+     LOGOS MARQUEE (for schools)
+     (now 18.75s loop)
+     ============================ */
+  .logos {
+    overflow: hidden;      
+    white-space: nowrap;   
+    padding: 48px 0;       
   }
-}
-
-.logos {
-  overflow: hidden;      /* hide overflow so we only see one 'set' width at a time */
-  white-space: nowrap;   /* force items to remain in one line */
-  padding: 48px 0;       /* optional top/bottom spacing */
-}
-
-/* The container that holds two sets of items side by side. */
-.logos-slide {
-  display: inline-block;
-  animation: marquee 25s linear infinite; 
-  /* 10s is an example; tweak the duration to taste */
-}
-
-/* Make each school block inline so they line up horizontally */
-.logos-slide > div {
-  display: inline-block;
-  vertical-align: middle;   /* keeps them aligned in the center */
-  margin-right: 5rem;       /* horizontal space between each “card” */
-  text-align: center;       /* center the content inside each block */
-}
-
-/* Remove margin on the very last block if you prefer no trailing space */
-.logos-slide > div:last-child {
-  margin-right: 0;
-}
-
-/* Size the images however you like */
-.logos-slide img {
-  height: 150px;
-  display: block;
-  margin: 0 auto; /* center the image horizontally */
-}
-
-.logos:hover .logos-slide { 
-  animation-play-state: paused;
-}
+  .logos-slide {
+    display: inline-block;
+    animation: marquee 10s linear infinite;  /* 25% quicker */
+  }
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  .logos-slide > div {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5rem;
+    text-align: center;
+  }
+  .logos-slide > div:last-child {
+    margin-right: 0;
+  }
+  .logos-slide img {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .logos:hover .logos-slide { 
+    animation-play-state: paused;
+  }
+  

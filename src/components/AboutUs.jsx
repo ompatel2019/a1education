@@ -47,7 +47,7 @@ const AboutUs = ({
           <img
             src={aboutimg}
             alt="Tutoring session demonstrating individualized attention"
-            className="rounded-md w-[100%] h-auto object-cover"
+            className="rounded-md max-h-[480px] w-[100%] h-auto object-cover"
             loading="lazy"
           />
         </div>
