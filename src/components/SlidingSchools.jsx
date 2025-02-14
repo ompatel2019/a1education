@@ -1,10 +1,7 @@
 import React from 'react';
 
-const SlidingSchools = ({
-  sectionName,
-  schoolsData
-}) => {
-  const name = 'We have students from';
+const SlidingSchools = ({ sectionName, schoolsData }) => {
+  const heading = 'We have students from';
 
   return (
     <section
@@ -13,31 +10,35 @@ const SlidingSchools = ({
         2xl:space-y-12 lg:space-y-10 md:space-y-8 sm:space-y-6 space-y-4
         font-generalSans-medium`}
     >
+      {/* Section Heading */}
       <div className="responsivePad">
-        <h3 className={sectionName}>{name.toUpperCase()}</h3>
+        <h3 className={sectionName}>
+          {heading.toUpperCase()}
+        </h3>
       </div>
 
-      <div className="schools-slider-container overflow-hidden w-full mt-8">
-        <div className="schools-slider-track flex schools-slider-animation gap-16 justify-center items-center p font-generalSans-semibold">
-          {/* Original set */}
+      {/* Outer wrapper (clips overflow) */}
+      <div className="logos">
+        {/* Inner "marquee" container (two sets side by side) */}
+        <div className="logos-slide font-generalSans-semibold">
+          {/* First set of schools */}
           {schoolsData.map((item, index) => (
-            <div key={index} className="flex-shrink-0 space-y-4 text-center">
+            <div key={index}>
               <img
                 src={item.school}
                 alt={item.alt}
-                className="school-logo-img mx-auto"
                 loading="lazy"
               />
               <p>{item.schoolName}</p>
             </div>
           ))}
-          {/* Duplicate set */}
+
+          {/* Duplicate set for the continuous scroll */}
           {schoolsData.map((item, index) => (
-            <div key={`dup-${index}`} className="flex-shrink-0 space-y-4 text-center">
+            <div key={`dup-${index}`}>
               <img
                 src={item.school}
                 alt={item.alt}
-                className="school-logo-img mx-auto"
                 loading="lazy"
               />
               <p>{item.schoolName}</p>

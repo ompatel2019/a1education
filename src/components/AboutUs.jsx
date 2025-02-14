@@ -29,6 +29,10 @@ const AboutUs = ({
       statHeader: '90+ ATAR',
       statDesc: 'Karan achieved an excellent ATAR and received Band 6 in Economics'
     }, 
+    {
+      statHeader: '90+ ATAR',
+      statDesc: 'Karan achieved an excellent ATAR and received Band 6 in Economics'
+    }, 
   ];
 
   return (
@@ -37,13 +41,13 @@ const AboutUs = ({
     >
       <h3 className={sectionName}>{name.toUpperCase()}</h3>
 
-      <div className='grid grid-cols-3 gap-8 max-md:grid-cols-1'>
+      <div className='grid grid-cols-3 gap-8 max-md:grid-cols-1 '>
 
-        <div className="flex col-span-1">
+        <div className="flex col-span-1 ">
           <img
             src={aboutimg}
             alt="Tutoring session demonstrating individualized attention"
-            className="rounded-md"
+            className="rounded-md w-[100%] h-auto object-cover"
             loading="lazy"
           />
         </div>
@@ -60,9 +64,9 @@ const AboutUs = ({
         </div>
       </div>
 
-      <div className="flex justify-around items-center 2xl:gap-10 lg:gap-8 md:gap-6 gap-4 max-sm:flex-col max-md:grid-cols-2 max-md:grid">
+      <div className="flex justify-around items-center 2xl:gap-10 lg:gap-8 md:gap-6 gap-4 max-sm:flex-col max-md:grid-cols-2 max-md:grid text-black-0 ">
         {perks.map((perk, index) => (
-          <div key={index} className="flex flex-col border-4 rounded-2xl 2xl:p-10 lg:p-8 md:p-6 sm:p-4 p-2 2xl:py-20 lg:py-16 md:py-12 sm:py-10 py-6 max-md:col-span-1">
+          <div key={index} className="flex flex-col rounded-md 2xl:p-8 lg:p-6 md:p-4 sm:p-2 p-1 2xl:py-16 lg:py-12 md:py-10 sm:py-6 py-4 max-md:col-span-1 bg-white-0">
             <h5 className='h4 text-center'>{perk.statHeader}</h5>
             <p className='p text-center'>{perk.statDesc}</p>
           </div>
