@@ -26,34 +26,32 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
     },
   ];
 
-  const [statusMessage, setStatusMessage] = useState("");
+  const [result, setResult] = useState('');
 
-  // Clears the status message after 3 seconds
-  const clearStatus = () => {
-    setTimeout(() => {
-      setStatusMessage("");
-    }, 3000);
-  };
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult('Sending...');
+    const formData = new FormData(event.target);
+    formData.append('access_key', 'b9a14700-64c8-410a-b58b-9f5fc49ee6ad');
 
-  // Handle form submission via AJAX
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevents page reload
-    const form = e.target;
-    const formData = new FormData(form);
-
-    fetch("/", {
-      method: "POST",
-      body: formData,
-    })
-      .then(() => {
-        setStatusMessage("Form submission successful!");
-        form.reset();
-        clearStatus();
-      })
-      .catch((error) => {
-        setStatusMessage(`Form submission failed: ${error}`);
-        clearStatus();
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
       });
+
+      const data = await response.json();
+      if (data.success) {
+        setResult('Form Submitted Successfully');
+        event.target.reset();
+      } else {
+        console.error('Error submitting form:', data);
+        setResult(data.message);
+      }
+    } catch (error) {
+      console.error('Network Error:', error);
+      setResult('Error submitting form. Please try again later.');
+    }
   };
 
   const name = 'Contact Form';
@@ -92,11 +90,9 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
               <p>{formSubheading}</p>
             </div>
             <form
-              name="contact" 
-              method="post" 
-              data-netlify="true" 
-              onSubmit={handleSubmit}
+              onSubmit={onSubmit}
               className="space-y-4 text-base"
+              method="POST"
               aria-label="Contact Form"
             >
               {/* NAME + EMAIL */}
@@ -160,15 +156,11 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
                 />
               </div>
               {/* SUBMIT BUTTON */}
-              <div
-                className="turnParent flex p-3 rounded-md text-black bg-white px-8 w-full items-center space-x-1 text-base
-                  hover:bg-c3 hover:px-12 justify-center hover:bg-purple-400 hover:text-white transition-all"
-              >
-                <button type="submit" aria-label="Submit contact form" className="focus:outline-none p">
-                  Send Inquiry
-                </button>
-              </div>
-              {statusMessage && <p>{statusMessage}</p>}
+              <button type="submit" aria-label="Submit contact form" className="focus:outline-none p flex p-3 rounded-md text-black bg-white px-8 w-full items-center space-x-1 text-base
+                hover:bg-c3 hover:px-12 justify-center hover:bg-purple-400 hover:text-white transition-all">
+                Send Inquiry
+              </button>
+              {result && <p className="mt-2">{result}</p>}
             </form>
           </div>
         </div>

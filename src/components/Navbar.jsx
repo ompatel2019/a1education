@@ -8,11 +8,11 @@ import AnimateOnScroll from '../tools/AnimateOnScroll';
 const Navbar = ({ navbarLinks }) => {
   const [showMenu, setShowMenu] = useState(false);
 
-  const toggleMenu = () => setShowMenu(prev => !prev);
+  const toggleMenu = () => setShowMenu((prev) => !prev);
 
   return (
     <>
-      <AnimateOnScroll className='fade-in fade-down'>
+      <AnimateOnScroll className="fade-in fade-down">
         <header
           className={`2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] py-4 flex justify-between font-generalSans-medium items-center sticky top-0 z-50 ${
             showMenu ? 'bg-gray max-md:justify-end' : 'bg-white'
@@ -28,6 +28,7 @@ const Navbar = ({ navbarLinks }) => {
               />
             </HashLink>
           )}
+
           {/* Desktop Navigation */}
           <nav role="navigation" aria-label="Primary" className="hidden md:flex">
             <ul className="flex space-x-3 items-center">
@@ -53,6 +54,7 @@ const Navbar = ({ navbarLinks }) => {
               )}
             </ul>
           </nav>
+
           {/* Mobile Hamburger Button */}
           <button
             onClick={toggleMenu}
@@ -61,7 +63,7 @@ const Navbar = ({ navbarLinks }) => {
             className="md:hidden focus:outline-none"
           >
             {showMenu ? (
-              <RxCross2 className="w-6 h-6 text-black" />
+              <></>
             ) : (
               <FiMenu className="w-6 h-6 text-black" />
             )}
@@ -72,14 +74,28 @@ const Navbar = ({ navbarLinks }) => {
       {/* Mobile Menu Overlay */}
       <div
         className={`
-          fixed inset-0 
-          bg-grey text-black h4 font-generalSans-medium 
-          flex flex-col items-center justify-center 
+          fixed inset-0
+          bg-primary text-white h1 px-4 font-generalSans-medium
+          flex flex-col items-left justify-center
           transition-opacity duration-300
-          ${showMenu ? 'opacity-95 pointer-events-auto z-40' : 'opacity-0 pointer-events-none z-[-1]'}
+          ${
+            showMenu
+              ? 'opacity-100 pointer-events-auto z-40'
+              : 'opacity-0 pointer-events-none z-[-1]'
+          }
         `}
         aria-hidden={!showMenu}
       >
+        {/* 
+          1. Close Icon in Overlay
+          - Make it bigger by wrapping in <h2> or using text-2xl, etc.
+        */}
+        <div className="absolute top-4 right-4">
+          <h2 onClick={toggleMenu} className="cursor-pointer">
+            <RxCross2 className="w-10 h-10 text-white " />
+          </h2>
+        </div>
+
         <nav role="navigation" aria-label="Mobile menu">
           <ul className="flex flex-col space-y-6">
             {navbarLinks.map((link, index) => (
