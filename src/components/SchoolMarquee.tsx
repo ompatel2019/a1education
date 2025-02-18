@@ -17,6 +17,21 @@ import school11 from "../assets/school11.png";
 
 const schoolsData = [
   {
+    name: school9,
+    schoolName: "Macquarie Fields High School",
+    alt: "Macquarie Fields High School logo",
+  },
+  {
+    name: school10,
+    schoolName: "William Clarke College",
+    alt: "William Clarke College logo",
+  },
+  {
+    name: school11,
+    schoolName: "Penrith Selective High School",
+    alt: "Penrith High School logo",
+  },
+  {
     name: school1,
     schoolName: "Strathfield Girls High School",
     alt: "Strathfield Girls High School logo",
@@ -56,25 +71,9 @@ const schoolsData = [
     schoolName: "St Marys Senior High School",
     alt: "St Marys Senior High School logo",
   },
-  {
-    name: school9,
-    schoolName: "William Clarke College",
-    alt: "William Clarke College logo",
-  },
-  {
-    name: school10,
-    schoolName: "William Clarke College",
-    alt: "William Clarke College logo",
-  },
-  {
-    name: school11,
-    schoolName: "Penrith High School",
-    alt: "Penrith High School logo",
-  },
 ];
 
-const firstRow = schoolsData.slice(0, schoolsData.length / 2);
-const secondRow = schoolsData.slice(schoolsData.length / 2);
+const firstRow = schoolsData;
 
 interface SchoolCardProps {
   name: string; // With Vite, imported assets are typically treated as strings (URLs)
@@ -94,7 +93,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ name, schoolName, alt }) => {
         <div className="flex flex-col justify-center items-center">
           {/* Use a regular <img> tag to render the image */}
           <img src={name} alt={alt} className="mb-2 lg:h-[176px] md:h-[120px] h-[96px]" />
-          <figcaption className="font-medium dark:text-white">
+          <figcaption className="font-medium dark:text-white text-center">
             {schoolName}
           </figcaption>
         </div>

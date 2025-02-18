@@ -38,9 +38,48 @@ const reviews = [
     sig: "20% Improvement in Marks - Macquarie Fields High School",
     body: "Starting Year 11 with a basic understanding of economics, I advanced my knowledge after joining A1 Education. Karan’s detailed feedback and round-the-clock support via various channels significantly improved my short answer and essay writing. Their resources and guidance transformed my exam performance and boosted my confidence. I highly recommend their tutoring services.",
   },
+  // New Reviews
+  {
+    name: "Aryan Adlakha",
+    sig: "Hills Adventist College - Class of '25",
+    body: "Before A1 Education, my economics experience was depressing with poor writing and understanding. After a few lessons with Karan, my grasp of economic concepts improved, and my marks rose. Karan’s engaging, supportive approach makes learning enjoyable. He’s always available for help and guidance, making a real difference in my studies.",
+  },
+  {
+    name: "Smayan Guru",
+    sig: "Hills Adventist College - Class of '25",
+    body: "Before A1 Education, I struggled with economic terminology and detailed exam responses. Karan’s comprehensive resources—past papers, recordings, and homework—transformed my approach. His unique teaching style prioritizes understanding over note-taking, significantly boosting my grasp of HSC Economics. I highly recommend A1 Education for improved academic performance.",
+  },
+  {
+    name: "Aarav Patel",
+    sig: "St Marys Senior High School - Class of '25",
+    body: "Before A1 Education, my essay writing was dismal—I even scored 8/20 on a preliminary essay. Karan’s prompt support, detailed feedback, and valuable resources transformed my writing, with my scores rising to 90%. His guidance clarified key concepts, making a huge difference. I highly recommend A1 Education.",
+  },
+  {
+    name: "Prateek Mandalapu",
+    sig: "William Clarke College - Class of '25",
+    body: "Before tutoring with Karan, I struggled to grasp deep economic concepts and apply them in essays and short answers. After joining A1 Education, Karan’s engaging lessons kept me ahead of school content and reduced my revision time. His teaching significantly improved my understanding. I highly recommend his tutoring.",
+  },
+  {
+    name: "Vraj Bhatt",
+    sig: "St Marys Senior High School - Class of '25",
+    body: "Karan’s holistic approach at A1 Education transformed my academic path in Economics. His clear explanations, detailed feedback, and well-organized lessons improved my essay writing and overall results. With a variety of resources and prompt support, Karan ensures every student succeeds. I truly appreciate his commitment.",
+  },
+  {
+    name: "Siddharth Chinnanelli",
+    sig: "St Marys Senior High School - Class of '25",
+    body: "Starting Year 12 with A1 Education was a game-changer. Karan’s consistent feedback and key essay tips helped me secure my first ‘A’ after struggling in Year 11. His mentorship improved my marks and writing skills, making a real impact on my HSC journey. I highly recommend his tutoring.",
+  },
+  {
+    name: "Vivaan Brahmbhatt",
+    sig: "Hills Adventis College - Class of '25",
+    body: "Joining A1 Education drastically improved my grasp of Economics. With Karan’s prompt support, I quickly ranked 2nd in my first assessment. His fast responses and engaging classes made learning enjoyable and effective. I now have a solid understanding and look forward to every lesson.",
+  },
+  {
+    name: "Shuban Permalla",
+    sig: "The Ponds High School - Class of '25",
+    body: "A1 Education has deepened my understanding of Economics. Karan’s detailed explanations and engaging storytelling clarify each topic. His quick responses, excellent resources, and strong support network have streamlined my revision process. I highly recommend his tutoring for anyone seeking improved academic performance.",
+  },
 ];
-
-
 
 const firstRow = reviews.slice(0, reviews.length / 2);
 const secondRow = reviews.slice(reviews.length / 2);
@@ -58,8 +97,7 @@ const ReviewCard = ({
     <figure
       className={cn(
         "relative h-full 2xl:w-[412px] lg:w-96 md:w-80 w-72 cursor-pointer overflow-hidden rounded-lg border p-6 py-8 text-left font-generalSans-medium text-black",
-        // light styles
-        "border-gray-950/[.1] bg-white ",
+        "border-gray-950/[.1] bg-white",
       )}
     >
       <div className="flex flex-row items-center gap-2">

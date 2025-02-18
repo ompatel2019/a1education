@@ -3,28 +3,21 @@ import { Marquee } from "@/components/magicui/marquee";
 import React from "react";
 
 // Import your assets
-import hero1 from '../assets/hero1.webp'
-import hero2 from '../assets/hero2.webp'
 import hero3 from '../assets/hero3.webp'
-import hero4 from '../assets/hero4.webp'
-import hero5 from '../assets/hero5.webp'
 import hero6 from '../assets/hero6.webp'
 import hero7 from '../assets/hero7.webp'
 import hero8 from '../assets/hero8.webp'
+import hero9 from '../assets/hero9.webp'
 
 const heroImages = [
-    { name: hero1, alt: 'High school students engaged in study #1' },
-    { name: hero2, alt: 'High school students engaged in study #2' },
     { name: hero3, alt: 'High school students engaged in study #3' },
-    { name: hero4, alt: 'High school students engaged in study #4' },
-    { name: hero5, alt: 'High school students engaged in study #4' },
-    { name: hero6, alt: 'High school students engaged in study #4' },
-    { name: hero7, alt: 'High school students engaged in study #4' },
-    { name: hero8, alt: 'High school students engaged in study #4' },
+    { name: hero6, alt: 'High school students engaged in study #6' },
+    { name: hero7, alt: 'High school students engaged in study #7' },
+    { name: hero8, alt: 'High school students engaged in study #8' },
+    { name: hero9, alt: 'High school students engaged in study #9' },
   ];  
 
-const firstRow = heroImages.slice(0, heroImages.length / 2);
-const secondRow = heroImages.slice(heroImages.length / 2);
+const firstRow = heroImages;
 
 interface ImageCardProps {
   name: string;

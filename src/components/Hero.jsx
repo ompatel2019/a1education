@@ -4,7 +4,7 @@ import AnimateOnScroll from '../tools/AnimateOnScroll';
 import ImagesMarquee from './ImagesMarquee';
 import { TextAnimateDemo } from './TextAnimateDemo'
 
-const Hero = ({ heroImages }) => {
+const Hero = ({}) => {
   const heroTopText = 'On-campus / Online Years 11-12 Economics Tutoring';
   const heroHeading = 'HSC Economics Specialists In Sydney';
   const threeSteps = [

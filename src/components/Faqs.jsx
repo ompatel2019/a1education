@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
 
 const Faqs = ({ section, sectionName, sectionSubheading }) => {
+  const term = "https://drive.google.com/file/d/14it9qMWyvAu8MiKZpY-nI_Y6kIBVucoZ/view?ts=67b00b7b";
+  const privacy = "https://drive.google.com/file/d/1BF1z-fMGrbdK6iQQulVW4Xug31L-xkTj/view?ts=67b00c59";
   const faqCategories = [
     {
       categoryTitle: 'Fees & Payment',
@@ -38,8 +40,7 @@ const Faqs = ({ section, sectionName, sectionSubheading }) => {
         {
           questionNumber: 'Q5',
           question: 'Where can I find the Terms and Conditions?',
-          answer:
-            'You can access our Terms and Conditions [here] and our Privacy Policy [here].'
+          answer: <p> You can access our Terms and Conditions <a target='_blank' href={term} className='text-blue-500 cursor-pointer'>Here</a> and our Privacy Policy <a target='_blank' href={privacy} className='text-blue-500'>Here.</a> </p>
         }
       ]
     },
