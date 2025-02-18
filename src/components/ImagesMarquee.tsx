@@ -17,8 +17,7 @@ const heroImages = [
     { name: hero9, alt: 'High school students engaged in study #9' },
   ];  
 
-  const firstRow = heroImages.slice(0, heroImages.length / 2);
-  const secondRow = heroImages.slice(heroImages.length / 2);
+  const firstRow = heroImages;
 
 interface ImageCardProps {
   name: string;
@@ -47,11 +46,6 @@ export default function ImagesMarqee() {
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
       <Marquee pauseOnHover className="[--duration:8s]">
         {firstRow.map((image) => (
-          <ImageCard key={image.alt} {...image} />
-        ))}
-      </Marquee>
-      <Marquee reverse className="[--duration:10s]">
-        {secondRow.map((image) => (
           <ImageCard key={image.alt} {...image} />
         ))}
       </Marquee>
