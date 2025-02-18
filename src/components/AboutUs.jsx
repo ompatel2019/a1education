@@ -12,7 +12,7 @@ const AboutUs = ({
   const subheading =
     'At A1 Education, we dedicate ourselves to delivering exceptional HSC Economics tutoring designed to foster academic excellence and personal growth.';
   const topDescription =
-    'My name is Karan Patel and I am the founder of A1 Education. I achieved a Band 6 in HSC Economics and am completing the Bachelor of Economics and Commerce at the University of New South Wales. I’ve tutored and mentored numerous students who have gone to achieve outstanding results in Economics. My vision for A1 Education is to offer high-quality tutoring at an affordable rate, inspiring students to develop the same passion for Economics that I have.';
+    'My name is Karan Patel and I am the founder of A1 Education. I achieved a Band 6 in HSC Economics and am pursuing a Bachelor of Economics and Commerce at the University of New South Wales. I’ve tutored and mentored numerous students who have gone to achieve outstanding results in Economics. My vision for A1 Education is to offer high-quality tutoring at an affordable rate, inspiring students to develop the same passion for Economics that I have.';
   const bottomDescription =
     'We emphasise an understanding of the core concepts mixed with an engaging teaching style. By ensuring each student is catered for when teaching content and marking responses, we enrich the learning experience. We believe in creating a positive and vibrant learning environment mixed with individual goal setting, continuous practice and an A1 attitude towards learning. Each student is empowered to unlock their full potential and excel not just in their exams, but in their overall understanding of Economics to take out in the real world.';
 
