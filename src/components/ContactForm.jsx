@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BlurFade } from "@/components/magicui/blur-fade";
 
 const ContactForm = ({ section, sectionName, sectionSubheading }) => {
   const contacts = [
@@ -25,32 +26,34 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
     },
   ];
 
-  const [result, setResult] = useState('');
+  const [statusMessage, setStatusMessage] = useState("");
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    setResult('Sending...');
-    const formData = new FormData(event.target);
-    formData.append('access_key', 'b9a14700-64c8-410a-b58b-9f5fc49ee6ad');
+  // Clears the status message after 3 seconds
+  const clearStatus = () => {
+    setTimeout(() => {
+      setStatusMessage("");
+    }, 3000);
+  };
 
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formData
+  // Handle form submission via AJAX
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevents page reload
+    const form = e.target;
+    const formData = new FormData(form);
+
+    fetch("/", {
+      method: "POST",
+      body: formData,
+    })
+      .then(() => {
+        setStatusMessage("Form submission successful!");
+        form.reset();
+        clearStatus();
+      })
+      .catch((error) => {
+        setStatusMessage(`Form submission failed: ${error}`);
+        clearStatus();
       });
-
-      const data = await response.json();
-      if (data.success) {
-        setResult('Form Submitted Successfully');
-        event.target.reset();
-      } else {
-        console.error('Error submitting form:', data);
-        setResult(data.message);
-      }
-    } catch (error) {
-      console.error('Network Error:', error);
-      setResult('Error submitting form. Please try again later.');
-    }
   };
 
   const name = 'Contact Form';
@@ -60,122 +63,116 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
 
   return (
     <section className={section}>
-      <div className="grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-24 lg:gap-16 md:gap-12 gap-8">
-        <div className="flex flex-col justify-between max-md:order-2">
-          <div className="space-y-8">
-            {contacts.map((i, k) => (
-              <div key={k} className="flex space-x-4 items-start p">
-                <div className="h5 rounded-sm border-gray-500">{i.icon}</div>
-
-                <div className="space-y-2">
-                  <p className='font-generalSans-semibold'>{i.contactType}</p>
-                  <p className="font-generalSans-medium">{i.contactDesc}</p>
-
-                  <a target="_blank" rel="noreferrer" href={i.contactRedirect}>
-                    <p className="mt-2 font-generalSans-bold">
-                      {i.contactInformation}
-                    </p>
-                  </a>
+      <BlurFade delay={0.2} inView>
+        <div className="grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-24 lg:gap-16 md:gap-12 gap-8">
+          <div className="flex flex-col justify-between max-md:order-2">
+            <div className="space-y-8">
+              {contacts.map((i, k) => (
+                <div key={k} className="flex space-x-4 items-start p">
+                  <div className="h5 rounded-sm border-gray-500">{i.icon}</div>
+                  <div className="space-y-2">
+                    <p className='font-generalSans-semibold'>{i.contactType}</p>
+                    <p className="font-generalSans-medium">{i.contactDesc}</p>
+                    <a target="_blank" rel="noreferrer" href={i.contactRedirect}>
+                      <p className="mt-2 font-generalSans-bold">
+                        {i.contactInformation}
+                      </p>
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="col-span-2 max-md:col-span-2 bg-primary rounded-xl text-white 2xl:p-20 lg:p-16 md:p-12 p-10">
+            <div className="text-left mb-8 space-y-2">
+              <div className="space-y-1">
+                <h3 className={sectionName}>{name}</h3>
+                <h4 className={sectionSubheading}>{subheading}</h4>
+              </div>
+              <p>{formSubheading}</p>
+            </div>
+            <form
+              name="contact" 
+              method="post" 
+              data-netlify="true" 
+              onSubmit={handleSubmit}
+              className="space-y-4 text-base"
+              aria-label="Contact Form"
+            >
+              {/* NAME + EMAIL */}
+              <div className="lg:flex gap-4 max-lg:space-y-4">
+                <div className="flex flex-col w-full">
+                  <label htmlFor="name" className="mb-1">
+                    Full Name <span className="sr-only">(required)</span>
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="John Doe"
+                    className="w-full bg-transparent border-c4 border-2 rounded-md py-2 px-4 transition-all hover:pl-8"
+                    required
+                    autoComplete="name"
+                  />
+                </div>
+                <div className="flex flex-col w-full">
+                  <label htmlFor="email" className="mb-1">
+                    Email <span className="sr-only">(required)</span>
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="johndoe@gmail.com"
+                    className="w-full bg-transparent border-c4 border-2 rounded-md py-2 px-4 transition-all hover:pl-8"
+                    required
+                    autoComplete="email"
+                  />
                 </div>
               </div>
-            ))}
-          </div>
-
-        </div>
-
-        <div className="col-span-2 max-md:col-span-2 bg-primary rounded-xl text-white 2xl:p-20 lg:p-16 md:p-12 p-10">
-          <div className="text-left mb-8 space-y-2">
-            <div className="space-y-1">
-              <h3 className={sectionName}>{name}</h3>
-              <h4 className={sectionSubheading}>{subheading}</h4>
-            </div>
-
-            <p>{formSubheading}</p>
-          </div>
-
-          <form
-            onSubmit={onSubmit}
-            className="space-y-4 text-base"
-            method="POST"
-            aria-label="Contact Form"
-          >
-            {/* NAME + EMAIL */}
-            <div className="lg:flex gap-4 max-lg:space-y-4">
-              <div className="flex flex-col w-full">
-                <label htmlFor="name" className="mb-1">
-                  Full Name <span className="sr-only">(required)</span>
+              {/* PHONE */}
+              <div className="flex flex-col">
+                <label htmlFor="phone" className="mb-1">
+                  Phone <span className="sr-only">(optional)</span>
                 </label>
                 <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="John Doe"
-                  className="w-full bg-transparent border-c4 border-2 rounded-md py-2 px-4 transition-all hover:pl-8"
-                  required
-                  autoComplete="name"
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  placeholder="123456789"
+                  className="w-full bg-transparent border-c4 border-2 rounded-md px-4 py-2 transition-all hover:pl-8"
+                  autoComplete="tel"
                 />
               </div>
-
-              <div className="flex flex-col w-full">
-                <label htmlFor="email" className="mb-1">
-                  Email <span className="sr-only">(required)</span>
+              {/* MESSAGE */}
+              <div className="flex flex-col">
+                <label htmlFor="message" className="mb-1">
+                  Message <span className="sr-only">(required)</span>
                 </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="johndoe@gmail.com"
-                  className="w-full bg-transparent border-c4 border-2 rounded-md py-2 px-4 transition-all hover:pl-8"
+                <textarea
+                  id="message"
+                  name="message"
+                  className="2xl:p-3 bg-transparent rounded-md border-2 border-c4 py-2 px-4 w-full text-c4 text-base transition-all hover:pl-8"
+                  placeholder="I'd love to get a free trial for Year 12 Economics!"
+                  rows={8}
                   required
-                  autoComplete="email"
+                  autoComplete="off"
                 />
               </div>
-            </div>
-
-            {/* PHONE */}
-            <div className="flex flex-col">
-              <label htmlFor="phone" className="mb-1">
-                Phone <span className="sr-only">(optional)</span>
-              </label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                placeholder="123456789"
-                className="w-full bg-transparent border-c4 border-2 rounded-md px-4 py-2 transition-all hover:pl-8"
-                autoComplete="tel"
-              />
-            </div>
-
-            {/* MESSAGE */}
-            <div className="flex flex-col">
-              <label htmlFor="message" className="mb-1">
-                Message <span className="sr-only">(required)</span>
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                className="2xl:p-3 bg-transparent rounded-md border-2 border-c4 py-2 px-4 w-full text-c4 text-base transition-all hover:pl-8"
-                placeholder="I'd love to get a free trial for Year 12 Economics!"
-                rows={8}
-                required
-                autoComplete="off"
-              />
-            </div>
-
-            {/* SUBMIT BUTTON */}
-            <div
-              className="turnParent flex p-3 rounded-md text-black bg-white px-8 w-full items-center space-x-1 text-base
-                hover:bg-c3 hover:px-12 justify-center hover:bg-purple-400 hover:text-white transition-all"
-            >
-              <button type="submit" aria-label="Submit contact form" className="focus:outline-none p">
-                Send Inquiry
-              </button>
-            </div>
-            {result && <p className="mt-2">{result}</p>}
-          </form>
+              {/* SUBMIT BUTTON */}
+              <div
+                className="turnParent flex p-3 rounded-md text-black bg-white px-8 w-full items-center space-x-1 text-base
+                  hover:bg-c3 hover:px-12 justify-center hover:bg-purple-400 hover:text-white transition-all"
+              >
+                <button type="submit" aria-label="Submit contact form" className="focus:outline-none p">
+                  Send Inquiry
+                </button>
+              </div>
+              {statusMessage && <p>{statusMessage}</p>}
+            </form>
+          </div>
         </div>
-      </div>
+      </BlurFade>
     </section>
   );
 };

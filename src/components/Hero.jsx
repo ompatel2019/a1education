@@ -2,6 +2,7 @@ import React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import AnimateOnScroll from '../tools/AnimateOnScroll';
 import ImagesMarquee from './ImagesMarquee';
+import { TextAnimateDemo } from './TextAnimateDemo'
 
 const Hero = ({ heroImages }) => {
   const heroTopText = 'On-campus / Online Years 11-12 Economics Tutoring';
@@ -26,7 +27,9 @@ const Hero = ({ heroImages }) => {
         >
           <div className="responsivePad flex flex-col 2xl:space-y-10 lg:space-y-8 space-y-6 text-center items-center font-generalSans-medium">
             <h5 className="h5 font-generalSans-semibold">{heroTopText}</h5>
-            <h1 className="h1 font-generalSans-bold 2xl:px-[200px]">{heroHeading}</h1>
+            <div className='h1 font-generalSans-bold 2xl:px-[200px]'>
+              <TextAnimateDemo text={heroHeading} by={"word"} />
+            </div>
             {/* Numbered steps */}
             <div className="flex space-x-4 h7 max-md:space-x-4">
               {threeSteps.map((step, index) => (
@@ -57,5 +60,4 @@ const Hero = ({ heroImages }) => {
     </AnimateOnScroll>
   );
 };
-
 export default Hero;

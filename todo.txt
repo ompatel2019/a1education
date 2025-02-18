@@ -1,0 +1,5 @@
+- use navbar from HeroUI 
+- improve footer 
+- sitemap and schema 
+- netlify contact form integration
+- lighthouse score

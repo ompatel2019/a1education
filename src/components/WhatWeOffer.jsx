@@ -1,4 +1,5 @@
 import React from 'react'
+import { BlurFade } from "@/components/magicui/blur-fade";
 
 const WhatWeOffer = ({section, sectionName, sectionSubheading}) => {
   const perks = [
@@ -40,38 +41,35 @@ const WhatWeOffer = ({section, sectionName, sectionSubheading}) => {
   return (
     <>
       <section className={section}>
-          <h3 className={`${sectionName} text-center`}>
-            {perk.toUpperCase()}
-          </h3>
+          <BlurFade delay={0.2} inView>
+            <h3 className={`${sectionName} text-center`}>
+              {perk.toUpperCase()}
+            </h3>
+            <h4 className={`${sectionSubheading} text-center`}>
+              {subheading}
+            </h4>
+          </BlurFade>
 
-          <h4 className={`${sectionSubheading} text-center`}>
-            {subheading}
-          </h4>
-
-          <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 text-white 2xl:gap-8 lg:gap-6 md:gap-4 gap-2'>
-            {perks.map((i, k) => (
-              <div key={k} className='bg-primary 2xl:p-10 lg:p-8 md:p-6 p-6 flex flex-col 2xl:space-y-8 lg:space-y-6 md:space-y-4 space-y-2 rounded-lg'>
-
-                <div className='h5'>
-                  {i.icon}
+          <BlurFade delay={0.4} inView>
+            <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 text-white 2xl:gap-8 lg:gap-6 md:gap-4 gap-2'>
+              {perks.map((i, k) => (
+                <div key={k} className='bg-primary 2xl:p-10 lg:p-8 md:p-6 p-6 flex flex-col 2xl:space-y-8 lg:space-y-6 md:space-y-4 space-y-2 rounded-lg'>
+                  <div className='h5'>
+                    {i.icon}
+                  </div>
+                  <div className='h7 flex space-x-2'>
+                    <h5>
+                      {k + 1}.
+                    </h5>
+                    <h5>{i.perk}</h5>
+                  </div>
+                  <p>
+                    {i.desc}
+                  </p>
                 </div>
-
-                <div className='h7 flex space-x-2'>
-                  <h5>
-                    {k + 1}.
-                  </h5>
-
-                  <h5>{i.perk}</h5>
-                </div>
-
-                <p>
-                  {i.desc}
-                </p>
-
-              </div>
-            ))}
-
-          </div>
+              ))}
+            </div>
+          </BlurFade>
 
       </section>
     </>
