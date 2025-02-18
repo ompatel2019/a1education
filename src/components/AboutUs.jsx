@@ -71,7 +71,7 @@ const AboutUs = ({
       <div className="flex justify-around items-center 2xl:gap-10 lg:gap-8 md:gap-6 gap-4 max-sm:flex-col max-md:grid-cols-2 max-md:grid text-black ">
         {perks.map((perk, index) => (
           <div key={index} className="flex flex-col rounded-md 2xl:p-8 lg:p-6 md:p-4 sm:p-2 p-1 2xl:py-16 lg:py-12 md:py-10 sm:py-6 py-4 max-md:col-span-1 bg-white">
-            <div className='flex'>
+            <div className='flex justify-center'>
               <NumberTickerDemo className={`h4 text-center`} value={perk.statHeader}/>
               <h5 className='h4 text-center'>{perk.statMetric}</h5>
             </div>
