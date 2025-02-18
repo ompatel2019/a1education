@@ -12,7 +12,7 @@ import Fallback from './tools/Fallback';
 import aboutUsPlaceholder from './assets/hero4.webp'
 
 // -- Lazy loaded pages --
-const HomePage = lazy(() => import('./pages/HomePage'));
+import HomePage from './pages/HomePage';
 const SpecialtyPage = lazy(() => import('./pages/SpecialtyPage'));
 const WhyChooseUsPage = lazy(() => import('./pages/WhyChooseUsPage'));
 const AboutUsPage = lazy(() => import('./pages/AboutUsPage'));
@@ -57,7 +57,6 @@ const router = createBrowserRouter(
               sectionSubheading={sectionSubheading}
               sectionDescriptionHeading={sectionDescriptionHeading}
               sectionText={sectionText}
-              aboutUsPlaceholder={aboutUsPlaceholder}
 
             />
           </Suspense>
