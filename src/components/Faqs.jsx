@@ -34,8 +34,7 @@ const Faqs = ({ section, sectionName, sectionSubheading }) => {
         {
           questionNumber: 'Q4',
           question: 'How do I enrol?',
-          answer:
-            'You can enrol by clicking [Enrol Link], calling 0402 097 284, or emailing contact@a1education.com.au.'
+          answer:<p> You can enrol by filling out the form on our <HashLink smooth to='/contact' className='text-blue-500 cursor-pointer'>contact</HashLink> page, calling <a className='text-blue-500 cursor-pointer' href="tel:+61 402 097 284">+61 402 097 284</a> or emailing <a className='text-blue-500 cursor-pointer' href="mailto:contact@a1education.com.au.">contact@a1education.com.au</a></p>
         },
         {
           questionNumber: 'Q5',
