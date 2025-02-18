@@ -1,34 +1,61 @@
-// pages/ContactPage.jsx
 import React from 'react';
-import SeoHelmet from '../tools/SeoHelmet';
+import SeoHelmet from '../components/SeoHelmet';
 
-// ─── Components for Contact Page ─────────────────────────────────────
+// Components
+import PageTitle from '../components/PageTitle';
 import ContactForm from '../components/ContactForm';
+import WhatWeOffer from '../components/WhatWeOffer';
 import Faqs from '../components/Faqs';
 import CTA from '../components/CTA';
 
-const ContactPage = () => {
-  // ─── Schema for Contact Page ─────────────────────────────────────────
+const ContactPage = ({
+  section,
+  sectionName,
+  sectionSubheading,
+  sectionDescriptionHeading,
+  sectionText
+}) => {
   const jsonLdContactPage = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Contact - Business Name",
-    "description": "Get in touch with Business Name for inquiries and support.",
-    "url": "https://example.com/contact"
+    "name": "Contact - A1 Education",
+    "description": "Get in touch with A1 Education for inquiries on HSC Economics tutoring in Sydney.",
+    "url": "https://a1education.com.au/contact"
   };
 
   return (
     <>
       <SeoHelmet
-        title="Contact - Business Name"
-        description="Get in touch with Business Name for inquiries and support."
+        title="Contact - A1 Education"
+        description="Reach out to Sydney’s top Economics tutors at A1 Education and book a trial lesson on us."
         jsonSchema={jsonLdContactPage}
       />
 
-      {/* ─── Sections ───────────────────────────────────────────── */}
-      <ContactForm />
-      <Faqs />
-      <CTA />
+      <PageTitle
+        heading="Contact Us"
+        subheading="Reach out to Sydney’s top Economics tutors at A1 Education and book a trial lesson on us."
+        route="Home / Contact"
+      />
+
+      <ContactForm
+        section={section}
+        sectionName={sectionName}
+        sectionSubheading={sectionSubheading}
+        sectionDescriptionHeading={sectionDescriptionHeading}
+        sectionText={sectionText}
+      />
+
+      <WhatWeOffer
+        section={section}
+        sectionName={sectionName}
+        sectionSubheading={sectionSubheading}
+      />
+
+      <Faqs
+        section={section}
+        sectionName={sectionName}
+        sectionSubheading={sectionSubheading}
+      />
     </>
   );
 };

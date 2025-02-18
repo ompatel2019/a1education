@@ -1,35 +1,79 @@
-// pages/AboutUsPage.jsx
 import React from 'react';
-import SeoHelmet from '../tools/SeoHelmet';
+import SeoHelmet from '../components/SeoHelmet';
 
-// ─── Components for About Us Page ─────────────────────────────────────
+// Components
+import PageTitle from '../components/PageTitle';
+import BlankSpace from '../components/BlankSpace';
 import AboutUs from '../components/AboutUs';
 import Testimonials from '../components/Testimonials';
+import SlidingSchools from '../components/SlidingSchools';
 import Faqs from '../components/Faqs';
 import CTA from '../components/CTA';
 
-const AboutUsPage = () => {
-  // ─── Schema for About Us Page ─────────────────────────────────────────
+const AboutUsPage = ({
+  section,
+  sectionName,
+  sectionSubheading,
+  sectionDescriptionHeading,
+  sectionText,
+  aboutUsPlaceholder,
+  testimonialsData,
+  schoolsData
+}) => {
   const jsonLdAboutUsPage = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "About Us - Business Name",
-    "description": "Learn more about Business Name, our values, and our team.",
-    "url": "https://example.com/aboutus"
+    "name": "About Us - A1 Education",
+    "description": "Learn more about A1 Education's team, mission, and values in HSC Economics tutoring.",
+    "url": "https://a1education.com.au/aboutus"
   };
 
   return (
     <>
       <SeoHelmet
-        title="About Us - Business Name"
-        description="Learn more about Business Name, our values, and our team."
+        title="About Us - A1 Education"
+        description="Discover how our Economics tutors in Sydney have built a reputation for excellence, transforming students into leaders in economic thinking."
         jsonSchema={jsonLdAboutUsPage}
       />
 
-      {/* ─── Sections ───────────────────────────────────────────── */}
-      <AboutUs />
-      <Testimonials />
-      <Faqs />
+      <PageTitle
+        heading="About Us"
+        subheading="Discover how our Economics tutors in Sydney have built a reputation for excellence, transforming students into leaders in economic thinking."
+        route="Home / About Us"
+      />
+
+      <BlankSpace />
+
+      <AboutUs
+        section={section}
+        sectionName={sectionName}
+        sectionSubheading={sectionSubheading}
+        sectionDescriptionHeading={sectionDescriptionHeading}
+        sectionText={sectionText}
+        placeholder={aboutUsPlaceholder}
+      />
+
+      <Testimonials
+        section={section}
+        sectionName={sectionName}
+        sectionSubheading={sectionSubheading}
+        testimonialsData={testimonialsData}
+      />
+
+      <SlidingSchools
+        section={section}
+        sectionName={sectionName}
+        sectionSubheading={sectionSubheading}
+        sectionDescriptionHeading={sectionDescriptionHeading}
+        sectionText={sectionText}
+        schoolsData={schoolsData}
+      />
+
+      <Faqs
+        section={section}
+        sectionName={sectionName}
+        sectionSubheading={sectionSubheading}
+      />
       <CTA />
     </>
   );

@@ -1,101 +1,182 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-const ContactForm = () => {
-  const [statusMessage, setStatusMessage] = useState("");
+const ContactForm = ({ section, sectionName, sectionSubheading }) => {
+  const contacts = [
+    {
+      icon: <i className="bi bi-envelope"></i>,
+      contactType: 'Email',
+      contactDesc: 'Send us an email and we will get back to you.',
+      contactInformation: 'contact@a1education.com.au',
+      contactRedirect: 'mailto:contact@a1education.com.au'
+    },
+    {
+      icon: <i className="bi bi-geo"></i>,
+      contactType: 'Location',
+      contactDesc: 'Our in-person classes are in Blacktown.',
+      contactInformation: '207/30 Campbell Street, Blacktown NSW 2148',
+      contactRedirect: 'https://g.co/kgs/vpV449u'
+    },
+    {
+      icon: <i className="bi bi-telephone"></i>,
+      contactType: 'Phone',
+      contactDesc: 'Mon - Fri 8am to 5pm',
+      contactInformation: '0402 097 284',
+      contactRedirect: 'tel:0402 097 284'
+    },
+  ];
 
-  // Clears the status message after 3 seconds
-  const clearStatus = () => {
-    setTimeout(() => {
-      setStatusMessage("");
-    }, 3000);
-  };
+  const [result, setResult] = useState('');
 
-  // Handle form submission via AJAX
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevents page reload
-    const form = e.target;
-    const formData = new FormData(form);
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult('Sending...');
+    const formData = new FormData(event.target);
+    formData.append('access_key', 'b9a14700-64c8-410a-b58b-9f5fc49ee6ad');
 
-    fetch("/", {
-      method: "POST",
-      body: formData,
-    })
-      .then(() => {
-        setStatusMessage("Form submission successful!");
-        form.reset();
-        clearStatus();
-      })
-      .catch((error) => {
-        setStatusMessage(`Form submission failed: ${error}`);
-        clearStatus();
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
       });
+
+      const data = await response.json();
+      if (data.success) {
+        setResult('Form Submitted Successfully');
+        event.target.reset();
+      } else {
+        console.error('Error submitting form:', data);
+        setResult(data.message);
+      }
+    } catch (error) {
+      console.error('Network Error:', error);
+      setResult('Error submitting form. Please try again later.');
+    }
   };
+
+  const name = 'Contact Form';
+  const subheading = 'Get in Touch / Start Your Free Trial.';
+  const formSubheading =
+    'Ready to join A1 Education or have questions about HSC Economics tutoring in Sydney? Reach out to us—our friendly team is here to help';
 
   return (
-    <>
-      <div>ContactForm</div>
-      
-      <div>
-        {/*
-          Contact Form Component - No Styling Version
+    <section className={section}>
+      <div className="grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-24 lg:gap-16 md:gap-12 gap-8">
+        <div className="flex flex-col justify-between max-md:order-2">
+          <div className="space-y-8">
+            {contacts.map((i, k) => (
+              <div key={k} className="flex space-x-4 items-start p">
+                <div className="h5 rounded-sm border-gray-500">{i.icon}</div>
 
-          This form is configured for Netlify Forms.
-          It includes:
-            - A hidden input ("form-name") for Netlify to identify the form.
-            - A honeypot field ("bot-field") for spam prevention.
-            - Input fields for Name, Email, Number, and Message with aria-labels.
-            - A reCAPTCHA placeholder (injected by Netlify on deployment).
-            - AJAX submission handler that clears the status message after 3 seconds.
-        */}
-        <form name="contact" method="post" data-netlify="true" onSubmit={handleSubmit}>
-          {/* Hidden input required by Netlify */}
-          <input type="hidden" name="form-name" value="contact" />
+                <div className="space-y-2">
+                  <p className='font-generalSans-semibold'>{i.contactType}</p>
+                  <p className="font-generalSans-medium">{i.contactDesc}</p>
 
-          {/* Honeypot field for spam prevention */}
-          <p style={{ display: "none" }}>
-            <label>
-              Don’t fill this out: <input name="bot-field" aria-label="bot-field" />
-            </label>
-          </p>
-
-          {/* Name field */}
-          <div>
-            <label htmlFor="name">Your Name:</label>
-            <input id="name" type="text" name="name" aria-label="Your Name" required />
+                  <a target="_blank" rel="noreferrer" href={i.contactRedirect}>
+                    <p className="mt-2 font-generalSans-bold">
+                      {i.contactInformation}
+                    </p>
+                  </a>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Email field */}
-          <div>
-            <label htmlFor="email">Your Email:</label>
-            <input id="email" type="email" name="email" aria-label="Your Email" required />
+        </div>
+
+        <div className="col-span-2 max-md:col-span-2 bg-primary rounded-xl text-white 2xl:p-20 lg:p-16 md:p-12 p-10">
+          <div className="text-left mb-8 space-y-2">
+            <div className="space-y-1">
+              <h3 className={sectionName}>{name}</h3>
+              <h4 className={sectionSubheading}>{subheading}</h4>
+            </div>
+
+            <p>{formSubheading}</p>
           </div>
 
-          {/* Number field */}
-          <div>
-            <label htmlFor="number">Your Number:</label>
-            <input id="number" type="number" name="number" aria-label="Your Number" required />
-          </div>
+          <form
+            onSubmit={onSubmit}
+            className="space-y-4 text-base"
+            method="POST"
+            aria-label="Contact Form"
+          >
+            {/* NAME + EMAIL */}
+            <div className="lg:flex gap-4 max-lg:space-y-4">
+              <div className="flex flex-col w-full">
+                <label htmlFor="name" className="mb-1">
+                  Full Name <span className="sr-only">(required)</span>
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="John Doe"
+                  className="w-full bg-transparent border-c4 border-2 rounded-md py-2 px-4 transition-all hover:pl-8"
+                  required
+                  autoComplete="name"
+                />
+              </div>
 
-          {/* Message field */}
-          <div>
-            <label htmlFor="message">Message:</label>
-            <textarea id="message" name="message" aria-label="Message" required></textarea>
-          </div>
+              <div className="flex flex-col w-full">
+                <label htmlFor="email" className="mb-1">
+                  Email <span className="sr-only">(required)</span>
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="johndoe@gmail.com"
+                  className="w-full bg-transparent border-c4 border-2 rounded-md py-2 px-4 transition-all hover:pl-8"
+                  required
+                  autoComplete="email"
+                />
+              </div>
+            </div>
 
-          {/* reCAPTCHA placeholder - Netlify will inject the widget when deployed */}
-          <div data-netlify-recaptcha="true"></div>
+            {/* PHONE */}
+            <div className="flex flex-col">
+              <label htmlFor="phone" className="mb-1">
+                Phone <span className="sr-only">(optional)</span>
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="123456789"
+                className="w-full bg-transparent border-c4 border-2 rounded-md px-4 py-2 transition-all hover:pl-8"
+                autoComplete="tel"
+              />
+            </div>
 
-          {/* Submit button */}
-          <div>
-            <button type="submit">Send a message</button>
-          </div>
-        </form>
+            {/* MESSAGE */}
+            <div className="flex flex-col">
+              <label htmlFor="message" className="mb-1">
+                Message <span className="sr-only">(required)</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                className="2xl:p-3 bg-transparent rounded-md border-2 border-c4 py-2 px-4 w-full text-c4 text-base transition-all hover:pl-8"
+                placeholder="I'd love to get a free trial for Year 12 Economics!"
+                rows={8}
+                required
+                autoComplete="off"
+              />
+            </div>
 
-        {/* Display status message if it exists */}
-        {statusMessage && <p>{statusMessage}</p>}
+            {/* SUBMIT BUTTON */}
+            <div
+              className="turnParent flex p-3 rounded-md text-black bg-white px-8 w-full items-center space-x-1 text-base
+                hover:bg-c3 hover:px-12 justify-center hover:bg-purple-400 hover:text-white transition-all"
+            >
+              <button type="submit" aria-label="Submit contact form" className="focus:outline-none p">
+                Send Inquiry
+              </button>
+            </div>
+            {result && <p className="mt-2">{result}</p>}
+          </form>
+        </div>
       </div>
-      
-    </>
+    </section>
   );
 };
 

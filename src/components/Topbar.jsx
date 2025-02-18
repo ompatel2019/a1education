@@ -2,36 +2,36 @@ import React from 'react';
 import AnimateOnScroll from '../tools/AnimateOnScroll';
 
 const Topbar = () => {
-  const leftText = 'Business Information Goes Here';
-  const number = 'Business Number Goes Here';
-  const location = 'Business Location Goes Here';
+  const leftText = 'A1 Education – Specialists in Year 11 & 12 Economics Tutoring in Sydney';
+  const number = '0402 097 284';
+  const location = '207/30 Campbell Street, Blacktown NSW 2148';
 
   return (
-    <AnimateOnScroll className='fade-in fade-down p'>
+    <AnimateOnScroll className='fade-in fade-down'>
       <header
-        className="2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px]
-        flex justify-between 2xl:py-6 lg:py-4 py-2 max-lg:justify-center"
+        className="font-generalSans-medium 2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px]
+        bg-primary text-white flex justify-between 2xl:py-6 lg:py-4 py-2 max-lg:justify-center"
       >
-        <p className="text-center">{leftText}</p>
-        <div className="max-lg:hidden flex space-x-4">
+        <p className="p text-center">{leftText}</p>
+        <div className="max-lg:hidden flex space-x-4 p">
           <a
             target="_blank"
             rel="noreferrer"
-            href="tel:"
+            href="tel:0402 097 284"
             className="flex space-x-2 items-center"
           >
-            <i className="bi bi-telephone-fill"></i>
+            <i className="bi bi-telephone-fill h7"></i>
             <p>{number}</p>
           </a>
           <a
             target="_blank"
             rel="noreferrer"
-            href=""
+            href="https://g.co/kgs/vpV449u"
             className="flex space-x-2 items-center"
           >
-            <i className="bi bi-geo-fill"></i>
+            <i className="bi bi-geo-fill h7"></i>
             <p>{location}</p>
-        </a>
+          </a>
         </div>
       </header>
     </AnimateOnScroll>
