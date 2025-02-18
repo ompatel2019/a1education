@@ -56,14 +56,12 @@ const Hero = ({}) => {
               ))}
             </div>
           </div>
-
+          <div className="max-sm:hidden"><ImagesMarquee/></div>
           <BlurFade delay={0.2} inView>
             <div className='pb-6 responsivePad'>
               <img src={hero9} alt="Student at A1 education" className='hero-slide-img sm:hidden rounded-md' />
             </div>
           </BlurFade>
-
-          <div className="max-sm:hidden"><ImagesMarquee/></div>
         </div>
       </section>
     </AnimateOnScroll>
