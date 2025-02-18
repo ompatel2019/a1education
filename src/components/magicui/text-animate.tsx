@@ -365,7 +365,7 @@ export function TextAnimate({
         whileInView={startOnView ? "show" : undefined}
         animate={startOnView ? undefined : "show"}
         exit="exit"
-        className={cn("whitespace-pre-wrap", className)}
+        className={cn("whitespace-pre-wrap h1 font-generalSans-bold", className)}
         viewport={{ once }}
         {...props}
       >

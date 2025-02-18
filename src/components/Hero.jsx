@@ -4,6 +4,7 @@ import AnimateOnScroll from '../tools/AnimateOnScroll';
 import ImagesMarquee from './ImagesMarquee';
 import { TextAnimateDemo } from './TextAnimateDemo'
 import hero9 from '../assets/hero9.webp'
+import { BlurFade } from "@/components/magicui/blur-fade";
 
 const Hero = ({}) => {
   const heroTopText = 'On-campus / Online Years 11-12 Economics Tutoring';
@@ -55,9 +56,12 @@ const Hero = ({}) => {
               ))}
             </div>
           </div>
-          <div className='pb-6'>
-            <img src={hero9} alt="Student at A1 education" className='hero-slide-img sm:hidden rounded-md' />
-          </div>
+
+          <BlurFade delay={0.2} inView>
+            <div className='pb-6 responsivePad'>
+              <img src={hero9} alt="Student at A1 education" className='hero-slide-img sm:hidden rounded-md' />
+            </div>
+          </BlurFade>
 
           <div className="max-sm:hidden"><ImagesMarquee/></div>
         </div>

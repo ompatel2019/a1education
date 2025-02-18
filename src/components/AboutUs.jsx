@@ -35,7 +35,7 @@ const AboutUs = ({
     {
       statHeader: '100',
       statMetric: '%',
-      statDesc: 'Of A1 Education students report increased confidence in their first month.'
+      statDesc: 'Of A1 Education students report increased confidence in their first month of enrolment.'
     }, 
   ];
 
