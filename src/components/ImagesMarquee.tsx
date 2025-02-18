@@ -44,7 +44,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ name, alt }) => {
 export default function ImagesMarqee() {
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-      <Marquee pauseOnHover className="[--duration:8s]">
+      <Marquee pauseOnHover className="[--duration:15s]">
         {firstRow.map((image) => (
           <ImageCard key={image.alt} {...image} />
         ))}
