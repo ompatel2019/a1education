@@ -41,6 +41,28 @@ html {
   @apply text-base leading-normal xl:text-lg xl:leading-normal;
 }
 
+.hero-slide-img {
+  object-fit: cover;
+  width: auto;
+  flex-shrink: 0;
+  height: 280px;
+}
+@media (min-width: 640px) {
+  .hero-slide-img { height: 320px; }
+}
+@media (min-width: 768px) {
+  .hero-slide-img { height: 360px; }
+}
+@media (min-width: 1024px) {
+  .hero-slide-img { height: 380px; }
+}
+@media (min-width: 1280px) {
+  .hero-slide-img { height: 400px; }
+}
+@media (min-width: 1440px) {
+  .hero-slide-img { height: 400px; }
+}
+
 /* Variables for "primary" etc. */
 @layer base {
   :root {

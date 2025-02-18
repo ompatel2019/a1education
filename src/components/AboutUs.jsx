@@ -1,5 +1,5 @@
 import React from 'react'
-import aboutimg from '../assets/aboutus.png'
+import aboutimg from '../assets/aboutUs.webp'
 
 const AboutUs = ({
   section,

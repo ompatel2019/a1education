@@ -1,8 +1,9 @@
 import React from 'react';
+import SchoolMarquee from './SchoolMarquee';
 
-const SlidingSchools = ({ sectionName, schoolsData }) => {
+const SlidingSchools = ({ sectionName }) => {
   const heading = 'We have students from';
-
+  
   return (
     <section
       className={`bg-white text-center text-black
@@ -17,37 +18,7 @@ const SlidingSchools = ({ sectionName, schoolsData }) => {
         </h3>
       </div>
 
-      {/* Outer wrapper (clips overflow) */}
-      <div className="logos">
-        {/* Inner "marquee" container (two sets side by side) */}
-        <div className="logos-slide font-generalSans-semibold">
-          {/* First set of schools */}
-          {schoolsData.map((item, index) => (
-            <div key={index}>
-              <img
-                src={item.school}
-                alt={item.alt}
-                loading="lazy"
-                className='lg:h-[176px] md:h-[120px] h-[96px]'
-              />
-              <p>{item.schoolName}</p>
-            </div>
-          ))}
-
-          {/* Duplicate set for the continuous scroll */}
-          {schoolsData.map((item, index) => (
-            <div key={`dup-${index}`}>
-              <img
-                src={item.school}
-                alt={item.alt}
-                loading="lazy"
-                className='lg:h-[176px] md:h-[120px] h-[96px]'
-              />
-              <p>{item.schoolName}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SchoolMarquee/>
     </section>
   );
 };

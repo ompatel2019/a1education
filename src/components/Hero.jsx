@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import AnimateOnScroll from '../tools/AnimateOnScroll';
+import ImagesMarquee from './ImagesMarquee';
 
 const Hero = ({ heroImages }) => {
   const heroTopText = 'On-campus / Online Years 11-12 Economics Tutoring';
@@ -50,31 +51,7 @@ const Hero = ({ heroImages }) => {
               ))}
             </div>
           </div>
-          {/* Sliding images conveyor belt */}
-          <div className="hero-slider-container overflow-hidden w-full mt-8">
-            <div className="hero-slider-track flex gap-8 hero-slider-animation">
-              {/* Original set of images */}
-              {heroImages.map((item, index) => (
-                <img
-                  key={index}
-                  src={item.image}
-                  alt={item.imageAlt}
-                  className="hero-slide-img"
-                  loading="lazy"
-                />
-              ))}
-              {/* Duplicate set for seamless looping */}
-              {heroImages.map((item, index) => (
-                <img
-                  key={`dup-${index}`}
-                  src={item.image}
-                  alt={item.imageAlt}
-                  className="hero-slide-img"
-                  loading="lazy"
-                />
-              ))}
-            </div>
-          </div>
+          <ImagesMarquee/>
         </div>
       </section>
     </AnimateOnScroll>

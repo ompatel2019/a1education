@@ -8,7 +8,6 @@ import WhyChooseUs from '../components/WhyChooseUs';
 import AboutUs from '../components/AboutUs';
 import Pricing from '../components/Pricing'
 import Testimonials from '../components/Testimonials';
-import {MarqueeDemo} from '../components/MarqueeDemo';
 import Faqs from '../components/Faqs';
 import SlidingSchools from '../components/SlidingSchools';
 
@@ -69,12 +68,6 @@ const HomePage = ({
         sectionSubheading={sectionSubheading}
       />
       <Testimonials
-        section={section}
-        sectionName={sectionName}
-        sectionSubheading={sectionSubheading}
-        testimonialsData={testimonialsData}
-      />
-      <MarqueeDemo
         section={section}
         sectionName={sectionName}
         sectionSubheading={sectionSubheading}

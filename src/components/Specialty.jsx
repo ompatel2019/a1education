@@ -62,7 +62,7 @@ const Specialty = ({
         <h3 className={sectionName}>{name.toUpperCase()}</h3>
         <h4 className={sectionSubheading}>{subheading}</h4>
         <div className="grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-8 lg:gap-6 gap-4">
-          <div className="flex flex-col max-md:flex-row max-md:space-x-4 max-sm:flex-col max-sm:space-x max-sm:space-y-4 md:space-y-4">
+          <div className="flex flex-col max-md:flex-row max-md:space-x-4 max-sm:flex-col max-sm:space-x-0 max-sm:space-y-4 md:space-y-4">
             {specialties.map((specialty, index) => (
               <div
                 key={index}
