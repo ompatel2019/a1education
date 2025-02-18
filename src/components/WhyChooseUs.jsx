@@ -50,9 +50,9 @@ const WhyChooseUs = ({section, sectionName, sectionText}) => {
               {stats.map((stat, index) => (
                 <div key={index} className='md:text-right text-left bg-primary text-white 2xl:p-10 lg:p-8 md:p-6 p-4 rounded-md 2xl:space-y-8 lg:space-y-6 space-y-4'>
                   <p className={`${sectionText} font-generalSans-medium`}>{stat.statName}</p>
-                  <div className='flex h3 md:justify-end justify-start'>
-                    <NumberTickerDemo className={`h3 max-md:text-4xl text-white`} value={stat.stat}/>
-                    <p>{stat.metric}</p>
+                  <div className='flex h3 md:justify-end justify-start items-center'>
+                    <NumberTickerDemo className={`max-md:text-4xl text-white`} value={stat.stat}/>
+                    <p className='h3'>{stat.metric}</p>
                   </div>
                   <p className='border-t-[3px] border-t-white pt-4 mt-4'>
                     {stat.desc}
