@@ -1,0 +1,46 @@
+/* ============================
+   HERO IMAGES SLIDER
+   (now 3.75s loop; pause on hover)
+   ============================ */
+   .hero-slider-container {
+    overflow: hidden;
+    width: 100%;
+    margin-top: 8px; /* same as before */
+  }
+  .hero-slider-track {
+    display: flex;
+    gap: 2rem; /* equivalent to gap-8 */
+    width: max-content; /* force width to content size */
+    animation: heroSlider 20s linear infinite;  /* 25% quicker */
+  }
+  @keyframes heroSlider {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%); /* moves exactly one set of images */
+    }
+  }
+  
+  .hero-slide-img {
+    object-fit: cover;
+    width: auto;
+    flex-shrink: 0;
+    /* sizing (unchanged) */
+    height: 280px;
+  }
+  @media (min-width: 640px) {
+    .hero-slide-img { height: 320px; }
+  }
+  @media (min-width: 768px) {
+    .hero-slide-img { height: 360px; }
+  }
+  @media (min-width: 1024px) {
+    .hero-slide-img { height: 380px; }
+  }
+  @media (min-width: 1280px) {
+    .hero-slide-img { height: 400px; }
+  }
+  @media (min-width: 1440px) {
+    .hero-slide-img { height: 400px; }
+  }

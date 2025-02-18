@@ -3,6 +3,11 @@ import { HashLink } from 'react-router-hash-link';
 import AnimateOnScroll from '../tools/AnimateOnScroll';
 import ImagesMarquee from './ImagesMarquee';
 import { TextAnimateDemo } from './TextAnimateDemo'
+import hero3 from '../assets/hero3.webp'
+import hero6 from '../assets/hero6.webp'
+import hero7 from '../assets/hero7.webp'
+import hero8 from '../assets/hero8.webp'
+import hero9 from '../assets/hero9.webp'
 
 const Hero = ({}) => {
   const heroTopText = 'On-campus / Online Years 11-12 Economics Tutoring';
@@ -15,6 +20,14 @@ const Hero = ({}) => {
   const buttons = [
     { name: 'Learn More', to: '/specialty' },
     { name: 'Book Free Trial', to: '/contact' },
+  ];
+
+  const heroImages = [
+    { image: hero3, imageAlt: 'High school students engaged in study #1' },
+    { image: hero6, imageAlt: 'High school students engaged in study #2' },
+    { image: hero7, imageAlt: 'High school students engaged in study #3' },
+    { image: hero8, imageAlt: 'High school students engaged in study #4' },
+    { image: hero9, imageAlt: 'High school students engaged in study #5' },
   ];
 
   return (
@@ -40,7 +53,7 @@ const Hero = ({}) => {
               ))}
             </div>
             {/* Buttons */}
-            <div className="flex space-x-4">
+          <div className="flex space-x-4">
               {buttons.map((button, index) => (
                 <HashLink
                   key={index}
@@ -54,7 +67,32 @@ const Hero = ({}) => {
               ))}
             </div>
           </div>
-          <ImagesMarquee/>
+          <div className="hero-slider-container overflow-hidden w-full mt-8 md:hidden">
+            <div className="hero-slider-track flex gap-8 hero-slider-animation">
+              {/* Original set of images */}
+              {heroImages.map((item, index) => (
+                <img
+                  key={index}
+                  src={item.image}
+                  alt={item.imageAlt}
+                  className="hero-slide-img rounded-md"
+                  loading="lazy"
+                />
+              ))}
+              {/* Duplicate set for seamless looping */}
+              {heroImages.map((item, index) => (
+                <img
+                  key={`dup-${index}`}
+                  src={item.image}
+                  alt={item.imageAlt}
+                  className="hero-slide-img rounded-md"
+                  loading="lazy"
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="max-md:hidden"><ImagesMarquee/></div>
         </div>
       </section>
     </AnimateOnScroll>
