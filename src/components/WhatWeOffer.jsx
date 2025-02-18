@@ -41,7 +41,7 @@ const WhatWeOffer = ({section, sectionName, sectionSubheading}) => {
   return (
     <>
       <section className={section}>
-          <BlurFade delay={0.2} inView>
+          <BlurFade delay={0.3} inView>
             <h3 className={`${sectionName} text-center`}>
               {perk.toUpperCase()}
             </h3>

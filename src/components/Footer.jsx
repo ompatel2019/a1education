@@ -66,9 +66,12 @@ const Footer = () => {
           <p className="p">
             © {new Date().getFullYear()} A1 Education. All rights reserved.
           </p>
-          <a target="_blank" rel="noreferrer" href="https://bytesitedigital.com.au/">
-            <p className="p">Powered by bytesitedigital</p>
-          </a>
+          <div className='flex items-center space-x-1 p'>
+            <a target="_blank" rel="noreferrer" href="https://bytesitedigital.com.au/">
+              <p className="p">Powered by bytesitedigital</p>
+            </a>
+            <i class="bi bi-rocket-takeoff"></i>
+          </div>
         </div>
       </div>
     </footer>
