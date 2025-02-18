@@ -8,6 +8,7 @@ import WhyChooseUs from '../components/WhyChooseUs';
 import AboutUs from '../components/AboutUs';
 import Pricing from '../components/Pricing'
 import Testimonials from '../components/Testimonials';
+import PhoneImagesMarquee from '../components/PhoneImagesMarquee';
 import Faqs from '../components/Faqs';
 import SlidingSchools from '../components/SlidingSchools';
 
@@ -54,6 +55,7 @@ const HomePage = ({
         sectionDescriptionHeading={sectionDescriptionHeading}
         sectionText={sectionText}
       />
+      <PhoneImagesMarquee/>
       <AboutUs
         section={section}
         sectionName={sectionName}
