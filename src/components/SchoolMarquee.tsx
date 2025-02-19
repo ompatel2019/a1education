@@ -48,8 +48,8 @@ const schoolsData = [
   },
   {
     name: school4,
-    schoolName: "Aurthur Phillip High School",
-    alt: "Aurthur Phillip High School logo",
+    schoolName: "Arthur Phillip High School",
+    alt: "Arthur Phillip High School logo",
   },
   {
     name: school5,
