@@ -38,7 +38,6 @@ const reviews = [
     sig: "20% Improvement in Marks - Macquarie Fields High School",
     body: "Starting Year 11 with a basic understanding of economics, I advanced my knowledge after joining A1 Education. Karan’s detailed feedback and round-the-clock support via various channels significantly improved my short answer and essay writing. Their resources and guidance transformed my exam performance and boosted my confidence. I highly recommend their tutoring services.",
   },
-  // New Reviews
   {
     name: "Aryan Adlakha",
     sig: "Hills Adventist College - Class of '25",
@@ -121,7 +120,7 @@ export default function TestimonialMarquee() {
           <ReviewCard key={review.sig} {...review} />
         ))}
       </Marquee>
-      <Marquee reverse pauseOnHover className="[--duration:20s]">
+      <Marquee reverse pauseOnHover className="[--duration:22s]">
         {secondRow.map((review) => (
           <ReviewCard key={review.sig} {...review} />
         ))}
