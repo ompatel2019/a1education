@@ -8,7 +8,7 @@ interface TextAnimateDemoProps {
 
 export function TextAnimateDemo({ text, by }: TextAnimateDemoProps) {
   return (
-    <TextAnimate animation="blurInUp" by={by} once>
+    <TextAnimate className='h1 font-generalSans-bold' animation="blurInDown" by={by} >
       {text}
     </TextAnimate>
   );
