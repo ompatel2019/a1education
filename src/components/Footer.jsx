@@ -23,20 +23,18 @@ const Footer = () => {
             <HashLink to="/" smooth className="p hover:underline">
               Home
             </HashLink>
-            <HashLink to="/specialty" smooth className="p hover:underline">
-              Specialty
-            </HashLink>
             <HashLink to="/whychooseus" smooth className="p hover:underline">
               Why Choose Us
             </HashLink>
             <HashLink to="/aboutus" smooth className="p hover:underline">
               About Us
             </HashLink>
-            <HashLink to="/pricing" smooth className="p hover:underline">
-              Pricing
-            </HashLink>
             <HashLink to="/contact" smooth className="p hover:underline">
               Contact Us
+            </HashLink>
+            <HashLink target='_blank' to="https://g.page/r/CUphtEkfNIs9EBI/review" smooth className="p hover:underline flex space-x-1">
+              <p>Leave a Review</p>
+              <i class="bi bi-arrow-up-right-circle-fill"></i>
             </HashLink>
           </nav>
           {/* Right: Social Icons */}
@@ -68,9 +66,8 @@ const Footer = () => {
           </p>
           <div className='flex items-center space-x-1 p'>
             <a target="_blank" rel="noreferrer" href="https://bytesitedigital.com.au/">
-              <p className="p">Powered by bytesitedigital</p>
+              <p className="p">Powered by bytesitedigital.</p>
             </a>
-            <i class="bi bi-rocket-takeoff"></i>
           </div>
         </div>
       </div>
