@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://a1education.com.au/sitemap.xml

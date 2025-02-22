@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Home page -->
+  <url>
+    <loc>https://a1education.com.au/</loc>
+    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Specialty page -->
+  <url>
+    <loc>https://a1education.com.au/specialty</loc>
+    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Why Choose Us page -->
+  <url>
+    <loc>https://a1education.com.au/whychooseus</loc>
+    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- About us page -->
+  <url>
+    <loc>https://a1education.com.au/aboutus</loc>
+    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Contact page -->
+  <url>
+    <loc>https://a1education.com.au/contact</loc>
+    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+<!-- 
+   Blogs landing page 
+  <url>
+    <loc>https://a1education.com.au/blogs</loc>
+    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+   Individual blog pages 
+  <url>
+    <loc>https://a1education.com.au/blogs/1</loc>
+    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://a1education.com.au/blogs/2</loc>
+    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://a1education.com.au/blogs/3</loc>
+    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url> -->
+
+</urlset>

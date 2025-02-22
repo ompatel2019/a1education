@@ -72,7 +72,7 @@
     <meta property="og:url" content="https://a1education.com.au/" />
     <meta
       property="og:image"
-      content="https://a1education.com.au/path-to-default-image.png"
+      content="https://a1education.com.au/favicon.svg"
     />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
@@ -88,31 +88,51 @@
     />
     <meta
       name="twitter:image"
-      content="https://a1education.com.au/path-to-default-image.png"
+      content="https://a1education.com.au/favicon.svg"
     />
 
     <!-- Structured Data (JSON-LD):
          Embeds Business Schema markup to help search engines understand your business details.
     -->
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "A1 Education",
-        "url": "https://a1education.com.au",
-        "logo": "https://a1education.com.au/path-to-logo.png",
-        "description": "A1 Education is a specialized Year 11 & 12 Economics tutoring provider in Sydney. Achieve your best in HSC Economics with expert tutors.",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "207/30 Campbell Street",
-          "addressLocality": "Blacktown",
-          "addressRegion": "NSW",
-          "postalCode": "2148",
-          "addressCountry": "Australia"
-        },
-        "telephone": "+61402097284"
-      }
-    </script>
+     {
+       "@context": "https://schema.org",
+       "@type": "LocalBusiness",
+       "name": "A1 Education",
+       "image": "https://a1education.com.au/favicon.svg",
+       "@id": "",
+       "url": "https://a1education.com.au/",
+       "telephone": "0402097284",
+       "priceRange": "60-70",
+       "address": {
+         "@type": "PostalAddress",
+         "streetAddress": "Suite 207/30 Campbell St, Blacktown",
+         "addressLocality": "Sydney",
+         "addressRegion": "NSW",
+         "postalCode": "2148",
+         "addressCountry": "AU"
+       },
+       "geo": {
+         "@type": "GeoCoordinates",
+         "latitude": -33.7716599,
+         "longitude": 150.9097367
+       },
+       "openingHoursSpecification": {
+         "@type": "OpeningHoursSpecification",
+         "dayOfWeek": [
+           "Monday",
+           "Tuesday",
+           "Wednesday",
+           "Thursday",
+           "Friday",
+           "Saturday",
+           "Sunday"
+         ],
+         "opens": "08:00",
+         "closes": "17:00"
+       } 
+     }
+     </script>
   </head>
   <body>
     <!-- React Root Element:
