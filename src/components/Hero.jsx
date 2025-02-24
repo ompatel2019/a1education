@@ -64,6 +64,13 @@ const Hero = ({}) => {
                 className='hero-slide-img sm:hidden rounded-md' 
                 width="400" 
                 height="400" 
+                loading="eager"
+                srcSet={`
+                  ${hero9}?w=300 300w,
+                  ${hero9}?w=400 400w,
+                  ${hero9}?w=500 500w
+                `}
+                sizes="(max-width: 640px) 300px, 400px"
               />
             </div>
           </BlurFade>

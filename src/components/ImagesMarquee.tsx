@@ -32,18 +32,19 @@ const ImageCard: React.FC<ImageCardProps> = ({ name, alt }) => {
         "border-gray-950/[.1]"
       )}
     >
-      <div className="flex flex-row items-center gap-2 justify-center">
-        <div className="flex flex-col justify-center items-center">
-          <img
-            src={name}
-            alt={alt}
-            className="mb-2 w-auto hero-slide-img rounded-md"
-            width="200"
-            height="100"
-            loading="lazy" // <-- Lazy-load offscreen images
-          />
-        </div>
-      </div>
+      <img
+        src={name}
+        alt={alt}
+        className="mb-2 w-auto hero-slide-img rounded-md"
+        loading="lazy"
+        srcSet={`
+          ${name}?w=320 320w,
+          ${name}?w=480 480w,
+          ${name}?w=640 640w,
+          ${name}?w=800 800w
+        `}
+        sizes="(max-width: 640px) 320px, (max-width: 768px) 480px, (max-width: 1024px) 640px, 800px"
+      />
     </figure>
   );
 };
