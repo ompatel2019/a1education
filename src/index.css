@@ -67,7 +67,7 @@ html {
 @layer base {
   :root {
     /* HeroUI / MagicUI variables */
-    --primary: #4A6CF7;          /* for bg-primary */
+    --primary: #344CAD;          /* for bg-primary */
     --primary-hover: #3B56D3;    /* for bg-primary-hover */
 
     /* Already present from your config (replace as needed) */

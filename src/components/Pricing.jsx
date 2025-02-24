@@ -1,3 +1,4 @@
+// Pricing.jsx
 import React, { useEffect, useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { BlurFade } from "@/components/magicui/blur-fade";
@@ -50,8 +51,8 @@ const Pricing = ({ section, sectionName, sectionSubheading }) => {
     <section className={section}>
       <BlurFade delay={0.25} inView>
         <div className="text-center space-x-4">
-          <h3 className={sectionName}>{name.toUpperCase()}</h3>
-          <h4 className={sectionSubheading}>{subheading}</h4>
+          <h2 className={sectionName}>{name.toUpperCase()}</h2>
+          <h3 className={sectionSubheading}>{subheading}</h3>
         </div>
       </BlurFade>
 
@@ -84,7 +85,7 @@ const Pricing = ({ section, sectionName, sectionSubheading }) => {
                 index === 1 ? 'bg-gradient-to-b-1 text-white border-primary' : 'bg-white text-black'
               } hover:2xl:py-12 hover:lg:py-10 hover:py-8 transition-all`}
             >
-              <p className="h6">{tab.header}</p>
+              <h4 className="h6">{tab.header}</h4>
               <h5
                 className={`h3 font-generalSans-semibold pb-5 border-b-2 ${
                   index === 0 ? 'border-black' : 'border-white'
