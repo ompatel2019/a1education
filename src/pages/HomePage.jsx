@@ -1,15 +1,15 @@
-import React from 'react';
-import SeoHelmet from '../components/SeoHelmet';
+import React from "react";
+import SeoHelmet from "../components/SeoHelmet";
 
 // Sections
-import Hero from '../components/Hero';
-import Specialty from '../components/Specialty';
-import WhyChooseUs from '../components/WhyChooseUs';
-import Pricing from '../components/Pricing'
-import Testimonials from '../components/Testimonials';
-import PhoneImagesMarquee from '../components/PhoneImagesMarquee';
-import Faqs from '../components/Faqs';
-import SlidingSchools from '../components/SlidingSchools';
+import Hero from "../components/Hero";
+import Specialty from "../components/Specialty";
+import WhyChooseUs from "../components/WhyChooseUs";
+import Pricing from "../components/Pricing";
+import Testimonials from "../components/Testimonials";
+import PhoneImagesMarquee from "../components/PhoneImagesMarquee";
+import Faqs from "../components/Faqs";
+import SlidingSchools from "../components/SlidingSchools";
 
 const HomePage = ({
   section,
@@ -20,14 +20,15 @@ const HomePage = ({
   heroImages,
   testimonialsData,
   schoolsData,
-  aboutUsPlaceholder
+  aboutUsPlaceholder,
 }) => {
   const jsonLdHomePage = {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "Home - A1 Education",
-    "description": "Welcome to A1 Education. Specializing in Year 11 & 12 HSC Economics tutoring in Sydney.",
-    "url": "https://a1education.com.au/"
+    "description":
+      "Welcome to A1 Education. Specializing in Year 11 & 12 HSC Economics tutoring in Sydney.",
+    "url": "https://a1education.com.au/",
   };
 
   return (
@@ -54,7 +55,7 @@ const HomePage = ({
         sectionDescriptionHeading={sectionDescriptionHeading}
         sectionText={sectionText}
       />
-      <PhoneImagesMarquee/>
+      <PhoneImagesMarquee />
       <Pricing
         section={section}
         sectionName={sectionName}

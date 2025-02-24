@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -47,19 +46,29 @@ html {
   height: 280px;
 }
 @media (min-width: 640px) {
-  .hero-slide-img { height: 320px; }
+  .hero-slide-img {
+    height: 320px;
+  }
 }
 @media (min-width: 768px) {
-  .hero-slide-img { height: 360px; }
+  .hero-slide-img {
+    height: 360px;
+  }
 }
 @media (min-width: 1024px) {
-  .hero-slide-img { height: 380px; }
+  .hero-slide-img {
+    height: 380px;
+  }
 }
 @media (min-width: 1280px) {
-  .hero-slide-img { height: 400px; }
+  .hero-slide-img {
+    height: 400px;
+  }
 }
 @media (min-width: 1440px) {
-  .hero-slide-img { height: 400px; }
+  .hero-slide-img {
+    height: 400px;
+  }
 }
 
 /* Variables for "primary" etc. */
@@ -67,7 +76,7 @@ html {
   :root {
     /* HeroUI / MagicUI variables */
     --primary: #4569F7;          /* for bg-primary */
-    --primary-hover: #3B56D3;    /* for bg-primary-hover */
+    --primary-hover: #3B56D3;     /* for bg-primary-hover */
 
     /* Already present from your config (replace as needed) */
     --background: 0 0% 100%;
