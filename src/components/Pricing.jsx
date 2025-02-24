@@ -84,7 +84,7 @@ const Pricing = ({ section, sectionName, sectionSubheading }) => {
                 index === 1 ? 'bg-gradient-to-b-1 text-white border-primary' : 'bg-white text-black'
               } hover:2xl:py-12 hover:lg:py-10 hover:py-8 transition-all`}
             >
-              <h6 className="h6">{tab.header}</h6>
+              <p className="h6">{tab.header}</p>
               <h5
                 className={`h3 font-generalSans-semibold pb-5 border-b-2 ${
                   index === 0 ? 'border-black' : 'border-white'

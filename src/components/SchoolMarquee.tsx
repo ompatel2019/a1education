@@ -11,9 +11,9 @@ import school5 from "../assets/school5.webp";
 import school6 from "../assets/school6.webp";
 import school7 from "../assets/school7.webp";
 import school8 from "../assets/school8.webp";
-import school9 from "../assets/school9.jpg";
-import school10 from "../assets/school10.png";
-import school11 from "../assets/school11.png";
+import school9 from "../assets/school9.webp";
+import school10 from "../assets/school10.webp";
+import school11 from "../assets/school11.webp";
 
 const schoolsData = [
   {
