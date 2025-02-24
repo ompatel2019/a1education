@@ -62,7 +62,6 @@ const Hero = ({}) => {
                 src={hero9} 
                 alt="Student at A1 education" 
                 className='hero-slide-img sm:hidden rounded-md' 
-                loading="lazy" 
                 width="400" 
                 height="400" 
               />
