@@ -59,7 +59,7 @@ const AboutUs = ({
         <div className="2xl:space-y-12 lg:space-y-10 md:space-y-8 sm:space-y-6 space-y-4 col-span-2 border-white flex flex-col max-md:col-span-1 items-center justify-center">
 
         <div className="space-y-2">
-          <h5 className="h6">{topDescription}</h5>
+          <h6 className="h6">{topDescription}</h6>
         </div>
 
         </div>

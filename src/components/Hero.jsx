@@ -15,7 +15,7 @@ const Hero = ({}) => {
     { numberIcon: <i className="bi bi-3-square h6 max-md:text-2xl"></i>, step: 'Master' },
   ];
   const buttons = [
-    { name: 'Learn More', to: '/specialty' },
+    { name: 'Our Specialty', to: '/specialty' },
     { name: 'Book Free Trial', to: '/contact' },
   ];
 

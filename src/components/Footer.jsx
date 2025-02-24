@@ -40,7 +40,7 @@ const Footer = () => {
           {/* Right: Social Icons */}
           <div className="flex space-x-4">
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/a1educationaustralia/"
               target="_blank"
               rel="noopener noreferrer"
               className="p hover:text-white"
@@ -48,7 +48,7 @@ const Footer = () => {
               <i className="bi bi-instagram text-xl"></i>
             </a>
             <a
-              href="https://google.com"
+              href="https://www.google.com/maps?sca_esv=0d523a7910ac4013&rlz=1C5CHFA_enAU1102AU1102&output=search&q=a1+education&source=lnms&fbs=ABzOT_CWdhQLP1FcmU5B0fn3xuWpA-dk4wpBWOGsoR7DG5zJBnsX62dbVmWR6QCQ5QEtPRqut5gkyra9fZFbsKm1oGezOI6DQjxNKZ2V8dXgJRWA_aVAvk7ndB4ZfOwxp0ba6GA2ThJkmNNGn2iwK5MZJcxi4ccCUFUQ19XYcWSqTN2Jl2Lg5UNklJ1uLNdq6X71Y7wnw1mLrumX-MWu_uVKOPeXkql0xw&entry=mc&ved=1t:200715&ictx=111"
               target="_blank"
               rel="noopener noreferrer"
               className="p hover:text-white"
