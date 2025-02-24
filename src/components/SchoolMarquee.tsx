@@ -1,5 +1,6 @@
+// SchoolMarquee.jsx
 import { cn } from "@/lib/utils";
-import { Marquee } from "@/components/magicui/marquee";
+import { Marquee } from "@/components/magicui/images-marquee";
 import React from "react";
 
 // Import your assets
@@ -91,8 +92,14 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ name, schoolName, alt }) => {
     >
       <div className="flex flex-row items-center gap-2 justify-center">
         <div className="flex flex-col justify-center items-center">
-          {/* Use a regular <img> tag to render the image */}
-          <img src={name} alt={alt} className="mb-2 lg:h-[176px] md:h-[120px] h-[96px]" />
+          <img 
+            src={name} 
+            alt={alt} 
+            className="mb-2 lg:h-[176px] md:h-[120px] h-[96px] 2xl:w-[176px] lg:w-[120px] w-[96px]" 
+            loading="lazy" 
+            width="200" 
+            height="100" 
+          />
           <figcaption className="font-medium dark:text-white text-center">
             {schoolName}
           </figcaption>

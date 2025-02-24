@@ -1,9 +1,10 @@
+// Hero.jsx
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import AnimateOnScroll from '../tools/AnimateOnScroll';
 import ImagesMarquee from './ImagesMarquee';
-import { TextAnimateDemo } from './TextAnimateDemo'
-import hero9 from '../assets/hero9.webp'
+import { TextAnimateDemo } from './TextAnimateDemo';
+import hero9 from '../assets/hero9.webp';
 import { BlurFade } from "@/components/magicui/blur-fade";
 
 const Hero = ({}) => {
@@ -22,17 +23,14 @@ const Hero = ({}) => {
   return (
     <AnimateOnScroll className='fade-up fade-in'>
       <section className="2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] text-white font-generalSans">
-        <div
-          className="bg-gradient-to-b 2xl:rounded-[32px] lg:rounded-[24px] md:rounded-[16px] rounded-[8px]
+        <div className="bg-gradient-to-b 2xl:rounded-[32px] lg:rounded-[24px] md:rounded-[16px] rounded-[8px]
           flex flex-col space-y-10 2xl:py-[96px] lg:py-[72px] md:py-[48px] py-[24px]
-          text-center items-center"
-        >
+          text-center items-center">
           <div className="responsivePad flex flex-col 2xl:space-y-10 lg:space-y-8 space-y-6 text-center items-center font-generalSans-medium">
             <h5 className="h5 font-generalSans-semibold">{heroTopText}</h5>
             <div className='h1 font-generalSans-bold 2xl:px-[200px]'>
               <TextAnimateDemo text={heroHeading} by={"word"} />
             </div>
-            {/* Numbered steps */}
             <div className="flex space-x-4 h7 max-md:space-x-4">
               {threeSteps.map((step, index) => (
                 <div key={index} className="space-x-2 flex items-center max-md:space-x-1">
@@ -41,8 +39,7 @@ const Hero = ({}) => {
                 </div>
               ))}
             </div>
-            {/* Buttons */}
-          <div className="flex space-x-4">
+            <div className="flex space-x-4">
               {buttons.map((button, index) => (
                 <HashLink
                   key={index}
@@ -56,10 +53,19 @@ const Hero = ({}) => {
               ))}
             </div>
           </div>
-          <div className="max-sm:hidden"><ImagesMarquee/></div>
+          <div className="max-sm:hidden">
+            <ImagesMarquee />
+          </div>
           <BlurFade delay={0.2} inView>
             <div className='pb-6 responsivePad'>
-              <img src={hero9} alt="Student at A1 education" className='hero-slide-img sm:hidden rounded-md' />
+              <img 
+                src={hero9} 
+                alt="Student at A1 education" 
+                className='hero-slide-img sm:hidden rounded-md' 
+                loading="lazy" 
+                width="400" 
+                height="400" 
+              />
             </div>
           </BlurFade>
         </div>
@@ -67,4 +73,5 @@ const Hero = ({}) => {
     </AnimateOnScroll>
   );
 };
+
 export default Hero;

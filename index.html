@@ -2,105 +2,58 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!--
-      Viewport Meta Tag:
-      Ensures proper scaling and rendering on mobile devices.
-    -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Favicon & App Icons: -->
+    <!-- Favicon & App Icons -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Page Title:
-         Appears in browser tabs and is used by search engines as the clickable headline.
-    -->
+    <!-- Page Title -->
     <title>A1 Education - Year 11 & 12 Economics Tutoring in Sydney</title>
 
-    <!-- Meta Description:
-         Provides a summary of the page content for search engines and social previews.
-    -->
-    <meta
-      name="description"
-      content="A1 Education specializes in Year 11 and Year 12 Economics tutoring in Sydney. Unlock your HSC Economics success today."
-    />
+    <!-- Meta Description -->
+    <meta name="description" content="A1 Education specializes in Year 11 and Year 12 Economics tutoring in Sydney. Unlock your HSC Economics success today." />
 
-    <!-- Meta Keywords:
-         (Optional) Lists targeted keywords. Note: most modern search engines give little weight to this tag.
-    -->
-    <meta
-      name="keywords"
-      content="A1 Education, Economics tutoring, HSC Economics, Year 11, Year 12, Sydney, tutoring service"
-    />
+    <!-- Meta Keywords -->
+    <meta name="keywords" content="A1 Education, Economics tutoring, HSC Economics, Year 11, Year 12, Sydney, tutoring service" />
 
-    <!-- Canonical Tag:
-         Helps prevent duplicate content issues by specifying the preferred URL.
-    -->
+    <!-- Canonical Tag -->
     <link rel="canonical" href="https://a1education.com.au/" />
 
-    <!-- Robots Meta Tag:
-         Instructs search engine crawlers to index the page and follow the links.
-    -->
+    <!-- Robots Meta Tag -->
     <meta name="robots" content="index, follow" />
-
-    <!-- X-Robots-Tag:
-         Additional crawler instructions (often set via HTTP headers, but can be included here).
-    -->
     <meta name="x-robots-tag" content="index, follow" />
 
-    <!-- Publisher Meta Tag:
-         Specifies the publisher or brand behind the content.
-    -->
+    <!-- Publisher Meta Tag -->
     <meta name="publisher" content="A1 Education" />
 
-    <!-- Theme Color:
-         Sets the browser toolbar color on supported mobile devices.
-    -->
+    <!-- Theme Color -->
     <meta name="theme-color" content="#ffffff" />
 
-    <!-- Open Graph Meta Tags:
-         Enhance link previews when your site is shared on social media platforms.
-    -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="A1 Education - Year 11 & 12 Economics Tutoring in Sydney" />
-    <meta
-      property="og:description"
-      content="Join A1 Education, the specialist in Year 11 & 12 HSC Economics tutoring in Sydney. Ace your exams with expert guidance!"
-    />
+    <meta property="og:description" content="Join A1 Education, the specialist in Year 11 & 12 HSC Economics tutoring in Sydney. Ace your exams with expert guidance!" />
     <meta property="og:url" content="https://a1education.com.au/" />
-    <meta
-      property="og:image"
-      content="https://a1education.com.au/favicon.svg"
-    />
+    <meta property="og:image" content="https://a1education.com.au/favicon.svg" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
 
-    <!-- Twitter Card Meta Tags:
-         Provide rich content previews for tweets sharing your page.
-    -->
+    <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="A1 Education - Year 11 & 12 Economics Tutoring in Sydney" />
-    <meta
-      name="twitter:description"
-      content="Join A1 Education for specialized Year 11 & 12 Economics tutoring in Sydney and boost your HSC results."
-    />
-    <meta
-      name="twitter:image"
-      content="https://a1education.com.au/favicon.svg"
-    />
+    <meta name="twitter:description" content="Join A1 Education for specialized Year 11 & 12 Economics tutoring in Sydney and boost your HSC results." />
+    <meta name="twitter:image" content="https://a1education.com.au/favicon.svg" />
 
-    <!-- Structured Data (JSON-LD):
-         Embeds Business Schema markup to help search engines understand your business details.
-    -->
+    <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
      {
        "@context": "https://schema.org",
        "@type": "LocalBusiness",
        "name": "A1 Education",
        "image": "https://a1education.com.au/favicon.svg",
-       "@id": "",
        "url": "https://a1education.com.au/",
        "telephone": "0402097284",
        "priceRange": "60-70",
@@ -130,27 +83,25 @@
          ],
          "opens": "08:00",
          "closes": "17:00"
-       } 
+       }
      }
-     </script>
+    </script>
+
+    <!-- Preload the Largest Contentful Paint Image -->
+    <link rel="preload" as="image" href="/assets/hero9.webp" />
+
   </head>
   <body>
-    <!-- React Root Element:
-         This is where your React application will be mounted.
-    -->
     <div id="root"></div>
 
-     <!-- Netlify form -->
+    <!-- Netlify form -->
     <form name="contact" netlify netlify-honeypot="bot-field" hidden>
-          <input type="text" name="name" />
-          <input type="email" name="email" />
-          <input type="text" name="number" />
-          <textarea name="message"></textarea>
-     </form>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="number" />
+      <textarea name="message"></textarea>
+    </form>
 
-    <!-- Main Entry Script:
-         Loads your React application bundle.
-    -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

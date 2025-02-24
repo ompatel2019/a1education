@@ -56,7 +56,7 @@ export default {
   
 		// 2) Custom gradient that overrides "bg-gradient-to-b"
 		backgroundImage: {
-		  "gradient-to-b": "linear-gradient(to bottom, #344CAD 0%, #5296E3 50%, #7A8BD1 100%)",
+		  "gradient-to-b": "linear-gradient(to bottom, #4569F7 0%, #5296E3 50%, #7A8BD1 100%)",
 		},
   
 		// 3) Fonts

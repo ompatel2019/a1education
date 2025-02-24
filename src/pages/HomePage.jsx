@@ -5,7 +5,6 @@ import SeoHelmet from '../components/SeoHelmet';
 import Hero from '../components/Hero';
 import Specialty from '../components/Specialty';
 import WhyChooseUs from '../components/WhyChooseUs';
-import AboutUs from '../components/AboutUs';
 import Pricing from '../components/Pricing'
 import Testimonials from '../components/Testimonials';
 import PhoneImagesMarquee from '../components/PhoneImagesMarquee';
@@ -56,14 +55,6 @@ const HomePage = ({
         sectionText={sectionText}
       />
       <PhoneImagesMarquee/>
-      <AboutUs
-        section={section}
-        sectionName={sectionName}
-        sectionSubheading={sectionSubheading}
-        sectionDescriptionHeading={sectionDescriptionHeading}
-        sectionText={sectionText}
-        placeholder={aboutUsPlaceholder}
-      />
       <Pricing
         section={section}
         sectionName={sectionName}
