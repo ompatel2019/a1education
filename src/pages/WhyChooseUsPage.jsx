@@ -1,3 +1,4 @@
+// WhyChooseUsPage.jsx
 import React from 'react';
 import SeoHelmet from '../components/SeoHelmet';
 
@@ -30,6 +31,7 @@ const WhyChooseUsPage = ({
       <SeoHelmet
         title="Why Choose Us - A1 Education"
         description="Discover why A1 Education is the best for Year 11 & 12 HSC Economics tutoring in Sydney. Consistent top results!"
+        canonicalUrl="https://a1education.com.au/whychooseus"
         jsonSchema={jsonLdWhyChooseUsPage}
       />
 

@@ -1,3 +1,4 @@
+// ContactPage.jsx
 import React from 'react';
 import SeoHelmet from '../components/SeoHelmet';
 
@@ -28,6 +29,7 @@ const ContactPage = ({
       <SeoHelmet
         title="Contact - A1 Education"
         description="Reach out to Sydney’s top Economics tutors at A1 Education and book a trial lesson on us."
+        canonicalUrl="https://a1education.com.au/contact"
         jsonSchema={jsonLdContactPage}
       />
 

@@ -1,3 +1,4 @@
+// AboutUsPage.jsx
 import React from 'react';
 import SeoHelmet from '../components/SeoHelmet';
 
@@ -33,6 +34,7 @@ const AboutUsPage = ({
       <SeoHelmet
         title="About Us - A1 Education"
         description="Discover how our Economics tutors in Sydney have built a reputation for excellence, transforming students into leaders in economic thinking."
+        canonicalUrl="https://a1education.com.au/aboutus"
         jsonSchema={jsonLdAboutUsPage}
       />
 
