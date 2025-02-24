@@ -16,6 +16,8 @@ const Footer = () => {
                 alt="A1 Education company logo"
                 className="h-8 w-auto"
                 loading="lazy"
+                width="100" 
+                height="100" 
               />
             </HashLink>
           </div>

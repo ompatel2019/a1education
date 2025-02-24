@@ -28,6 +28,8 @@ const Navbar = ({ navbarLinks }) => {
                   alt="A1 Education main logo"
                   className="lg:w-[152px] lg:h-[64px] w-[96px] h-[40px]"
                   loading="lazy"
+                  width="100" 
+                  height="100" 
                 />
               </HashLink>
             )}
