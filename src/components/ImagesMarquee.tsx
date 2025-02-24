@@ -36,7 +36,6 @@ const ImageCard: React.FC<ImageCardProps> = ({ name, alt }) => {
         src={name}
         alt={alt}
         className="mb-2 w-auto hero-slide-img rounded-md"
-        loading="lazy"
         srcSet={`
           ${name}?w=320 320w,
           ${name}?w=480 480w,

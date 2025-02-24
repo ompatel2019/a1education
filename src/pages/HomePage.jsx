@@ -1,6 +1,6 @@
 // HomePage.jsx
 import React from "react";
-import SeoHelmet from "../components/SeoHelmet";
+import SeoHelmet from '../tools/SeoHelmet';
 
 // Sections
 import Hero from "../components/Hero";

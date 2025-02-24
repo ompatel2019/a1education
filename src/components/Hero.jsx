@@ -1,4 +1,3 @@
-// Hero.jsx
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import AnimateOnScroll from '../tools/AnimateOnScroll';
@@ -6,8 +5,9 @@ import ImagesMarquee from './ImagesMarquee';
 import { TextAnimateDemo } from './TextAnimateDemo';
 import hero9 from '../assets/hero9.webp';
 import { BlurFade } from "@/components/magicui/blur-fade";
+import ImageComponent from './ImageComponent';
 
-const Hero = ({}) => {
+const Hero = () => {
   const heroTopText = 'On-campus / Online Years 11-12 Economics Tutoring';
   const heroHeading = 'HSC Economics Specialists In Sydney';
   const threeSteps = [
@@ -58,19 +58,19 @@ const Hero = ({}) => {
           </div>
           <BlurFade delay={0.2} inView>
             <div className='pb-6 responsivePad'>
-              <img 
-                src={hero9} 
-                alt="Student at A1 education" 
-                className='hero-slide-img sm:hidden rounded-md' 
-                width="400" 
-                height="400" 
-                loading="eager"
+              <ImageComponent 
+                src={hero9}
+                alt="Student at A1 education"
+                className="hero-slide-img sm:hidden rounded-md"
+                width="400"
+                height="400"
                 srcSet={`
                   ${hero9}?w=300 300w,
                   ${hero9}?w=400 400w,
                   ${hero9}?w=500 500w
                 `}
                 sizes="(max-width: 640px) 300px, 400px"
+                priority={true}  // Ensure this critical image loads eagerly
               />
             </div>
           </BlurFade>

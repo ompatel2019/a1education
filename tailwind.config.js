@@ -10,14 +10,11 @@ export default {
 		colors: {
 		  primary: "var(--primary)",       
 		  "primary-hover": "var(--primary-hover)",
-  
 		  black: "#2A2A2A",
 		  white: "#FFFFFF",
 		  grey: "#525252",
-  
 		  background: "hsl(var(--background))",
 		  foreground: "hsl(var(--foreground))",
-  
 		  card: {
 			DEFAULT: "hsl(var(--card))",
 			foreground: "hsl(var(--card-foreground))",
@@ -53,13 +50,9 @@ export default {
 			"5": "hsl(var(--chart-5))",
 		  },
 		},
-  
-		// 2) Custom gradient that overrides "bg-gradient-to-b"
 		backgroundImage: {
 		  "gradient-to-b": "linear-gradient(to bottom, #4569F7 0%, #5296E3 50%, #7A8BD1 100%)",
 		},
-  
-		// 3) Fonts
 		fontFamily: {
 		  "generalSans-light": ["GeneralSans-Light", "sans-serif"],
 		  "generalSans-light-italic": ["GeneralSans-LightItalic", "sans-serif"],
@@ -74,8 +67,6 @@ export default {
 		  "generalSans-variable": ["GeneralSans-Variable", "sans-serif"],
 		  "generalSans-variable-italic": ["GeneralSans-VariableItalic", "sans-serif"],
 		},
-  
-		// 4) Marquee animations (for MagicUI marquee)
 		keyframes: {
 		  marquee: {
 			from: { transform: "translateX(0)" },

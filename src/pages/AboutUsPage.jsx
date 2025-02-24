@@ -1,6 +1,6 @@
 // AboutUsPage.jsx
 import React from 'react';
-import SeoHelmet from '../components/SeoHelmet';
+import SeoHelmet from '../tools/SeoHelmet';
 
 // Components
 import PageTitle from '../components/PageTitle';

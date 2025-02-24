@@ -1,6 +1,6 @@
 // SpecialtyPage.jsx
 import React from 'react';
-import SeoHelmet from '../components/SeoHelmet';
+import SeoHelmet from '../tools/SeoHelmet';
 
 // Sections
 import PageTitle from '../components/PageTitle';
