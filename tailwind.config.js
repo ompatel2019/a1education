@@ -13,7 +13,7 @@ export default {
   
 		  black: "#2A2A2A",
 		  white: "#FFFFFF",
-		  grey: "#B0B0B0",
+		  grey: "#525252",
   
 		  background: "hsl(var(--background))",
 		  foreground: "hsl(var(--foreground))",

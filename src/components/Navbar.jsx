@@ -1,3 +1,4 @@
+// Navbar.jsx
 import React, { useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { FiMenu } from 'react-icons/fi';
@@ -11,10 +12,6 @@ const Navbar = ({ navbarLinks }) => {
 
   return (
     <>
-      {/* 
-          Wrap the animated content in a header with sticky positioning.
-          This header is sticky at the top regardless of the content above it.
-      */}
       <header className="sticky top-0 z-50">
         <AnimateOnScroll className="fade-in fade-down">
           <div
@@ -74,40 +71,41 @@ const Navbar = ({ navbarLinks }) => {
         </AnimateOnScroll>
       </header>
 
-      {/* Mobile Menu Overlay */}
-      <div
-        className={`
-          fixed inset-0
-          bg-primary text-white h1 px-4 font-generalSans-medium
-          flex flex-col items-left justify-center
-          transition-opacity duration-300
-          ${showMenu ? 'opacity-100 pointer-events-auto z-40' : 'opacity-0 pointer-events-none z-[-1]'}
-        `}
-        aria-hidden={!showMenu}
-      >
-        {/* Close Icon in Overlay */}
-        <div className="absolute top-4 right-4">
-          <h2 onClick={toggleMenu} className="cursor-pointer">
-            <RxCross2 className="w-10 h-10 text-white" />
-          </h2>
-        </div>
+      {/* Mobile Menu Overlay: Rendered only when showMenu is true */}
+      {showMenu && (
+        <div
+          className="
+            fixed inset-0
+            bg-primary text-white h1 px-4 font-generalSans-medium
+            flex flex-col items-left justify-center
+            transition-opacity duration-300 z-40
+          "
+        >
+          {/* Close Icon */}
+          <div className="absolute top-4 right-4">
+            <h2 onClick={toggleMenu} className="cursor-pointer">
+              <RxCross2 className="w-10 h-10 text-white" />
+            </h2>
+          </div>
 
-        <nav role="navigation" aria-label="Mobile menu">
-          <ul className="flex flex-col space-y-6">
-            {navbarLinks.map((link, index) => (
-              <li
-                key={index}
-                className="hover:text-grey transition-all"
-                onClick={toggleMenu}
-              >
-                <HashLink smooth to={link.to}>
-                  {link.name}
-                </HashLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
+          {/* Mobile Navigation */}
+          <nav role="navigation" aria-label="Mobile menu">
+            <ul className="flex flex-col space-y-6">
+              {navbarLinks.map((link, index) => (
+                <li
+                  key={index}
+                  className="hover:text-grey transition-all"
+                  onClick={toggleMenu}
+                >
+                  <HashLink smooth to={link.to}>
+                    {link.name}
+                  </HashLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      )}
     </>
   );
 };
