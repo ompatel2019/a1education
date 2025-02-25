@@ -112,7 +112,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ name, schoolName, alt }) => {
 export default function SchoolMarquee() {
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-      <Marquee pauseOnHover className="[--duration:20s]">
+      <Marquee pauseOnHover className="[--duration:25s]">
         {firstRow.map((school, index) => (
           <SchoolCard key={`${school.schoolName}-${index}`} {...school} />
         ))}
