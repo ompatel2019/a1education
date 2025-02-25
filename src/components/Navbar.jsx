@@ -21,7 +21,7 @@ const Navbar = ({ navbarLinks }) => {
                   <ImageComponent
                     src={logo}
                     alt="A1 Education main logo"
-                    className="lg:w-[146px] lg:h-[48px] w-[88px] h-[32px]"
+                    className="lg:w-[146px] lg:h-[47.24px] w-[88px] h-[28.47px]"
                     width="152"
                     height="64"
                     loading="lazy"
