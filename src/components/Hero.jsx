@@ -3,9 +3,6 @@ import { HashLink } from 'react-router-hash-link';
 import AnimateOnScroll from '../tools/AnimateOnScroll';
 import ImagesMarquee from './ImagesMarquee';
 import { TextAnimateDemo } from './TextAnimateDemo';
-import hero9 from '../assets/hero9.webp';
-import { BlurFade } from "@/components/magicui/blur-fade";
-import ImageComponent from './ImageComponent';
 
 const Hero = () => {
   const heroTopText = 'On-campus / Online Years 11-12 Economics Tutoring';
@@ -22,14 +19,16 @@ const Hero = () => {
 
   return (
     <AnimateOnScroll className="fade-up fade-in">
-      <section className="2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] text-white font-generalSans">
+      <section className="2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] text-white">
         <div className="bg-gradient-to-b 2xl:rounded-[32px] lg:rounded-[24px] md:rounded-[16px] rounded-[8px]
           flex flex-col space-y-10 2xl:py-[96px] lg:py-[72px] md:py-[48px] py-[24px]
           text-center items-center">
           <div className="responsivePad flex flex-col 2xl:space-y-10 lg:space-y-8 space-y-6 text-center items-center font-generalSans-medium">
             <h5 className="h5 font-generalSans-semibold">{heroTopText}</h5>
             <div className="h1 font-generalSans-bold 2xl:px-[200px]">
-              <TextAnimateDemo text={heroHeading} by="word" />
+              <h1>
+                <TextAnimateDemo text={heroHeading} by="word" />
+              </h1>
             </div>
             <div className="flex space-x-4 h7 max-md:space-x-4">
               {threeSteps.map((step, index) => (
@@ -53,29 +52,9 @@ const Hero = () => {
               ))}
             </div>
           </div>
-          <div className="max-sm:hidden">
+          <div className="">
             <ImagesMarquee />
           </div>
-          <BlurFade delay={0.2} inView>
-            <div className="pb-6 responsivePad">
-              <ImageComponent 
-                src={hero9}
-                alt="Student at A1 education"
-                className="hero-slide-img sm:hidden sm:invisible rounded-md"
-                srcSet={`
-                  ${hero9}?w=320 320w,
-                  ${hero9}?w=480 480w,
-                  ${hero9}?w=640 640w,
-                  ${hero9}?w=800 800w
-                `}
-                sizes="(max-width: 640px) 320px, (max-width: 768px) 480px, (max-width: 1024px) 640px, 800px"
-                width="800"
-                height="640"
-                loading='eager'
-                priority={true}
-              />
-            </div>
-          </BlurFade>
         </div>
       </section>
     </AnimateOnScroll>

@@ -4,12 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
+* { 
+  font-family: GeneralSans-Medium, sans-serif;
+}
+
 /* Additional custom classes */
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
   background-color: #ffffff;
-  font-family: 'GeneralSans-Bold';
 }
 
 .responsivePad {

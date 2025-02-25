@@ -57,7 +57,6 @@ const HomePage = ({
         sectionDescriptionHeading={sectionDescriptionHeading}
         sectionText={sectionText}
       />
-      <PhoneImagesMarquee />
       <Pricing
         section={section}
         sectionName={sectionName}
