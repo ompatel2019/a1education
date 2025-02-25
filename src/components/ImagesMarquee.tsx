@@ -36,14 +36,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ name, alt }) => {
       <ImageComponent
         src={name}
         alt={alt}
-        className="mb-2 w-auto hero-slide-img rounded-md"
-        srcSet={`
-          ${name}?w=320 320w,
-          ${name}?w=480 480w,
-          ${name}?w=640 640w,
-          ${name}?w=800 800w
-        `}
-        sizes="(max-width: 640px) 320px, (max-width: 768px) 480px, (max-width: 1024px) 640px, 800px"
+        className="mb-2 h-auto hero-slide-img rounded-md"
         width="800"
         height="640"
         loading='eager'

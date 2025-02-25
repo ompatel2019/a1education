@@ -46,7 +46,7 @@ const AboutUs = ({
         <div className="flex col-span-1">
           <ImageComponent
             src={aboutimg}
-            alt="Tutoring session demonstrating individualized attention"
+            alt="Photo of tutor Karan Mehul"
             className="rounded-md max-h-[720px] w-[100%] h-auto object-cover"
             width="100%"
             height="auto"
