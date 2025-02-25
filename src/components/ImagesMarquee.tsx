@@ -46,6 +46,8 @@ const ImageCard: React.FC<ImageCardProps> = ({ name, alt }) => {
         sizes="(max-width: 640px) 320px, (max-width: 768px) 480px, (max-width: 1024px) 640px, 800px"
         width="800"
         height="640"
+        loading='eager'
+        priority={true}
       />
     </figure>
   );
