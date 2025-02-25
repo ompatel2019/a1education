@@ -8,9 +8,6 @@ import {
 import MainLayout from './layouts/MainLayout';
 import Fallback from './tools/Fallback';
 
-// -- Imports for images --
-import aboutUsPlaceholder from './assets/hero4.webp'
-
 // -- Lazy loaded pages --
 import HomePage from './pages/HomePage';
 const SpecialtyPage = lazy(() => import('./pages/SpecialtyPage'));
@@ -90,9 +87,6 @@ const router = createBrowserRouter(
               sectionSubheading={sectionSubheading}
               sectionDescriptionHeading={sectionDescriptionHeading}
               sectionText={sectionText}
-              aboutUsPlaceholder={aboutUsPlaceholder}
-
-
             />
           </Suspense>
         }
