@@ -62,14 +62,15 @@ const Hero = () => {
                 src={hero9}
                 alt="Student at A1 education"
                 className="hero-slide-img sm:hidden rounded-md"
-                width="400"
-                height="400"
                 srcSet={`
-                  ${hero9}?w=300 300w,
-                  ${hero9}?w=400 400w,
-                  ${hero9}?w=500 500w
+                  ${hero9}?w=320 320w,
+                  ${hero9}?w=480 480w,
+                  ${hero9}?w=640 640w,
+                  ${hero9}?w=800 800w
                 `}
-                sizes="(max-width: 640px) 300px, 400px"
+                sizes="(max-width: 640px) 320px, (max-width: 768px) 480px, (max-width: 1024px) 640px, 800px"
+                width="800"
+                height="640"
                 priority={true}
               />
             </div>
