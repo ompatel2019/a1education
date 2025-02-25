@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Marquee } from "@/components/magicui/images-marquee";
 import React from "react";
+import ImageComponent from "./ImageComponent";
 
 // Import your assets
 import hero1 from "../assets/hero3.webp";
@@ -32,7 +33,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ name, alt }) => {
         "border-gray-950/[.1]"
       )}
     >
-      <img
+      <ImageComponent
         src={name}
         alt={alt}
         className="mb-2 w-auto hero-slide-img rounded-md"
@@ -43,12 +44,15 @@ const ImageCard: React.FC<ImageCardProps> = ({ name, alt }) => {
           ${name}?w=800 800w
         `}
         sizes="(max-width: 640px) 320px, (max-width: 768px) 480px, (max-width: 1024px) 640px, 800px"
+        width="100%"
+        height="auto"
+        loading="lazy"
       />
     </figure>
   );
 };
 
-export default function ImagesMarqee() {
+export default function ImagesMarquee() {
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
       <Marquee pauseOnHover className="[--duration:15s]">

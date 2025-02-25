@@ -117,12 +117,12 @@ export default function TestimonialMarquee() {
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
       <Marquee pauseOnHover className="[--duration:20s]">
         {firstRow.map((review) => (
-          <ReviewCard key={review.sig} {...review} />
+          <ReviewCard key={review.name} {...review} />
         ))}
       </Marquee>
       <Marquee reverse pauseOnHover className="[--duration:22s]">
         {secondRow.map((review) => (
-          <ReviewCard key={review.sig} {...review} />
+          <ReviewCard key={`dup-${review.name}`} {...review} />
         ))}
       </Marquee>
       <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4"></div>

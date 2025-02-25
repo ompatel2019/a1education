@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { FiMenu } from 'react-icons/fi';
 import { RxCross2 } from 'react-icons/rx';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 import AnimateOnScroll from '../tools/AnimateOnScroll';
 import ImageComponent from './ImageComponent';
 
@@ -16,23 +16,25 @@ const Navbar = ({ navbarLinks }) => {
         <AnimateOnScroll className="fade-in fade-down">
           <div className={`2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] py-4 flex justify-between font-generalSans-medium items-center ${showMenu ? 'bg-gray max-md:justify-end' : 'bg-white'}`}>
             {!showMenu && (
-              <HashLink smooth to="/">
-                <ImageComponent 
-                  src={logo}
-                  alt="A1 Education main logo"
-                  className="lg:w-[152px] lg:h-[64px] w-[96px] h-[40px]"
-                  width="152"
-                  height="64"
-                  loading="lazy"
-                />
-              </HashLink>
+              <div>
+                <HashLink smooth to="/">
+                  <ImageComponent
+                    src={logo}
+                    alt="A1 Education main logo"
+                    className="lg:w-[146px] lg:h-[48px] w-[88px] h-[32px]"
+                    width="152"
+                    height="64"
+                    loading="lazy"
+                  />
+                </HashLink>
+              </div>
             )}
             {/* Desktop Navigation */}
             <nav role="navigation" aria-label="Primary" className="hidden md:flex">
               <ul className="flex space-x-3 items-center">
                 {navbarLinks.map((link, index) =>
                   link.name !== 'Enrol Now' ? (
-                    <li key={index} className="hover:text-grey transition-all">
+                    <li key={index} className="hover:text-gray-400 transition-all">
                       <HashLink smooth to={link.to}>{link.name}</HashLink>
                     </li>
                   ) : (

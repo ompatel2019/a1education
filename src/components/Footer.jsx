@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 import ImageComponent from './ImageComponent';
 
 const Footer = () => {
@@ -9,13 +9,13 @@ const Footer = () => {
       <div className="bg-primary rounded-lg responsivePad 2xl:py-12 lg:py-10 md:py-8 py-6 space-y-6">
         <div className="flex flex-col lg:flex-row justify-between items-center space-y-4">
           <div className="flex items-center space-x-2">
-            <HashLink smooth to="/" aria-label="Home">
-              <ImageComponent 
+            <HashLink smooth to="/">
+              <ImageComponent
                 src={logo}
-                alt="A1 Education company logo"
-                className="h-8 w-auto"
-                width="100"
-                height="100"
+                alt="A1 Education main logo"
+                className="lg:w-[146px] lg:h-[48px] w-[88px] h-[32px]"
+                width="152"
+                height="64"
                 loading="lazy"
               />
             </HashLink>

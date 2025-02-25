@@ -21,15 +21,15 @@ const Hero = () => {
   ];
 
   return (
-    <AnimateOnScroll className='fade-up fade-in'>
+    <AnimateOnScroll className="fade-up fade-in">
       <section className="2xl:px-[48px] lg:px-[32px] md:px-[16px] px-[4px] text-white font-generalSans">
         <div className="bg-gradient-to-b 2xl:rounded-[32px] lg:rounded-[24px] md:rounded-[16px] rounded-[8px]
           flex flex-col space-y-10 2xl:py-[96px] lg:py-[72px] md:py-[48px] py-[24px]
           text-center items-center">
           <div className="responsivePad flex flex-col 2xl:space-y-10 lg:space-y-8 space-y-6 text-center items-center font-generalSans-medium">
             <h5 className="h5 font-generalSans-semibold">{heroTopText}</h5>
-            <div className='h1 font-generalSans-bold 2xl:px-[200px]'>
-              <TextAnimateDemo text={heroHeading} by={"word"} />
+            <div className="h1 font-generalSans-bold 2xl:px-[200px]">
+              <TextAnimateDemo text={heroHeading} by="word" />
             </div>
             <div className="flex space-x-4 h7 max-md:space-x-4">
               {threeSteps.map((step, index) => (
@@ -57,7 +57,7 @@ const Hero = () => {
             <ImagesMarquee />
           </div>
           <BlurFade delay={0.2} inView>
-            <div className='pb-6 responsivePad'>
+            <div className="pb-6 responsivePad">
               <ImageComponent 
                 src={hero9}
                 alt="Student at A1 education"
@@ -70,7 +70,7 @@ const Hero = () => {
                   ${hero9}?w=500 500w
                 `}
                 sizes="(max-width: 640px) 300px, 400px"
-                priority={true}  // Ensure this critical image loads eagerly
+                priority={true}
               />
             </div>
           </BlurFade>

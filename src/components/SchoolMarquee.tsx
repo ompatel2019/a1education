@@ -1,7 +1,7 @@
-// SchoolMarquee.jsx
 import { cn } from "@/lib/utils";
 import { Marquee } from "@/components/magicui/images-marquee";
 import React from "react";
+import ImageComponent from "./ImageComponent";
 
 // Import your assets
 import school1 from "../assets/school1.webp";
@@ -77,7 +77,7 @@ const schoolsData = [
 const firstRow = schoolsData;
 
 interface SchoolCardProps {
-  name: string; // With Vite, imported assets are typically treated as strings (URLs)
+  name: string;
   schoolName: string;
   alt: string;
 }
@@ -92,13 +92,13 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ name, schoolName, alt }) => {
     >
       <div className="flex flex-row items-center gap-2 justify-center">
         <div className="flex flex-col justify-center items-center">
-          <img 
+          <ImageComponent 
             src={name} 
             alt={alt} 
             className="mb-2 lg:h-[176px] md:h-[120px] h-[96px] 2xl:w-[176px] lg:w-[120px] w-[96px]" 
             loading="lazy" 
-            width="200" 
-            height="100" 
+            width={200} 
+            height={100} 
           />
           <figcaption className="font-medium dark:text-white text-center">
             {schoolName}
@@ -113,8 +113,8 @@ export default function SchoolMarquee() {
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
       <Marquee pauseOnHover className="[--duration:20s]">
-        {firstRow.map((school) => (
-          <SchoolCard key={school.schoolName} {...school} />
+        {firstRow.map((school, index) => (
+          <SchoolCard key={`${school.schoolName}-${index}`} {...school} />
         ))}
       </Marquee>
       <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background"></div>
