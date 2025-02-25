@@ -44,8 +44,8 @@ const ImageCard: React.FC<ImageCardProps> = ({ name, alt }) => {
           ${name}?w=800 800w
         `}
         sizes="(max-width: 640px) 320px, (max-width: 768px) 480px, (max-width: 1024px) 640px, 800px"
-        width="100%"
-        height="auto"
+        width="800"
+        height="640"
         loading="lazy"
       />
     </figure>
@@ -55,7 +55,7 @@ const ImageCard: React.FC<ImageCardProps> = ({ name, alt }) => {
 export default function ImagesMarquee() {
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-      <Marquee pauseOnHover className="[--duration:22.5s]">
+      <Marquee pauseOnHover className="[--duration:15s]">
         {firstRow.map((image) => (
           <ImageCard key={image.alt} {...image} />
         ))}
