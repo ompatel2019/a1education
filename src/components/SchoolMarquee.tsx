@@ -95,7 +95,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ name, schoolName, alt }) => {
           <ImageComponent 
             src={name} 
             alt={alt} 
-            className="mb-2 lg:h-[176px] md:h-[120px] h-[96px] 2xl:w-[176px] lg:w-[120px] w-[96px]" 
+            className="lg:h-[176px] md:h-[148px] h-[128px] lg:w-[176px] w-[120px] mb-2" 
             loading="lazy" 
             width={200} 
             height={100} 
