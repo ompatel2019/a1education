@@ -8,7 +8,7 @@
   <!-- Home page -->
   <url>
     <loc>https://a1education.com.au/</loc>
-    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <lastmod>2025-03-03T13:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -16,7 +16,7 @@
   <!-- Specialty page -->
   <url>
     <loc>https://a1education.com.au/specialty</loc>
-    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <lastmod>2025-03-03T13:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -24,7 +24,7 @@
   <!-- Why Choose Us page -->
   <url>
     <loc>https://a1education.com.au/whychooseus</loc>
-    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <lastmod>2025-03-03T13:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -32,7 +32,7 @@
   <!-- About Us page -->
   <url>
     <loc>https://a1education.com.au/aboutus</loc>
-    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <lastmod>2025-03-03T13:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -40,7 +40,7 @@
   <!-- Pricing page -->
   <url>
     <loc>https://a1education.com.au/pricing</loc>
-    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <lastmod>2025-03-03T13:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -48,10 +48,10 @@
   <!-- Contact page -->
   <url>
     <loc>https://a1education.com.au/contact</loc>
-    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <lastmod>2025-03-03T13:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Additional blog URLs etc. can go here -->
+  <!-- Additional blog URLs, etc. can go here -->
 </urlset>
