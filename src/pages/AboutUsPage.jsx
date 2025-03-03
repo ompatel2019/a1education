@@ -1,4 +1,3 @@
-// AboutUsPage.jsx
 import React from 'react';
 import SeoHelmet from '../tools/SeoHelmet';
 
@@ -24,7 +23,7 @@ const AboutUsPage = ({
   const jsonLdAboutUsPage = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "About Us - A1 Education",
+    "name": "About Us",
     "description": "Learn more about A1 Education's team, mission, and values in HSC Economics tutoring.",
     "url": "https://a1education.com.au/aboutus"
   };
@@ -32,7 +31,7 @@ const AboutUsPage = ({
   return (
     <>
       <SeoHelmet
-        title="About Us - A1 Education"
+        title="About Us"
         description="Discover how our Economics tutors in Sydney have built a reputation for excellence, transforming students into leaders in economic thinking."
         canonicalUrl="https://a1education.com.au/aboutus"
         jsonSchema={jsonLdAboutUsPage}

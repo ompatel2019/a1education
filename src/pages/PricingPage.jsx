@@ -1,4 +1,3 @@
-// PricingPage.jsx
 import React from 'react';
 import SeoHelmet from '../tools/SeoHelmet';
 
@@ -18,7 +17,7 @@ const PricingPage = ({
   const jsonLdPricingPage = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Pricing - A1 Education",
+    "name": "Pricing",
     "description": "Explore affordable rates for top Year 11 & 12 Economics tutoring in Sydney.",
     "url": "https://a1education.com.au/pricing"
   };
@@ -26,7 +25,7 @@ const PricingPage = ({
   return (
     <>
       <SeoHelmet
-        title="Pricing - A1 Education"
+        title="Pricing"
         description="Explore our competitive pricing for Year 11 & 12 HSC Economics tutoring in Sydney."
         canonicalUrl="https://a1education.com.au/pricing"
         jsonSchema={jsonLdPricingPage}

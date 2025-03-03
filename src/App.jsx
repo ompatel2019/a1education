@@ -25,7 +25,7 @@ const sectionSubheading = 'h5';
 const sectionDescriptionHeading = 'h7';
 const sectionText = 'p';
 
-// ─── Router Configuration ───────────────────────────────────────────────
+// ─── Router Configuration ─────────────────────────────────────────────────────
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout />}>
@@ -43,7 +43,6 @@ const router = createBrowserRouter(
           </Suspense>
         }
       />
-
       <Route
         path="specialty"
         element={
@@ -54,12 +53,10 @@ const router = createBrowserRouter(
               sectionSubheading={sectionSubheading}
               sectionDescriptionHeading={sectionDescriptionHeading}
               sectionText={sectionText}
-
             />
           </Suspense>
         }
       />
-
       <Route
         path="whychooseus"
         element={
@@ -70,13 +67,10 @@ const router = createBrowserRouter(
               sectionSubheading={sectionSubheading}
               sectionDescriptionHeading={sectionDescriptionHeading}
               sectionText={sectionText}
-
-
             />
           </Suspense>
         }
       />
-
       <Route
         path="aboutus"
         element={
@@ -91,7 +85,6 @@ const router = createBrowserRouter(
           </Suspense>
         }
       />
-
       <Route
         path="contact"
         element={
@@ -106,7 +99,6 @@ const router = createBrowserRouter(
           </Suspense>
         }
       />
-
       <Route
         path="pricing"
         element={

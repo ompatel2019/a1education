@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+                        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
   <!-- Home page -->
   <url>
@@ -27,9 +29,17 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- About us page -->
+  <!-- About Us page -->
   <url>
     <loc>https://a1education.com.au/aboutus</loc>
+    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Pricing page -->
+  <url>
+    <loc>https://a1education.com.au/pricing</loc>
     <lastmod>2025-02-22T05:25:18+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -42,33 +52,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-<!-- 
-   Blogs landing page 
-  <url>
-    <loc>https://a1education.com.au/blogs</loc>
-    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
 
-   Individual blog pages 
-  <url>
-    <loc>https://a1education.com.au/blogs/1</loc>
-    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://a1education.com.au/blogs/2</loc>
-    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://a1education.com.au/blogs/3</loc>
-    <lastmod>2025-02-22T05:25:18+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url> -->
-
+  <!-- Additional blog URLs etc. can go here -->
 </urlset>

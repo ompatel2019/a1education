@@ -1,103 +1,172 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
 
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link
+      rel="icon"
+      type="image/png"
+      href="/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.svg"
+    />
+    <link
+      rel="shortcut icon"
+      href="/favicon.ico"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-touch-icon.png"
+    />
+    <link
+      rel="manifest"
+      href="/site.webmanifest"
+    />
 
-    <!-- Page Title -->
-    <title>A1 Education - Year 11 &amp; 12 Economics Tutoring in Sydney</title>
+    <!-- Minimal fallback Title & Description for the HOME page -->
+    <!-- React Helmet on the Home page will override these if JS is rendered -->
+    <title>A1 Education: Year 11 &amp; 12 Economics Tutoring in Sydney</title>
+    <meta
+      name="description"
+      content="A1 Education provides premier Year 11 &amp; 12 HSC Economics tutoring in Sydney."
+    />
 
-    <!-- Meta Description -->
-    <meta name="description" content="A1 Education specializes in Year 11 and Year 12 Economics tutoring in Sydney. Unlock your HSC Economics success today.">
-
-    <!-- Meta Keywords -->
-    <meta name="keywords" content="A1 Education, Economics tutoring, HSC Economics, Year 11, Year 12, Sydney, tutoring service">
-
-    <!-- Canonical Tag -->
-    <link rel="canonical" href="https://a1education.com.au/">
+    <!-- Canonical (Home) -->
+    <link
+      rel="canonical"
+      href="https://a1education.com.au/"
+    />
 
     <!-- Robots Meta Tag -->
-    <meta name="robots" content="index, follow">
-    <meta name="x-robots-tag" content="index, follow">
-
-    <!-- Publisher Meta Tag -->
-    <meta name="publisher" content="A1 Education">
+    <meta
+      name="robots"
+      content="index, follow"
+    />
+    <meta
+      name="x-robots-tag"
+      content="index, follow"
+    />
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#ffffff">
+    <meta
+      name="theme-color"
+      content="#ffffff"
+    />
 
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="A1 Education - Year 11 &amp; 12 Economics Tutoring in Sydney">
-    <meta property="og:description" content="Join A1 Education, the specialist in Year 11 &amp; 12 HSC Economics tutoring in Sydney. Ace your exams with expert guidance!">
-    <meta property="og:url" content="https://a1education.com.au/">
-    <meta property="og:image" content="https://a1education.com.au/favicon.svg">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="en_US">
+    <!-- Open Graph Meta Tags (fallback for Home) -->
+    <meta
+      property="og:title"
+      content="A1 Education: Year 11 &amp; 12 Economics Tutoring in Sydney"
+    />
+    <meta
+      property="og:description"
+      content="Join A1 Education, the specialist in Year 11 &amp; 12 HSC Economics tutoring in Sydney. Ace your exams with expert guidance!"
+    />
+    <meta
+      property="og:url"
+      content="https://a1education.com.au/"
+    />
+    <meta
+      property="og:image"
+      content="https://a1education.com.au/favicon.svg"
+    />
+    <meta
+      property="og:type"
+      content="website"
+    />
+    <meta
+      property="og:locale"
+      content="en_US"
+    />
 
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="A1 Education - Year 11 &amp; 12 Economics Tutoring in Sydney">
-    <meta name="twitter:description" content="Join A1 Education for specialized Year 11 &amp; 12 Economics tutoring in Sydney and boost your HSC results.">
-    <meta name="twitter:image" content="https://a1education.com.au/favicon.svg">
+    <!-- Twitter Card Meta Tags (fallback for Home) -->
+    <meta
+      name="twitter:card"
+      content="summary_large_image"
+    />
+    <meta
+      name="twitter:title"
+      content="A1 Education: Year 11 &amp; 12 Economics Tutoring in Sydney"
+    />
+    <meta
+      name="twitter:description"
+      content="Join A1 Education for specialized Year 11 &amp; 12 Economics tutoring in Sydney and boost your HSC results."
+    />
+    <meta
+      name="twitter:image"
+      content="https://a1education.com.au/favicon.svg"
+    />
 
-    <!-- Structured Data (JSON-LD) -->
+    <!-- Structured Data (JSON-LD) for LocalBusiness (fallback) -->
     <script type="application/ld+json">
-     {
-       "@context": "https://schema.org",
-       "@type": "LocalBusiness",
-       "name": "A1 Education",
-       "image": "https://a1education.com.au/favicon.svg",
-       "url": "https://a1education.com.au/",
-       "telephone": "0402097284",
-       "priceRange": "60-70",
-       "address": {
-         "@type": "PostalAddress",
-         "streetAddress": "Suite 207/30 Campbell St, Blacktown",
-         "addressLocality": "Sydney",
-         "addressRegion": "NSW",
-         "postalCode": "2148",
-         "addressCountry": "AU"
-       },
-       "geo": {
-         "@type": "GeoCoordinates",
-         "latitude": -33.7716599,
-         "longitude": 150.9097367
-       },
-       "openingHoursSpecification": {
-         "@type": "OpeningHoursSpecification",
-         "dayOfWeek": [
-           "Monday",
-           "Tuesday",
-           "Wednesday",
-           "Thursday",
-           "Friday",
-           "Saturday",
-           "Sunday"
-         ],
-         "opens": "08:00",
-         "closes": "17:00"
-       }
-     }
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "A1 Education",
+      "image": "https://a1education.com.au/favicon.svg",
+      "url": "https://a1education.com.au/",
+      "telephone": "0402097284",
+      "priceRange": "60-70",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Suite 207/30 Campbell St, Blacktown",
+        "addressLocality": "Sydney",
+        "addressRegion": "NSW",
+        "postalCode": "2148",
+        "addressCountry": "AU"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -33.7716599,
+        "longitude": 150.9097367
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "08:00",
+        "closes": "17:00"
+      }
+    }
     </script>
   </head>
+
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FVPEZ96ZPW"></script>
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-FVPEZ96ZPW"
+  ></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-FVPEZ96ZPW');
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-FVPEZ96ZPW");
   </script>
+
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script
+      type="module"
+      src="/src/main.jsx"
+    ></script>
   </body>
 </html>

@@ -1,4 +1,3 @@
-// SpecialtyPage.jsx
 import React from 'react';
 import SeoHelmet from '../tools/SeoHelmet';
 
@@ -17,7 +16,7 @@ const SpecialtyPage = ({
   const jsonLdSpecialtyPage = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Specialty - A1 Education",
+    "name": "Specialty",
     "description": "Learn more about our Year 11 & 12 Economics specialty for HSC students in Sydney.",
     "url": "https://a1education.com.au/specialty"
   };
@@ -25,7 +24,7 @@ const SpecialtyPage = ({
   return (
     <>
       <SeoHelmet
-        title="Specialty - A1 Education"
+        title="Specialty"
         description="Explore our specialized tutoring for Year 11 & 12 Economics in Sydney. Be HSC-ready with A1 Education."
         canonicalUrl="https://a1education.com.au/specialty"
         jsonSchema={jsonLdSpecialtyPage}

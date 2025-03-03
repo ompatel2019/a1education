@@ -1,4 +1,3 @@
-// HomePage.jsx
 import React from "react";
 import SeoHelmet from '../tools/SeoHelmet';
 
@@ -23,19 +22,19 @@ const HomePage = ({
   schoolsData,
   aboutUsPlaceholder,
 }) => {
+  // JSON-LD for the homepage
   const jsonLdHomePage = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Home - A1 Education",
-    "description":
-      "Welcome to A1 Education. Specializing in Year 11 & 12 HSC Economics tutoring in Sydney.",
-    "url": "https://a1education.com.au/",
+    "name": "A1 Education: Year 11 & 12 Economics Tutoring in Sydney",
+    "description": "Welcome to A1 Education. Specializing in Year 11 & 12 HSC Economics tutoring in Sydney.",
+    "url": "https://a1education.com.au/"
   };
 
   return (
     <>
       <SeoHelmet
-        title="Home - A1 Education | Year 11 & 12 Economics Tutoring in Sydney"
+        title="A1 Education: Year 11 & 12 Economics Tutoring in Sydney"
         description="A1 Education is your go-to for Year 11 & 12 Economics tutoring in Sydney. Learn from expert tutors and boost your HSC performance."
         canonicalUrl="https://a1education.com.au/"
         jsonSchema={jsonLdHomePage}
