@@ -26,7 +26,7 @@ const HomePage = ({
   const jsonLdHomePage = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "A1 Education: Year 11 & 12 Economics Tutoring in Sydney",
+    "name": "A1 Education | Year 11 & 12 Economics Tutoring in Sydney",
     "description": "Welcome to A1 Education. Specializing in Year 11 & 12 HSC Economics tutoring in Sydney.",
     "url": "https://a1education.com.au/"
   };
@@ -34,7 +34,7 @@ const HomePage = ({
   return (
     <>
       <SeoHelmet
-        title="A1 Education: Year 11 & 12 Economics Tutoring in Sydney"
+        title="A1 Education | Year 11 & 12 Economics Tutoring in Sydney"
         description="A1 Education is your go-to for Year 11 & 12 Economics tutoring in Sydney. Learn from expert tutors and boost your HSC performance."
         canonicalUrl="https://a1education.com.au/"
         jsonSchema={jsonLdHomePage}

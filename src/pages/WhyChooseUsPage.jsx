@@ -20,7 +20,7 @@ const WhyChooseUsPage = ({
   const jsonLdWhyChooseUsPage = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Why Choose Us",
+    "name": "Why Choose Us - A1 Education",
     "description": "Why A1 Education stands out for Year 11 & 12 Economics tutoring in Sydney.",
     "url": "https://a1education.com.au/whychooseus"
   };
@@ -28,7 +28,7 @@ const WhyChooseUsPage = ({
   return (
     <>
       <SeoHelmet
-        title="Why Choose Us"
+        title="Why Choose Us - A1 Education"
         description="Discover why A1 Education is best for Year 11 & 12 HSC Economics tutoring in Sydney. Consistent top results!"
         canonicalUrl="https://a1education.com.au/whychooseus"
         jsonSchema={jsonLdWhyChooseUsPage}

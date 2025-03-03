@@ -18,7 +18,7 @@ const ContactPage = ({
   const jsonLdContactPage = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Contact",
+    "name": "Contact Us - A1 Education",
     "description": "Get in touch with A1 Education for inquiries on HSC Economics tutoring in Sydney.",
     "url": "https://a1education.com.au/contact"
   };
@@ -26,7 +26,7 @@ const ContactPage = ({
   return (
     <>
       <SeoHelmet
-        title="Contact"
+        title="Contact Us - A1 Education"
         description="Reach out to Sydney’s top Economics tutors at A1 Education and book a trial lesson on us."
         canonicalUrl="https://a1education.com.au/contact"
         jsonSchema={jsonLdContactPage}
