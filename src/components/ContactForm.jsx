@@ -7,8 +7,8 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
       icon: <i className="bi bi-envelope"></i>,
       contactType: 'Email',
       contactDesc: 'Send us an email and we will get back to you.',
-      contactInformation: 'contact@a1education.com.au',
-      contactRedirect: 'mailto:contact@a1education.com.au'
+      contactInformation: 'admin@a1education.com.au',
+      contactRedirect: 'mailto:admin@a1education.com.au'
     },
     {
       icon: <i className="bi bi-geo"></i>,
