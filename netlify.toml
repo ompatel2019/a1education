@@ -1,4 +1,22 @@
 [[redirects]]
+  from = "http://a1education.com.au/*"
+  to = "https://a1education.com.au/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.a1education.com.au/*"
+  to = "https://a1education.com.au/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.a1education.com.au/*"
+  to = "https://a1education.com.au/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/sitemap.xml"
   to = "/sitemap.xml"
   status = 200
