@@ -140,6 +140,20 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
                   autoComplete="tel"
                 />
               </div>
+              {/* School */}
+              <div className="flex flex-col">
+                <label htmlFor="school" className="mb-1">
+                  School <span className="sr-only">(required)</span>
+                </label>
+                <input
+                  id="school"
+                  name="school"
+                  type="text"
+                  placeholder="Penrith High School"
+                  className="w-full bg-transparent border-c4 border-2 rounded-md px-4 py-2 transition-all hover:pl-8"
+                  autoComplete="text"
+                />
+              </div>
               {/* MESSAGE */}
               <div className="flex flex-col">
                 <label htmlFor="message" className="mb-1">
