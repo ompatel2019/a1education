@@ -57,7 +57,7 @@ const ContactPage = ({
         sectionName={sectionName}
         sectionSubheading={sectionSubheading}
       />
-      <CTA />
+      <CTA contactPage={true}/>
     </>
   );
 };

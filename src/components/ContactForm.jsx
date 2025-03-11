@@ -60,7 +60,7 @@ const ContactForm = ({ section, sectionName, sectionSubheading }) => {
     'Ready to join A1 Education or have questions about HSC Economics tutoring in Sydney? Reach out to us—our friendly team is here to help';
 
   return (
-    <section className={section}>
+    <section id='contact' className={section}>
       <BlurFade delay={0.2} inView>
         <div className="grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-24 lg:gap-16 md:gap-12 gap-8">
           <div className="flex flex-col justify-between max-md:order-2">
