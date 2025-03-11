@@ -175,16 +175,6 @@ const Faqs = ({ section, sectionName, sectionSubheading }) => {
           </div>
         ))}
       </div>
-
-      {/* Example final CTA */}
-      <div className="text-center mt-10">
-        <p className="mb-4">Got a question we missed?</p>
-        <HashLink smooth to="/contact">
-          <button className="bg-primary text-white px-4 py-2 rounded-sm hover:bg-purple-400 transition-all">
-            Contact Us
-          </button>
-        </HashLink>
-      </div>
     </section>
   );
 };
