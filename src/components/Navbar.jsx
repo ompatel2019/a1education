@@ -8,7 +8,7 @@ import ImageComponent from './ImageComponent';
 
 const Navbar = ({ navbarLinks }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const toggleMenu = () => setShowMenu((prev) => !prev);
+  const toggleMenu = () => setShowMenu(prev => !prev);
 
   return (
     <>
@@ -29,6 +29,7 @@ const Navbar = ({ navbarLinks }) => {
                 </HashLink>
               </div>
             )}
+
             {/* Desktop Navigation */}
             <nav role="navigation" aria-label="Primary" className="hidden md:flex">
               <ul className="flex space-x-3 items-center">
@@ -40,39 +41,55 @@ const Navbar = ({ navbarLinks }) => {
                   ) : (
                     <li key={index}>
                       <HashLink smooth to={link.to}>
-                        <div className="px-4 py-2 bg-primary hover:px-8 text-white rounded-sm hover:bg-blue-500 transition-all">{link.name}</div>
+                        <div className="px-4 py-2 bg-primary hover:px-8 text-white rounded-sm hover:bg-blue-500 transition-all">
+                          {link.name}
+                        </div>
                       </HashLink>
                     </li>
                   )
                 )}
               </ul>
             </nav>
+
             {/* Mobile Hamburger Button */}
-            <button onClick={toggleMenu} aria-label={showMenu ? 'Close menu' : 'Open menu'} aria-expanded={showMenu} className="md:hidden focus:outline-none">
-              {showMenu ? null : <FiMenu className="w-6 h-6 text-black" />}
+            <button
+              onClick={toggleMenu}
+              aria-label={showMenu ? 'Close menu' : 'Open menu'}
+              aria-expanded={showMenu}
+              className="md:hidden focus:outline-none relative z-50"
+            >
+              {showMenu ? (
+                <RxCross2 className="w-6 h-6 text-white" />
+              ) : (
+                <FiMenu className="w-6 h-6 text-black" />
+              )}
             </button>
           </div>
         </AnimateOnScroll>
       </header>
-      {/* Mobile Menu Overlay */}
-      {showMenu && (
-        <div className="fixed inset-0 bg-primary text-white h1 px-4 font-generalSans-medium flex flex-col items-left justify-center transition-opacity duration-300 z-40">
-          <div className="absolute top-4 right-4">
-            <h2 onClick={toggleMenu} className="cursor-pointer">
-              <RxCross2 className="w-10 h-10 text-white" />
-            </h2>
-          </div>
-          <nav role="navigation" aria-label="Mobile menu">
-            <ul className="flex flex-col space-y-6">
-              {navbarLinks.map((link, index) => (
-                <li key={index} className="hover:text-grey transition-all" onClick={toggleMenu}>
-                  <HashLink smooth to={link.to}>{link.name}</HashLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      )}
+
+      {/* Mobile Menu Overlay with Transition */}
+      <div
+        className={`fixed inset-0 bg-primary text-white px-4 font-generalSans-medium flex flex-col justify-center transition-transform duration-300 z-40 ${
+          showMenu ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
+        <nav role="navigation" aria-label="Mobile menu">
+          <ul className="flex flex-col space-y-6 h2">
+            {navbarLinks.map((link, index) => (
+              <li
+                key={index}
+                className="hover:text-gray-300 transition-all"
+                onClick={toggleMenu}
+              >
+                <HashLink smooth to={link.to}>
+                  {link.name}
+                </HashLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
     </>
   );
 };
