@@ -1,10 +1,11 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-import { generalSans } from "./fonts/fonts";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Topbar from "@/components/Topbar";
+import { Providers } from "./providers";
+import { generalSans } from "./fonts/fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,16 +14,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body className={`${generalSans.variable} antialiased`}>
-        <Topbar/>
-        <Navbar/>
-        {children}
-        <Footer/>
+        <Providers>
+          <Topbar />
+          <Navbar />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
