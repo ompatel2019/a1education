@@ -2,6 +2,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { generalSans } from "./fonts/fonts";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Topbar from "@/components/Topbar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${generalSans.variable} antialiased`}>{children}</body>
+      <body className={`${generalSans.variable} antialiased`}>
+        <Topbar/>
+        <Navbar/>
+        {children}
+        <Footer/>
+      </body>
     </html>
   );
 }
