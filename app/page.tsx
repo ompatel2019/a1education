@@ -10,10 +10,8 @@ export default function page() {
         <p className="font-light italic">Subtext</p>
         <div className="bg-primary text-white">Primary button</div>
         <p className="text-black">Black text</p>
-        <div className="bg-[var(--primary)] text-[var(--white)]">
-          This works. No config.
-        </div>
-        <p className="text-[var(--black)]">Black text</p>
+        <div className="bg-primary">This works. No config.</div>
+        <p className="">Black text</p>
       </div>
     </>
   );
