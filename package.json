@@ -2,16 +2,19 @@
   "name": "a1education-new",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://a1education.com.au",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "next lint && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@heroui/react": "^2.8.0-beta.10",
     "framer-motion": "^12.18.2",
     "next": "15.3.4",
+    "next-sitemap": "^4.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

@@ -1,7 +1,6 @@
-import React from 'react'
+// components/Navbar.tsx
+import React from "react";
 
 export default function Navbar() {
-  return (
-    <div>Navbar</div>
-  )
+  return <div>Navbar</div>;
 }
