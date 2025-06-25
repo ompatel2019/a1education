@@ -27,6 +27,16 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
+const navbarLinks = [
+  { name: "Home", to: "/" },
+  { name: "Specialty", to: "/specialty" },
+  { name: "Why Choose Us", to: "/why-choose-us" },
+  { name: "About Us", to: "/about-us" },
+  { name: "Pricing", to: "/pricing" },
+  { name: "Blogs", to: "/blogs" },
+  { name: "Enrol Now", to: "/contact-us" },
+];
+
 export default function RootLayout({
   children,
 }: {
@@ -82,7 +92,7 @@ export default function RootLayout({
       <body className={`${generalSans.variable} antialiased`}>
         <Providers>
           <Topbar />
-          <Navbar />
+          <Navbar navbarLinks={navbarLinks} />
           {children}
           <Footer />
         </Providers>

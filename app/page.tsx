@@ -34,5 +34,5 @@ export const generateMetadata = (): Metadata => ({
 });
 
 export default function HomePage() {
-  return <div>page</div>;
+  return <div className="">page</div>;
 }
