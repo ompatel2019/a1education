@@ -92,7 +92,7 @@ export default function RootLayout({
       <body className={`${generalSans.variable} antialiased`}>
         <Providers>
           <Topbar />
-          <Navbar navbarLinks={navbarLinks} />
+          <Navbar />
           {children}
           <Footer />
         </Providers>

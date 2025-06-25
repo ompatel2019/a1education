@@ -1,130 +1,113 @@
-// components/Navbar.tsx
 "use client";
-
+import React from "react";
 import {
   Navbar,
   NavbarBrand,
+  NavbarContent,
+  NavbarItem,
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  NavbarContent,
-  NavbarItem,
   Button,
+  Link,
 } from "@heroui/react";
-import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import Image from "next/image";
 
-type NavbarLinkType = {
+type MenuItem = {
   name: string;
   to: string;
 };
 
-const NavbarLink = ({ name, to }: NavbarLinkType) => {
+export default function NavbarComponent() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const pathname = usePathname();
-  const isActive = pathname === to || pathname === to.replace("#", "");
 
-  const baseClass =
-    "transition-colors duration-200 hover:text-primary font-medium";
-  const activeClass = "text-primary underline underline-offset-4 decoration-2";
-
-  return (
-    <Link href={to} scroll={false}>
-      <span className={`${baseClass} ${isActive ? activeClass : ""}`}>
-        {name}
-      </span>
-    </Link>
-  );
-};
-
-export default function NavbarComponent({
-  navbarLinks,
-}: {
-  navbarLinks: NavbarLinkType[];
-}) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuItems: MenuItem[] = [
+    { name: "Home", to: "/" },
+    { name: "Specialty", to: "/specialty" },
+    { name: "Why Choose Us", to: "/why-choose-us" },
+    { name: "About Us", to: "/about-us" },
+    { name: "Pricing", to: "/pricing" },
+    { name: "Blogs", to: "/blogs" },
+  ];
 
   return (
     <Navbar
-      isBlurred
-      maxWidth="full"
-      className="sm:px-2 lg:px-4 2xl:px-16"
-      isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
+      maxWidth="full"
+      isBlurred
+      shouldHideOnScroll
+      className="sm:px-2 lg:px-4 2xl:px-16 font-medium"
     >
-      {/* Mobile - Hamburger on the left */}
-      <NavbarContent className="md:hidden" justify="start">
-        <NavbarMenuToggle />
-      </NavbarContent>
-
-      {/* Logo - right on mobile, left on desktop */}
-      <NavbarContent
-        className="flex flex-row-reverse md:flex-row w-full md:w-auto items-center"
-        justify="start"
-      >
-        <NavbarBrand className="justify-end md:justify-start w-full md:w-auto">
-          <Link href="/" scroll={false}>
-            <Image
-              src="/logo.png"
-              alt="A1 Education main logo"
-              width={146}
-              height={48}
-              className="w-[88px] h-[30px] lg:w-[128px] lg:h-[40px]"
-              priority
-            />
-          </Link>
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="md:hidden"
+        />
+        <NavbarBrand>
+          <Image
+            src="/logo.png"
+            alt="A1 Education main logo"
+            width={146}
+            height={48}
+            className="w-[88px] h-[30px] lg:w-[128px] lg:h-[40px]"
+            priority
+          />
         </NavbarBrand>
       </NavbarContent>
 
-      {/* Mobile menu */}
-      <NavbarMenu className="mt-5">
-        {navbarLinks.map((link, i) => (
-          <NavbarMenuItem key={`${link.name}-${i}`}>
-            <Link
-              href={link.to}
-              scroll={false}
-              className="text-lg text-foreground hover:text-primary transition"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {link.name}
-            </Link>
-          </NavbarMenuItem>
-        ))}
+      <NavbarContent className="hidden md:flex gap-4" justify="center">
+        {menuItems.map((item, index) => {
+          const isActive = pathname === item.to;
+          return (
+            <NavbarItem key={index}>
+              <Link
+                href={item.to}
+                color="foreground"
+                className={`transition-colors duration-200 hover:text-primary ${
+                  isActive
+                    ? "font-semibold underline underline-offset-4 text-primary"
+                    : ""
+                }`}
+              >
+                {item.name}
+              </Link>
+            </NavbarItem>
+          );
+        })}
+      </NavbarContent>
+
+      <NavbarContent justify="end">
+        <NavbarItem>
+          <Link href="/contact-us">
+            <Button className="bg-primary w-32 rounded-[2px] text-white font-medium">
+              Enrol Now
+            </Button>
+          </Link>
+        </NavbarItem>
+      </NavbarContent>
+
+      <NavbarMenu className="mt-5 font-medium">
+        {menuItems.map((item, index) => {
+          const isActive = pathname === item.to;
+          return (
+            <NavbarMenuItem key={`${item.name}-${index}`}>
+              <Link
+                className={`w-full ${
+                  isActive
+                    ? "font-semibold underline underline-offset-4 decoration-primary"
+                    : ""
+                }`}
+                color="foreground"
+                href={item.to}
+              >
+                {item.name}
+              </Link>
+            </NavbarMenuItem>
+          );
+        })}
       </NavbarMenu>
-
-      {/* Center nav links - desktop only */}
-      <NavbarContent className="hidden md:flex gap-4" justify="end">
-        {navbarLinks.map(
-          (link, i) =>
-            link.name !== "Enrol Now" && (
-              <NavbarItem key={i}>
-                <NavbarLink name={link.name} to={link.to} />
-              </NavbarItem>
-            )
-        )}
-      </NavbarContent>
-
-      {/* Enrol Now - desktop only */}
-      <NavbarContent className="hidden md:flex" justify="end">
-        {navbarLinks.map(
-          (link, i) =>
-            link.name === "Enrol Now" && (
-              <NavbarItem key={i}>
-                <Button
-                  as={Link}
-                  href={link.to}
-                  color="primary"
-                  variant="flat"
-                  scroll={false}
-                  className="text-white hover:opacity-90 bg-primary !rounded-sm font-medium w-24"
-                >
-                  {link.name}
-                </Button>
-              </NavbarItem>
-            )
-        )}
-      </NavbarContent>
     </Navbar>
   );
 }

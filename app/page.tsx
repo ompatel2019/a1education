@@ -1,4 +1,5 @@
 // app/page.tsx
+import Hero from "@/components/Hero";
 import type { Metadata } from "next";
 
 export const generateMetadata = (): Metadata => ({
@@ -34,5 +35,5 @@ export const generateMetadata = (): Metadata => ({
 });
 
 export default function HomePage() {
-  return <div className="">page</div>;
+  return <div className=""><Hero/></div>;
 }
