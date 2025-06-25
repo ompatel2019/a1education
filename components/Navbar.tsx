@@ -13,6 +13,7 @@ import {
 } from "@heroui/react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { menuItems } from "@/lib/navConfig";
 
 type MenuItem = {
   name: string;
@@ -22,15 +23,6 @@ type MenuItem = {
 export default function NavbarComponent() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const pathname = usePathname();
-
-  const menuItems: MenuItem[] = [
-    { name: "Home", to: "/" },
-    { name: "Specialty", to: "/specialty" },
-    { name: "Why Choose Us", to: "/why-choose-us" },
-    { name: "About Us", to: "/about-us" },
-    { name: "Pricing", to: "/pricing" },
-    { name: "Blogs", to: "/blogs" },
-  ];
 
   return (
     <Navbar
@@ -94,9 +86,9 @@ export default function NavbarComponent() {
           return (
             <NavbarMenuItem key={`${item.name}-${index}`}>
               <Link
-                className={`w-full ${
+                className={`transition-colors duration-200 hover:text-primary ${
                   isActive
-                    ? "font-semibold underline underline-offset-4 decoration-primary"
+                    ? "font-semibold underline underline-offset-4 text-primary"
                     : ""
                 }`}
                 color="foreground"
