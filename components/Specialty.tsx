@@ -8,12 +8,12 @@ import {
   perks,
   sectionName,
   sectionSubheading,
-} from "@/lib/config/specialty";
+} from "@/lib/config/specialtyConfig";
 import {
   sectionClass,
   sectionNameClass,
   sectionSubheadingClass,
-} from "@/lib/config/sharedclasses";
+} from "@/lib/config/sharedclassesConfig";
 
 const cardAnim = {
   hidden: { opacity: 0, y: 32, scale: 0.97 },

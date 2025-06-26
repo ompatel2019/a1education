@@ -1,7 +1,7 @@
 import { TextAnimate } from "@/components/magicui/text-animate";
 import { ImagesMarquee } from "@/components/ImagesMarquee";
 import ClientButtons from "@/components/ClientButtons";
-import { heroTopText, heroHeading, threeSteps } from "@/lib/config/hero";
+import { heroTopText, heroHeading, threeSteps } from "@/lib/config/heroConfig";
 import { BlurFade } from "./magicui/blur-fade";
 
 const gradBg =

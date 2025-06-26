@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import { Marquee } from "@/components/magicui/marquee";
 import Image, { StaticImageData } from "next/image";
-import { heroImages } from "@/lib/config/hero";
+import { heroImages } from "@/lib/config/heroConfig";
 
 interface ImageCardProps {
   src: StaticImageData; // <-- Not string!

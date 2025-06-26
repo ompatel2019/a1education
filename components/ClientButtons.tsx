@@ -2,7 +2,7 @@
 "use client";
 import { Button } from "@heroui/react";
 import Link from "next/link";
-import { heroButtons } from "@/lib/config/hero";
+import { heroButtons } from "@/lib/config/heroConfig";
 
 const ClientButtons = () => {
   return (

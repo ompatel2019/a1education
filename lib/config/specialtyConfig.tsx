@@ -18,6 +18,7 @@ type perkItem = {
   name: string;
   desc: string;
 };
+
 export const specialties: specialtyItem[] = [
   {
     tags: ["Year 11", "Economics"],

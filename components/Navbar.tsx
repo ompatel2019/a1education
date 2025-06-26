@@ -14,7 +14,7 @@ import {
 } from "@heroui/react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { menuItems } from "@/lib/config/navbar";
+import { menuItems } from "@/lib/config/navbarConfig";
 import { BlurFade } from "./magicui/blur-fade";
 
 export default function NavbarComponent() {
