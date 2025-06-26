@@ -15,11 +15,7 @@ import {
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { menuItems } from "@/lib/config/navbar";
-
-type MenuItem = {
-  name: string;
-  to: string;
-};
+import { BlurFade } from "./magicui/blur-fade";
 
 export default function NavbarComponent() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);

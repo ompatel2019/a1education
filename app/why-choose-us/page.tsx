@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Why Choose A1 Education for HSC Economics?",
+  title: "Why Choose Us | A1 Education",
   description:
     "Find out why top students choose A1 Education for HSC Economics. Results-driven approach, elite tutors, and personalised feedback.",
   alternates: {

@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tutoring Prices | A1 Education",
+  title: "Prices | A1 Education",
   description:
     "View A1 Education’s transparent and competitive pricing for HSC tutoring in Sydney. Affordable rates, no hidden fees, and free trial options.",
   alternates: {

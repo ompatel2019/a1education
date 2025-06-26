@@ -1,5 +1,6 @@
 // app/page.tsx
 import Hero from "@/components/Hero";
+import Specialty from "@/components/Specialty";
 import type { Metadata } from "next";
 
 export const generateMetadata = (): Metadata => ({
@@ -36,8 +37,9 @@ export const generateMetadata = (): Metadata => ({
 
 export default function HomePage() {
   return (
-    <div className="">
+    <>
       <Hero />
-    </div>
+      <Specialty/>
+    </>
   );
 }

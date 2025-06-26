@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact A1 Education",
+  title: "Contact Us | A1 Education",
   description:
     "Get in touch with A1 Education to ask about HSC Economics tutoring, book a free trial, or speak directly with our lead tutor.",
   alternates: {
