@@ -91,7 +91,7 @@ export default function RootLayout({
       </head>
       <body className={`${generalSans.variable} antialiased`}>
         <Providers>
-          <Topbar />
+          {/* <Topbar /> */}
           <Navbar />
           {children}
           <Footer />

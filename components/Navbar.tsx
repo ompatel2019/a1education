@@ -1,3 +1,4 @@
+// components/Navbar.tsx
 "use client";
 import React from "react";
 import {
@@ -13,7 +14,7 @@ import {
 } from "@heroui/react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { menuItems } from "@/lib/navConfig";
+import { menuItems } from "@/lib/config/navbar";
 
 type MenuItem = {
   name: string;
@@ -29,8 +30,7 @@ export default function NavbarComponent() {
       onMenuOpenChange={setIsMenuOpen}
       maxWidth="full"
       isBlurred
-      shouldHideOnScroll
-      className="sm:px-2 lg:px-4 2xl:px-16 font-medium"
+      className="md:px-2 lg:px-6 font-medium bg-white"
     >
       <NavbarContent>
         <NavbarMenuToggle
@@ -59,7 +59,7 @@ export default function NavbarComponent() {
                 color="foreground"
                 className={`transition-colors duration-200 hover:text-primary ${
                   isActive
-                    ? "font-semibold underline underline-offset-4 text-primary"
+                    ? "font-semibold underline decoration-2 underline-offset-5 text-primary"
                     : ""
                 }`}
               >
@@ -73,14 +73,14 @@ export default function NavbarComponent() {
       <NavbarContent justify="end">
         <NavbarItem>
           <Link href="/contact-us">
-            <Button className="bg-primary w-32 rounded-[2px] text-white font-medium">
+            <Button className="bg-primary w-32 rounded-sm text-white font-medium">
               Enrol Now
             </Button>
           </Link>
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu className="mt-5 font-medium">
+      <NavbarMenu className="font-medium bg-white">
         {menuItems.map((item, index) => {
           const isActive = pathname === item.to;
           return (
@@ -88,7 +88,7 @@ export default function NavbarComponent() {
               <Link
                 className={`transition-colors duration-200 hover:text-primary ${
                   isActive
-                    ? "font-semibold underline underline-offset-4 text-primary"
+                    ? "font-semibold underline decoration-2 underline-offset-5 text-primary"
                     : ""
                 }`}
                 color="foreground"

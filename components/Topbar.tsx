@@ -12,7 +12,7 @@ const Topbar = () => {
     <header className="bg-primary text-white w-full">
       <div
         className="flex flex-col md:flex-row items-center justify-between
-        px-4 sm:px-6 lg:px-12 2xl:px-24 py-2 md:py-4 2xl:py-6
+        px-4 sm:px-6 lg:px-12 2xl:px-24 py-4 md:py-6 2xl:py-8
         gap-2 md:gap-4 text-sm md:text-base max-lg:justify-center font-semibold"
       >
         <p>{leftText}</p>
