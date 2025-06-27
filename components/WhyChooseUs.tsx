@@ -16,7 +16,16 @@ import { NumberTicker } from "@/components/magicui/number-ticker";
 import { cn } from "@/lib/utils";
 
 // === STAT CARD COMPONENT ===
-const StatCard = ({ statName, stat, metric, desc, index }: any) => (
+
+interface StatCardProps {
+  statName: string;
+  stat: string;
+  metric: string;
+  desc: string;
+  index: number;
+}
+
+const StatCard = ({ statName, stat, metric, desc, index }: StatCardProps) => (
   <BlurFade delay={0.1 + index * 0.1} inView>
     <div
       className={cn(
@@ -40,6 +49,7 @@ const StatCard = ({ statName, stat, metric, desc, index }: any) => (
 );
 
 // === TESTIMONIAL COMPONENT ===
+
 const Testimonial = () => (
   <BlurFade delay={0.35} inView>
     <div className="flex flex-col h-full w-full items-start rounded-xl border border-black/10 bg-white px-7 py-8 shadow-sm hover:shadow-lg transition-all relative overflow-hidden group min-h-[220px]">
@@ -54,11 +64,12 @@ const Testimonial = () => (
 );
 
 // === OUR DIFFERENCE BOX ===
+
 const DifferenceCard = () => (
   <BlurFade delay={0.45} inView>
     <div className="flex flex-col h-full w-full rounded-xl border border-black/10 bg-white px-7 py-8 shadow-sm hover:shadow-lg transition-all min-h-[220px]">
       <div className="flex flex-col justify-around gap-5 flex-1">
-        {ourDifference.map((item, idx) => (
+        {ourDifference.map((item) => (
           <div key={item.label} className="flex items-start gap-4">
             <span className="mt-1 text-primary text-2xl">{item.icon}</span>
             <div>
@@ -73,6 +84,7 @@ const DifferenceCard = () => (
 );
 
 // === MAIN COMPONENT ===
+
 const WhyChooseUs = () => {
   return (
     <section className={sectionClass}>

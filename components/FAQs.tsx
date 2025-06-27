@@ -62,7 +62,7 @@ const FAQs = () => {
       <BlurFade delay={0.25} inView>
         <div className="flex flex-col gap-12 mx-auto">
           {faqsCategories.map((cat, catIdx) => (
-            <div key={cat.categoryTitle}>
+            <div key={catIdx}>
               <h5 className="h5 font-semibold mb-4 text-blue-700">
                 {cat.categoryTitle}
               </h5>

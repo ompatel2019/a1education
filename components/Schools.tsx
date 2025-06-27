@@ -1,6 +1,6 @@
 // components/Schools.tsx
 import React from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { Marquee } from "@/components/magicui/marquee";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import {
@@ -14,7 +14,7 @@ const SchoolCard = ({
   schoolName,
   alt,
 }: {
-  src: any;
+  src: string | StaticImageData;
   schoolName: string;
   alt: string;
 }) => (

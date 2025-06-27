@@ -14,17 +14,23 @@ import {
   blogsSectionSubheading,
   blogsFallbackMessage,
 } from "@/lib/config/blogsConfig";
+import { PortableTextBlock } from "next-sanity";
 
 export interface BlogPost {
   _id: string;
   title: string;
   slug: string;
   excerpt?: string;
-  body?: any;
+  body?: PortableTextBlock[];
   publishedAt: string;
   author?: {
     name: string;
-    image?: any;
+    image?: {
+      asset: {
+        _ref: string;
+        _type: "reference";
+      };
+    };
   };
   mainImage?: {
     url: string;
