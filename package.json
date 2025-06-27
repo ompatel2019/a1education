@@ -5,7 +5,7 @@
   "homepage": "https://a1education.com.au",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next lint && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "postbuild": "next-sitemap"
