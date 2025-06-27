@@ -5,7 +5,6 @@ import { BlurFade } from "./magicui/blur-fade";
 import {
   sectionName,
   sectionSubheading,
-  commonPerks,
   year11pricing,
   year12pricing,
 } from "@/lib/config/pricingConfig";

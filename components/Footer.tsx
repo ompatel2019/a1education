@@ -8,6 +8,7 @@ import {
   footerAttribution,
 } from "@/lib/config/footerConfig";
 import { sectionClass } from "@/lib/config/sharedclassesConfig";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -17,7 +18,7 @@ const Footer = () => {
         <div className="flex flex-col gap-8 md:flex-row md:justify-between md:items-center">
           {/* Logo */}
           <div className="flex justify-center md:justify-start">
-            <a href="/" aria-label="A1 Education Home">
+            <Link href="/" aria-label="A1 Education Home">
               <Image
                 src="/logo.png"
                 alt="A1 Education main logo"
@@ -26,7 +27,7 @@ const Footer = () => {
                 className="w-[110px] md:w-[146px] h-auto"
                 priority
               />
-            </a>
+            </Link>
           </div>
           {/* Main Links */}
           <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-white text-[0.98rem] font-medium">

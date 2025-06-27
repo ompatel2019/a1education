@@ -4,7 +4,6 @@ import React from "react";
 import { BlurFade } from "./magicui/blur-fade";
 import { Marquee } from "@/components/magicui/marquee";
 import {
-  sectionClass,
   sectionNameClass,
   sectionSubheadingClass,
 } from "@/lib/config/sharedclassesConfig";
@@ -18,9 +17,7 @@ import {
 
 const Testimonials = () => {
   return (
-    <section
-      className={`bg-primary text-white text-center py-12 space-y-10`}
-    >
+    <section className={`bg-primary text-white text-center py-12 space-y-10`}>
       <BlurFade delay={0.15} inView>
         <div className="max-w-2xl mx-auto">
           <h3 className={sectionNameClass}>{sectionHeading.toUpperCase()}</h3>
