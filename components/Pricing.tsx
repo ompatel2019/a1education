@@ -56,7 +56,7 @@ const Pricing = () => {
               ))}
             </div>
             <a
-              href="/contact"
+              href="/contact-us"
               className="mt-8 w-full text-center rounded-md p-3 bg-primary text-white font-semibold hover:bg-primary/80 transition-colors"
             >
               Get Started

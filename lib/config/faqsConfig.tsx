@@ -34,7 +34,7 @@ export const faqsCategories = [
         answer: (
           <>
             You can enrol by filling out the form on our{" "}
-            <a href="/contact" className="text-blue-600 underline">
+            <a href="/contact-us" className="text-blue-600 underline">
               contact
             </a>{" "}
             page, calling{" "}

@@ -4,9 +4,9 @@ import { FaInstagram, FaGoogle } from "react-icons/fa";
 
 export const footerLinks = [
   { label: "Home", href: "/" },
-  { label: "Why Choose Us", href: "/whychooseus" },
-  { label: "About Us", href: "/aboutus" },
-  { label: "Contact Us", href: "/contact" },
+  { label: "Why Choose Us", href: "/why-choose-us" },
+  { label: "About Us", href: "/about-us" },
+  { label: "Contact Us", href: "/contact-us" },
   {
     label: "Leave a Review",
     href: "https://g.page/r/CUphtEkfNIs9EBI/review",

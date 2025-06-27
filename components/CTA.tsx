@@ -24,7 +24,7 @@ const CTA = ({ contactPage }: { contactPage?: boolean }) => {
             {ctaSubheading}
           </h4>
           <Link
-            href={contactPage ? "#contact" : "/contact"}
+            href={contactPage ? "#contact" : "/contact-us"}
             className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-primary hover:bg-blue-600 hover:text-white transition-all font-semibold text-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-white"
           >
             {ctaButton.label}
