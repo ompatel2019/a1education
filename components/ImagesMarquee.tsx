@@ -33,7 +33,7 @@ const ImageCard = ({ src, alt }: ImageCardProps) => {
 export function ImagesMarquee() {
   return (
     <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-      <Marquee pauseOnHover className="[--duration:25s]">
+      <Marquee pauseOnHover className="[--duration:35s]">
         {heroImages.map((image) => (
           <ImageCard key={image.alt} {...image} />
         ))}

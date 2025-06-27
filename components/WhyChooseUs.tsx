@@ -55,7 +55,7 @@ const Testimonial = () => (
 const DifferenceCard = () => (
   <BlurFade delay={0.45} inView>
     <div className="flex flex-col h-full w-full rounded-xl border border-black/10 bg-white px-7 py-8 shadow-sm hover:shadow-lg transition-all min-h-[220px]">
-      <div className="flex flex-col gap-5 flex-1">
+      <div className="flex flex-col justify-around gap-5 flex-1">
         {ourDifference.map((item, idx) => (
           <div key={item.label} className="flex items-start gap-4">
             <span className="mt-1 text-primary text-2xl">{item.icon}</span>

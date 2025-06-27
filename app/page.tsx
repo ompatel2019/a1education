@@ -1,5 +1,6 @@
 // app/page.tsx
 import Hero from "@/components/Hero";
+import Pricing from "@/components/Pricing";
 import Specialty from "@/components/Specialty";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import type { Metadata } from "next";
@@ -42,6 +43,7 @@ export default function HomePage() {
       <Hero />
       <Specialty/>
       <WhyChooseUs/>
+      <Pricing/>
     </>
   );
 }

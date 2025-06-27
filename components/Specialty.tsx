@@ -72,7 +72,7 @@ export default function Specialty() {
                   {specialty.desc}
                 </div>
                 <Link
-                  href="/contact"
+                  href="/contact-us"
                   className="
                     mt-4 w-fit px-6 py-2
                     bg-primary text-white font-semibold rounded-md

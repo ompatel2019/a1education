@@ -1,3 +1,4 @@
+// lib/config/sepcialtyConfig.tsx
 import { ReactElement } from "react";
 import {
   TbHexagonNumber1,
