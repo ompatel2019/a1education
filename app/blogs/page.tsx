@@ -2,6 +2,11 @@
 
 import React from "react";
 import type { Metadata } from "next";
+import Blogs from "@/components/Blogs";
+import Specialty from "@/components/Specialty";
+import CTA from "@/components/CTA";
+import PageTitle from "@/components/PageTitle";
+// import { fetchBlogs } from "@/lib/sanity/queries"; // ready for next step
 
 export const metadata: Metadata = {
   title: "Blog | A1 Education",
@@ -12,6 +17,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
-  return <div>Blog Page</div>;
+export default async function BlogPage() {
+  // const posts = await fetchBlogs();
+
+  return (
+    <>
+      <PageTitle
+        heading="Our Blogs"
+        subheading="Insights, tips, and strategies for excelling in HSC Economics."
+        route="Home / Blogs"
+      />
+      {/* <Blogs posts={posts} /> */}
+      <Specialty />
+      <CTA />
+    </>
+  );
 }
