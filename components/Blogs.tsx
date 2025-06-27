@@ -19,12 +19,17 @@ export interface BlogPost {
   _id: string;
   title: string;
   slug: string;
-  mainImage: {
-    url: string;
-    alt: string;
-  };
-  excerpt: string;
+  excerpt?: string;
+  body?: any;
   publishedAt: string;
+  author?: {
+    name: string;
+    image?: any;
+  };
+  mainImage?: {
+    url: string;
+    alt?: string;
+  };
 }
 
 export default function Blogs({ posts }: { posts: BlogPost[] }) {
@@ -57,12 +62,15 @@ export default function Blogs({ posts }: { posts: BlogPost[] }) {
               className="block group overflow-hidden rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all bg-white"
             >
               <div className="relative aspect-[16/9] w-full overflow-hidden">
-                <Image
-                  src={post.mainImage.url}
-                  alt={post.mainImage.alt}
-                  fill
-                  className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
-                />
+                {post.mainImage?.url && (
+                  <Image
+                    src={post.mainImage.url}
+                    alt={post.mainImage.alt ?? post.title}
+                    width={600}
+                    height={400}
+                    className="rounded-lg w-full h-auto object-cover"
+                  />
+                )}
               </div>
               <div className="p-5">
                 <h5 className="h5 font-semibold mb-2 text-gray-900 group-hover:text-primary transition-colors">

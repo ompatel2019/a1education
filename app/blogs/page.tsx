@@ -6,7 +6,7 @@ import Blogs from "@/components/Blogs";
 import Specialty from "@/components/Specialty";
 import CTA from "@/components/CTA";
 import PageTitle from "@/components/PageTitle";
-// import { fetchBlogs } from "@/lib/sanity/queries"; // ready for next step
+import { fetchBlogs } from "@/sanity/lib/queries";
 
 export const metadata: Metadata = {
   title: "Blog | A1 Education",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  // const posts = await fetchBlogs();
+  const posts = await fetchBlogs();
 
   return (
     <>
@@ -27,7 +27,7 @@ export default async function BlogPage() {
         subheading="Insights, tips, and strategies for excelling in HSC Economics."
         route="Home / Blogs"
       />
-      {/* <Blogs posts={posts} /> */}
+      <Blogs posts={posts} />
       <Specialty />
       <CTA />
     </>
