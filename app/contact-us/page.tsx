@@ -1,4 +1,5 @@
 // app/contact-us/page.tsx
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,6 +11,28 @@ export const metadata: Metadata = {
   },
 };
 
+import PageTitle from "@/components/PageTitle";
+import ContactForm from "@/components/ContactForm";
+import WhatWeOffer from "@/components/WhatWeOffer";
+import FAQs from "@/components/FAQs";
+import CTA from "@/components/CTA";
+
 export default function ContactUsPage() {
-  return <div>Contact Us Page</div>;
+  return (
+    <>
+      <PageTitle
+        heading="Contact Us"
+        subheading="Reach out to Sydney’s top Economics tutors at A1 Education and book a trial lesson on us."
+        route="Home / Contact"
+      />
+
+      <ContactForm />
+
+      <WhatWeOffer />
+
+      <FAQs />
+
+      <CTA contactPage={true} />
+    </>
+  );
 }

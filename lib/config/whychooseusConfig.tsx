@@ -1,3 +1,5 @@
+// lib/config/whychooseusConfig.tsx
+
 import {
   FaRegHandshake,
   FaRegLightbulb,

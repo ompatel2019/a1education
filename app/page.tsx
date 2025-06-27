@@ -50,7 +50,7 @@ export default function HomePage() {
       <Pricing />
       <Testimonials />
       <Schools />
-      <FAQs/>
+      <FAQs />
     </>
   );
 }

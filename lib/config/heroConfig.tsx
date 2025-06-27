@@ -1,4 +1,5 @@
 // lib/config/heroConfig.tsx
+
 import {
   TbHexagonNumber1,
   TbHexagonNumber2,

@@ -1,6 +1,9 @@
 // app/specialty/page.tsx
 
 import type { Metadata } from "next";
+import PageTitle from "@/components/PageTitle";
+import Specialty from "@/components/Specialty";
+import CTA from "@/components/CTA";
 
 export const metadata: Metadata = {
   title: "Specialty | A1 Education",
@@ -12,5 +15,15 @@ export const metadata: Metadata = {
 };
 
 export default function SpecialtyPage() {
-  return <div>Economics Specialty Page</div>;
+  return (
+    <>
+      <PageTitle
+        heading="Specialty"
+        subheading="Explore our Specialty with the leading Economics tutors in Sydney, offering tailored programs that prepare students for HSC success."
+        route="Home / Specialty"
+      />
+      <Specialty />
+      <CTA />
+    </>
+  );
 }

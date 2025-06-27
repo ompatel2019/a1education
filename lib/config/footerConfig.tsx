@@ -1,6 +1,6 @@
 // lib/config/footerConfig.tsx
 
-import { FaInstagram, FaGoogle } from "react-icons/fa"; // You can change to any icon lib you like
+import { FaInstagram, FaGoogle } from "react-icons/fa";
 
 export const footerLinks = [
   { label: "Home", href: "/" },

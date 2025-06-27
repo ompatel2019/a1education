@@ -1,4 +1,5 @@
 // app/layout.tsx
+
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -81,7 +82,7 @@ export default function RootLayout({
       </head>
       <body className={`${generalSans.variable} antialiased`}>
         <Providers>
-          {/* <Topbar /> */}
+          <Topbar />
           <Navbar />
           {children}
           <Footer />

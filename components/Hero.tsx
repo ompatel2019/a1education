@@ -18,9 +18,9 @@ const gradBg =
 const Hero = () => {
   return (
     <BlurFade inView>
-      <section className="md:py-2 text-white 2xl:px-12 lg:px-8 md:px-4 px-1">
+      <section className="md:py-2 text-white 2xl:px-16 lg:px-12 md:px-8 px-4">
         <div
-          className={`${gradBg} 2xl:py-24 lg:py-18 md:py-16 py-6 text-center 2xl:rounded-lg lg:rounded-md md:rounded-sm rounded-xs`}
+          className={`${gradBg} 2xl:py-24 lg:py-18 md:py-16 py-6 text-center 2xl:rounded-xl lg:rounded-lg md:rounded-md rounded-sm`}
         >
           <div className="responsivePad 2xl:space-y-16 lg:space-y-12 md:space-y-8 space-y-4">
             <h4 className="h4 font-semibold">{heroTopText}</h4>

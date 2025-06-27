@@ -1,3 +1,5 @@
+// components/magicui/number-ticker.tsx
+
 "use client";
 
 import { useInView, useMotionValue, useSpring } from "motion/react";

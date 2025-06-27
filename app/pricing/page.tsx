@@ -1,15 +1,37 @@
 // app/pricing/page.tsx
+
 import type { Metadata } from "next";
 
+// Metadata block for SEO
 export const metadata: Metadata = {
-  title: "Prices | A1 Education",
+  title: "Pricing | A1 Education",
   description:
-    "View A1 Education’s transparent and competitive pricing for HSC tutoring in Sydney. Affordable rates, no hidden fees, and free trial options.",
+    "Explore our competitive pricing for Year 11 & 12 HSC Economics tutoring in Sydney. Affordable, transparent rates—no hidden fees.",
   alternates: {
     canonical: "https://a1education.com.au/pricing",
   },
 };
 
+// Sections
+import PageTitle from "@/components/PageTitle";
+import Pricing from "@/components/Pricing";
+import Faqs from "@/components/FAQs";
+import CTA from "@/components/CTA";
+
 export default function PricingPage() {
-  return <div>Pricing Page</div>;
+  return (
+    <>
+      <PageTitle
+        heading="Pricing"
+        subheading="Explore affordable options with top Economics tutors in Sydney, ensuring quality education that delivers measurable improvements."
+        route="Home / Pricing"
+      />
+
+      <Pricing />
+
+      <Faqs />
+
+      <CTA />
+    </>
+  );
 }
