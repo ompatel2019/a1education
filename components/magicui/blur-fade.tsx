@@ -1,3 +1,5 @@
+// components/magicui/blur-fade.tsx
+
 "use client";
 
 import {

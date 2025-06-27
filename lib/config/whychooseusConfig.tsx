@@ -32,10 +32,10 @@ export const stats: statItem[] = [
     desc: "of our students score above their school's average in Prelim and HSC Economics.",
   },
   {
-    statName: "Trusted by Families",
-    stat: "100+",
-    metric: "",
-    desc: "Sydney families have trusted us to deliver quality economics tutoring.",
+    statName: "Top rankers",
+    stat: "35",
+    metric: "%",
+    desc: "Students are top rankers in their cohorts and are keeping their position at the top.",
   },
 ];
 

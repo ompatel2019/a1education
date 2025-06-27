@@ -1,4 +1,5 @@
 // app/about-us/page.tsx
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

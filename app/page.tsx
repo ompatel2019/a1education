@@ -1,7 +1,11 @@
 // app/page.tsx
+
+import FAQs from "@/components/FAQs";
 import Hero from "@/components/Hero";
 import Pricing from "@/components/Pricing";
+import Schools from "@/components/Schools";
 import Specialty from "@/components/Specialty";
+import Testimonials from "@/components/Testimonials";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import type { Metadata } from "next";
 
@@ -41,9 +45,12 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <Specialty/>
-      <WhyChooseUs/>
-      <Pricing/>
+      <Specialty />
+      <WhyChooseUs />
+      <Pricing />
+      <Testimonials />
+      <Schools />
+      <FAQs/>
     </>
   );
 }

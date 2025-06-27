@@ -1,4 +1,5 @@
-// lib/config/navbar.ts
+// lib/config/navbarConfig.tsx
+
 export type MenuItem = {
     name: string;
     to: string;

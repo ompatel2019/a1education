@@ -19,7 +19,6 @@ export type ThreeStep = {
   numberIcon: ReactElement;
   step: string;
 };
-
 export const threeSteps: ThreeStep[] = [
   {
     numberIcon: <TbHexagonNumber1 className="xl:size-10 lg:size-8 size-6" />,
@@ -39,7 +38,6 @@ export type HeroImage = {
   src: StaticImageData;
   alt: string;
 };
-
 export const heroImages: HeroImage[] = [
   { src: hero1, alt: "Image of Students at A1 Education #1" },
   { src: hero2, alt: "Image of Students at A1 Education #2" },
@@ -52,7 +50,6 @@ export type HeroButton = {
   name: string;
   to: string;
 };
-
 export const heroButtons: HeroButton[] = [
   { name: "Our Specialty", to: "/specialty" },
   { name: "Book Free Trial", to: "/contact-us" },

@@ -1,8 +1,16 @@
+// components/Hero.tsx
+
 import { TextAnimate } from "@/components/magicui/text-animate";
-import { ImagesMarquee } from "@/components/ImagesMarquee";
+import { Marquee } from "@/components/magicui/marquee";
 import ClientButtons from "@/components/ClientButtons";
-import { heroTopText, heroHeading, threeSteps } from "@/lib/config/heroConfig";
+import Image from "next/image";
 import { BlurFade } from "./magicui/blur-fade";
+import {
+  heroTopText,
+  heroHeading,
+  threeSteps,
+  heroImages,
+} from "@/lib/config/heroConfig";
 
 const gradBg =
   "bg-[linear-gradient(to_bottom,_#4569F7_0%,_#5296E3_50%,_#7A8BD1_100%)]";
@@ -32,7 +40,28 @@ const Hero = () => {
             <ClientButtons />
           </div>
           <div className="2xl:pt-16 lg:pt-12 md:pt-8 pt-4">
-            <ImagesMarquee />
+            <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
+              <Marquee pauseOnHover className="[--duration:35s]">
+                {heroImages.map((image) => (
+                  <figure
+                    key={image.alt}
+                    className="relative h-full w-full cursor-pointer overflow-hidden text-black border-gray-950/[.1]"
+                  >
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      className="mb-2 h-auto hero-slide-img rounded-md"
+                      width={800}
+                      height={640}
+                      loading="eager"
+                      priority
+                    />
+                  </figure>
+                ))}
+              </Marquee>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4"></div>
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4"></div>
+            </div>
           </div>
         </div>
       </section>

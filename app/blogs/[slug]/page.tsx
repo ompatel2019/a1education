@@ -1,3 +1,5 @@
+// app/blogs/[slug]/page.tsx
+
 import React from "react";
 import { Metadata } from "next";
 
