@@ -1,15 +1,9 @@
-# Allow all user agents to access public pages only
+# *
 User-agent: *
-Disallow: /api/
-Disallow: /_next/
-Disallow: /static/
-Disallow: /server/
-Disallow: /private/
-Disallow: /404
-Disallow: /500
-
-# Allow indexing of everything else
 Allow: /
 
-# Sitemap (must match your real domain!)
+# Host
+Host: https://a1education.com.au
+
+# Sitemaps
 Sitemap: https://a1education.com.au/sitemap.xml

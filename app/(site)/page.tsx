@@ -34,7 +34,7 @@ export const generateMetadata = (): Metadata => ({
   },
   twitter: {
     card: "summary_large_image",
-    title: "A1 Education | Sydney’s #1 HSC Economics Tutors",
+    title: "A1 Education | Sydney's #1 HSC Economics Tutors",
     description:
       "Join the top HSC Economics tutoring centre in Sydney. Small classes, recorded lessons, and band 6 results.",
     images: ["/web-app-manifest-512x512.png"],
