@@ -42,10 +42,10 @@ export default function Blogs({ posts }: { posts: BlogPost[] }) {
   if (!posts || posts.length === 0) {
     return (
       <section className={sectionClass}>
-        <h3 className={sectionNameClass}>
+        <h2 className={sectionNameClass}>
           {blogsSectionHeading.toUpperCase()}
-        </h3>
-        <h4 className={sectionSubheadingClass}>{blogsSectionSubheading}</h4>
+        </h2>
+        <h3 className={sectionSubheadingClass}>{blogsSectionSubheading}</h3>
         <p className="text-gray-600 mt-4">{blogsFallbackMessage}</p>
       </section>
     );
@@ -54,10 +54,10 @@ export default function Blogs({ posts }: { posts: BlogPost[] }) {
   return (
     <section className={sectionClass}>
       <BlurFade delay={0.1} inView>
-        <h3 className={sectionNameClass}>
+        <h2 className={sectionNameClass}>
           {blogsSectionHeading.toUpperCase()}
-        </h3>
-        <h4 className={sectionSubheadingClass}>{blogsSectionSubheading}</h4>
+        </h2>
+        <h3 className={sectionSubheadingClass}>{blogsSectionSubheading}</h3>
       </BlurFade>
 
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 mt-8">

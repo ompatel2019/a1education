@@ -30,8 +30,8 @@ export default function Specialty() {
   return (
     <section className={sectionClass}>
       <BlurFade delay={0.15} inView className="space-y-4">
-        <h3 className={sectionNameClass}>{sectionName.toUpperCase()}</h3>
-        <h4 className={sectionSubheadingClass}>{sectionSubheading}</h4>
+        <h2 className={sectionNameClass}>{sectionName.toUpperCase()}</h2>
+        <h3 className={sectionSubheadingClass}>{sectionSubheading}</h3>
       </BlurFade>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-6">
         {/* Left: Class cards */}

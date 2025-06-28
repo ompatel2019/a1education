@@ -33,9 +33,9 @@ const PageTitle = ({
 
           <div className="relative z-10 w-full max-w-4xl flex flex-col items-center space-y-6 md:space-y-8 font-generalSans">
             {route && (
-              <h5 className="h5 font-semibold uppercase tracking-widest text-white/80">
+              <h2 className="h5 font-semibold uppercase tracking-widest text-white/80">
                 {route}
-              </h5>
+              </h2>
             )}
             <h1 className="h1 font-bold text-white drop-shadow-lg md:px-10 px-4">
               {heading}

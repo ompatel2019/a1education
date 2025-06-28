@@ -71,12 +71,12 @@ const ContactForm: React.FC = () => {
           <div className="col-span-2 max-md:col-span-2 bg-primary/80 backdrop-blur-xl rounded-2xl text-white 2xl:p-16 lg:p-12 md:p-10 p-8 shadow-2xl border border-white/20 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-purple-500/20 rounded-2xl pointer-events-none" />
             <div className="relative z-10 text-left mb-7 space-y-1">
-              <h3 className={sectionNameClass}>
+              <h2 className={sectionNameClass}>
                 {contactFormHeadings.name.toUpperCase()}
-              </h3>
-              <h4 className={sectionSubheadingClass}>
+              </h2>
+              <h3 className={sectionSubheadingClass}>
                 {contactFormHeadings.subheading}
-              </h4>
+              </h3>
             </div>
             <form
               onSubmit={onSubmit}

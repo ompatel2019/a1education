@@ -18,12 +18,12 @@ const WhatWeOffer: React.FC = () => {
   return (
     <section className={sectionClass}>
       <BlurFade delay={0.3} inView>
-        <h3 className={`${sectionNameClass} text-center`}>
+        <h2 className={`${sectionNameClass} text-center`}>
           {whatWeOfferHeading.toUpperCase()}
-        </h3>
-        <h4 className={`${sectionSubheadingClass} text-center`}>
+        </h2>
+        <h3 className={`${sectionSubheadingClass} text-center`}>
           {whatWeOfferSubheading}
-        </h4>
+        </h3>
       </BlurFade>
       <BlurFade delay={0.4} inView>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 2xl:gap-8 lg:gap-6 md:gap-4 gap-2 mt-8">

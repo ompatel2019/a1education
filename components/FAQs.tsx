@@ -55,17 +55,17 @@ const FAQs = () => {
     <section className={`${sectionClass} bg-white text-black`}>
       <BlurFade delay={0.1} inView>
         <div className="text-center mb-8">
-          <h3 className={sectionNameClass}>{faqsSectionTitle.toUpperCase()}</h3>
-          <h4 className={sectionSubheadingClass}>{faqsSectionSubheading}</h4>
+          <h2 className={sectionNameClass}>{faqsSectionTitle.toUpperCase()}</h2>
+          <h3 className={sectionSubheadingClass}>{faqsSectionSubheading}</h3>
         </div>
       </BlurFade>
       <BlurFade delay={0.25} inView>
         <div className="flex flex-col gap-12 mx-auto">
           {faqsCategories.map((cat, catIdx) => (
             <div key={catIdx}>
-              <h5 className="h5 font-semibold mb-4 text-blue-700">
+              <h4 className="h5 font-semibold mb-4 text-blue-700">
                 {cat.categoryTitle}
-              </h5>
+              </h4>
               <div>
                 {cat.items.map((faq, faqIdx) => {
                   const uniqueKey = `${cat.categoryTitle}-${faqIdx}`;
