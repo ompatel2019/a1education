@@ -19,7 +19,17 @@ import { menuItems } from "@/lib/config/navbarConfig";
 
 export default function NavbarComponent() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [atTop, setAtTop] = React.useState(true);
   const pathname = usePathname();
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setAtTop(window.scrollY === 0);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // set initial
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <Navbar
@@ -76,7 +86,13 @@ export default function NavbarComponent() {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu className="font-medium bg-white">
+      {/*
+        IMPORTANT: Only render <NavbarMenuItem> as direct children of <NavbarMenu> for accessibility.
+        Do NOT put <div>, <Button>, or any other element directly inside <NavbarMenu>.
+      */}
+      <NavbarMenu
+        className={`font-medium bg-white ${atTop ? "mt-[54px] sm:mt-12" : "mt-0"} md:mt-0`}
+      >
         {menuItems.map((item, index) => {
           const isActive = pathname === item.to;
           return (
@@ -95,6 +111,12 @@ export default function NavbarComponent() {
             </NavbarMenuItem>
           );
         })}
+        {/*
+          // Uncomment below to enforce at runtime (optional):
+          // if (React.Children.toArray(children).some(child => child.type !== NavbarMenuItem)) {
+          //   throw new Error('Only <NavbarMenuItem> allowed as children of <NavbarMenu>');
+          // }
+        */}
       </NavbarMenu>
     </Navbar>
   );
