@@ -1,7 +1,7 @@
 // components/ContactForm.tsx
 
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { contacts, contactFormHeadings } from "@/lib/config/contactFormConfig";
 import {
@@ -12,27 +12,67 @@ import {
 
 const ContactForm: React.FC = () => {
   const [result, setResult] = useState("");
+  const [howDidYouFindUs, setHowDidYouFindUs] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setResult("Sending...");
+
     const formData = new FormData(event.currentTarget);
-    formData.append("access_key", "1feabdc6-8f23-4db0-9697-f16d9c4de0ae");
+
+    // Log form data for debugging
+    console.log("Form data being sent:", {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      school: formData.get("school"),
+      year: formData.get("year"),
+      howDidYouFindUs: formData.get("howDidYouFindUs"),
+      otherSource: formData.get("otherSource"),
+      message: formData.get("message"),
+    });
+
+    const formObject = {
+      access_key: "1feabdc6-8f23-4db0-9697-f16d9c4de0ae",
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      school: formData.get("school"),
+      year: formData.get("year"),
+      howDidYouFindUs: formData.get("howDidYouFindUs"),
+      otherSource: formData.get("otherSource"),
+      message: formData.get("message"),
+    };
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formObject),
       });
+
+      console.log("Response status:", response.status);
       const data = await response.json();
+      console.log("Response data:", data);
+
       if (data.success) {
         setResult("Form submitted successfully!");
-        event.currentTarget.reset();
+        if (formRef.current) {
+          formRef.current.reset();
+        }
+        setHowDidYouFindUs("");
       } else {
-        setResult(data.message || "Error submitting form.");
+        setResult(`Error: ${data.message || "Unknown error occurred"}`);
       }
-    } catch {
-      setResult("Error submitting form. Please try again later.");
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setResult(
+        `Error submitting form: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
     }
   };
 
@@ -83,6 +123,7 @@ const ContactForm: React.FC = () => {
               className="space-y-4 text-base relative z-10"
               method="POST"
               aria-label="Contact Form"
+              ref={formRef}
             >
               <div className="lg:flex gap-4 max-lg:space-y-4">
                 <div className="flex flex-col w-full">
@@ -136,6 +177,79 @@ const ContactForm: React.FC = () => {
                   className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 placeholder:text-gray-200"
                 />
               </div>
+              <div className="lg:flex gap-4 max-lg:space-y-4">
+                <div className="flex flex-col w-full">
+                  <label htmlFor="year" className="mb-1">
+                    Year
+                  </label>
+                  <select
+                    id="year"
+                    name="year"
+                    className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 text-white"
+                    required
+                  >
+                    <option value="" className="text-gray-800">
+                      Select Year
+                    </option>
+                    <option value="10" className="text-gray-800">
+                      Year 10
+                    </option>
+                    <option value="11" className="text-gray-800">
+                      Year 11
+                    </option>
+                    <option value="12" className="text-gray-800">
+                      Year 12
+                    </option>
+                  </select>
+                </div>
+                <div className="flex flex-col w-full">
+                  <label htmlFor="howDidYouFindUs" className="mb-1">
+                    How did you find us?
+                  </label>
+                  <select
+                    id="howDidYouFindUs"
+                    name="howDidYouFindUs"
+                    value={howDidYouFindUs}
+                    onChange={(e) => setHowDidYouFindUs(e.target.value)}
+                    className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 text-white"
+                    required
+                  >
+                    <option value="" className="text-gray-800">
+                      Select option
+                    </option>
+                    <option value="Social Media" className="text-gray-800">
+                      Social Media
+                    </option>
+                    <option value="Website" className="text-gray-800">
+                      Website
+                    </option>
+                    <option value="Referral" className="text-gray-800">
+                      Referral
+                    </option>
+                    <option value="Seminar" className="text-gray-800">
+                      Seminar
+                    </option>
+                    <option value="Other" className="text-gray-800">
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+              {howDidYouFindUs === "Other" && (
+                <div className="flex flex-col">
+                  <label htmlFor="otherSource" className="mb-1">
+                    Please specify
+                  </label>
+                  <input
+                    id="otherSource"
+                    name="otherSource"
+                    type="text"
+                    placeholder="How did you hear about us?"
+                    className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 placeholder:text-gray-200"
+                    required
+                  />
+                </div>
+              )}
               <div className="flex flex-col">
                 <label htmlFor="message" className="mb-1">
                   Message
