@@ -3,7 +3,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import Blogs from "@/components/Blogs";
-import Specialty from "@/components/Specialty";
+// import Specialty from "@/components/Specialty";
 import CTA from "@/components/CTA";
 import PageTitle from "@/components/PageTitle";
 import { fetchBlogs } from "@/sanity/lib/queries";
@@ -28,7 +28,7 @@ export default async function BlogPage() {
         route="Home / Blogs"
       />
       <Blogs posts={posts} />
-      <Specialty />
+      {/* <Specialty /> */}
       <CTA />
     </>
   );

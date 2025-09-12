@@ -1,8 +1,8 @@
 // components/Blogs.tsx
 
 import React from "react";
-import Link from "next/link";
-import Image from "next/image";
+// import Link from "next/link";
+// import Image from "next/image";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import {
   sectionClass,
@@ -57,10 +57,11 @@ export default function Blogs({ posts }: { posts: BlogPost[] }) {
         <h2 className={sectionNameClass}>
           {blogsSectionHeading.toUpperCase()}
         </h2>
-        <h3 className={sectionSubheadingClass}>{blogsSectionSubheading}</h3>
+        {/* <h3 className={sectionSubheadingClass}>{blogsSectionSubheading}</h3> */}
+        Blogs and insights coming soon...
       </BlurFade>
 
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 mt-8">
+      {/* <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 mt-8">
         {posts.map((post, idx) => (
           <BlurFade key={post._id} delay={0.15 + idx * 0.1} inView>
             <Link
@@ -96,7 +97,7 @@ export default function Blogs({ posts }: { posts: BlogPost[] }) {
             </Link>
           </BlurFade>
         ))}
-      </div>
+      </div> */}
     </section>
   );
 }
