@@ -43,7 +43,7 @@ export const stats: statItem[] = [
 
 export const sectionName = "The A1 Difference";
 export const sectionSubheading =
-  '"Joined Karan recently and loving it. He simplifies concepts in an intriguing manner. Can\'t go wrong with his fast replies to any question."';
+  '"I don\'t know if words are able to express how much A1 Education has helped with my economics progress. Prior to joining, I was averaging 60-70% with a 60% mark in year 11 preliminary economics exam. Through hard work and the diligent effort that A1 sustains with every student, I was able to turn these marks around. Through this tuition, I was effectively able to increase my marks with a 94% and 96% in term 3 and HSC economics trials, respectively. I highly recommend A1 education to all who want to succeed in economics."';
 
 // "Our Difference" Items
 export const ourDifference = [
