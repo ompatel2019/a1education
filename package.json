@@ -2,6 +2,7 @@
   "name": "a1education-new",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "homepage": "https://a1education.com.au",
   "scripts": {
     "dev": "next dev --turbopack",
