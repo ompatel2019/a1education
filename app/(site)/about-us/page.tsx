@@ -9,9 +9,9 @@ import FAQs from "@/components/FAQs";
 import CTA from "@/components/CTA";
 
 export const metadata: Metadata = {
-  title: "About Us | A1 Education",
+  title: "About A1 | A1 Education",
   description:
-    "Learn about A1 Education’s mission to empower high school students through expert HSC tutoring, small classes, and personalised support.",
+    "Learn about A1 Education's mission to empower high school students through expert HSC tutoring, small classes, and personalised support.",
   alternates: {
     canonical: "https://a1education.com.au/about-us",
   },
@@ -21,9 +21,9 @@ export default function AboutUsPage() {
   return (
     <>
       <PageTitle
-        heading="About Us"
+        heading="About A1"
         subheading="Discover how our Economics tutors in Sydney have built a reputation for excellence, transforming students into leaders in economic thinking."
-        route="Home / About Us"
+        route="Home / About A1"
       />
 
       <AboutUs />

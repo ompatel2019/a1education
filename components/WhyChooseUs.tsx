@@ -57,7 +57,7 @@ const Testimonial = () => (
         {sectionSubheading}
       </div>
       <div className="text-sm text-gray-500 mt-4 font-semibold">
-        — Sansita Verma, Rank 1, ATAR 97.80 (Cumberland High)
+        — Arnav Lamba, 55% Y11 Prelim → 96% Y12 Trial
       </div>
     </div>
   </BlurFade>

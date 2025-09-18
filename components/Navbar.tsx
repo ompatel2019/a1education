@@ -44,18 +44,20 @@ export default function NavbarComponent() {
           className="md:hidden"
         />
         <NavbarBrand>
-          <Image
-            src="/logo.png"
-            alt="A1 Education main logo"
-            width={146}
-            height={48}
-            className="w-[88px] h-[30px] lg:w-[128px] lg:h-[40px]"
-            priority
-          />
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              alt="A1 Education main logo"
+              width={146}
+              height={48}
+              className="w-[88px] h-[30px] lg:w-[128px] lg:h-[40px]"
+              priority
+            />
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden md:flex gap-4" justify="center">
+      <NavbarContent className="hidden md:flex gap-6 lg:gap-8" justify="center">
         {menuItems.map((item, index) => {
           const isActive = pathname === item.to;
           return (
@@ -63,13 +65,16 @@ export default function NavbarComponent() {
               <Link
                 href={item.to}
                 color="foreground"
-                className={`transition-colors duration-200 hover:text-primary ${
+                className={`relative transition-all duration-300 hover:text-primary hover:opacity-100 group ${
                   isActive
                     ? "font-semibold underline decoration-2 underline-offset-5 text-primary"
-                    : ""
+                    : "hover:scale-105"
                 }`}
               >
-                {item.name}
+                <span className="relative z-10">{item.name}</span>
+                {!isActive && (
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                )}
               </Link>
             </NavbarItem>
           );
@@ -98,15 +103,18 @@ export default function NavbarComponent() {
           return (
             <NavbarMenuItem key={`${item.name}-${index}`}>
               <Link
-                className={`transition-colors duration-200 hover:text-primary ${
+                className={`relative transition-all duration-300 hover:text-primary hover:opacity-100 group ${
                   isActive
                     ? "font-semibold underline decoration-2 underline-offset-5 text-primary"
-                    : ""
+                    : "hover:scale-105"
                 }`}
                 color="foreground"
                 href={item.to}
               >
-                {item.name}
+                <span className="relative z-10">{item.name}</span>
+                {!isActive && (
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                )}
               </Link>
             </NavbarMenuItem>
           );

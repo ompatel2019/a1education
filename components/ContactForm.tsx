@@ -30,6 +30,7 @@ const ContactForm: React.FC = () => {
       year: formData.get("year"),
       howDidYouFindUs: formData.get("howDidYouFindUs"),
       otherSource: formData.get("otherSource"),
+      whoReferredYou: formData.get("whoReferredYou"),
       message: formData.get("message"),
     });
 
@@ -42,6 +43,7 @@ const ContactForm: React.FC = () => {
       year: formData.get("year"),
       howDidYouFindUs: formData.get("howDidYouFindUs"),
       otherSource: formData.get("otherSource"),
+      whoReferredYou: formData.get("whoReferredYou"),
       message: formData.get("message"),
     };
 
@@ -188,7 +190,7 @@ const ContactForm: React.FC = () => {
                     className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 text-white"
                     required
                   >
-                    <option value="" className="text-gray-800">
+                    <option value="" disabled className="text-gray-800">
                       Select Year
                     </option>
                     <option value="10" className="text-gray-800">
@@ -214,7 +216,7 @@ const ContactForm: React.FC = () => {
                     className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 text-white"
                     required
                   >
-                    <option value="" className="text-gray-800">
+                    <option value="" disabled className="text-gray-800">
                       Select option
                     </option>
                     <option value="Social Media" className="text-gray-800">
@@ -235,6 +237,21 @@ const ContactForm: React.FC = () => {
                   </select>
                 </div>
               </div>
+              {howDidYouFindUs === "Referral" && (
+                <div className="flex flex-col">
+                  <label htmlFor="whoReferredYou" className="mb-1">
+                    Who referred you?
+                  </label>
+                  <input
+                    id="whoReferredYou"
+                    name="whoReferredYou"
+                    type="text"
+                    placeholder="Name of person who referred you"
+                    className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 placeholder:text-gray-200"
+                    required
+                  />
+                </div>
+              )}
               {howDidYouFindUs === "Other" && (
                 <div className="flex flex-col">
                   <label htmlFor="otherSource" className="mb-1">

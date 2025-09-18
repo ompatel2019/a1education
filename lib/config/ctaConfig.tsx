@@ -2,9 +2,9 @@
 
 import { FaArrowRight } from "react-icons/fa";
 
-export const ctaHeading = "You won’t find out till you start.";
+export const ctaHeading = "Ready to achieve Band 6 in HSC Economics?";
 export const ctaSubheading =
-  "Jumpstart your success with A1 Education’s expert tutoring. Enhance your understanding and boost your scores with our tailored support. Ready to excel? Join us now and see the difference.";
+  "Join Sydney's #1 Economics tutoring program and transform your understanding. Our proven methods, expert tutors, and comprehensive resources have helped hundreds of students excel. Don't wait—your Band 6 journey starts here.";
 
 export const ctaButton = {
   label: "Enrol Now",

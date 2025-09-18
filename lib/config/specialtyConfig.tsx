@@ -37,36 +37,36 @@ export const specialties: specialtyItem[] = [
 export const perks: perkItem[] = [
   {
     number: <TbHexagonNumber1 className="xl:size-10 lg:size-8 size-6" />,
-    name: "Small Class Sizes",
-    desc: "We limit our classes to a maximum of 12 students, ensuring individual attention and a supportive learning environment.",
+    name: "Content Mastery",
+    desc: "Connect syllabus to real-world events - RBA decisions, federal budgets - think like an economist, not just a student.",
   },
   {
     number: <TbHexagonNumber2 className="xl:size-10 lg:size-8 size-6" />,
-    name: "Structured Lessons",
-    desc: "Each 2-hour session combines comprehensive content with practice questions—multiple choice, short answer, and essays.",
+    name: "Exam Technique",
+    desc: "Practice exams and essays in every session. Write like a Band 6 candidate under exam conditions.",
   },
   {
     number: <TbHexagonNumber3 className="xl:size-10 lg:size-8 size-6" />,
-    name: "Critical Learning",
-    desc: "Focus on critical thinking and real-world applications to ensure students understand beyond memorization.",
+    name: "Resources",
+    desc: "Exclusive Band 6 essays, model answers, recorded lessons, and 24/7 Q&A support.",
   },
   {
     number: <TbHexagonNumber4 className="xl:size-10 lg:size-8 size-6" />,
-    name: "Rich Resources",
-    desc: "Access to a wide array of study materials including recorded lessons, practice papers, and 24/7 homework help.",
+    name: "Support",
+    desc: "Direct exam and assignment support. Predictions, mock papers, and school-specific resources.",
   },
   {
     number: <TbHexagonNumber5 className="xl:size-10 lg:size-8 size-6" />,
-    name: "Consistent Results",
-    desc: "Students regularly outperform their peers, with most seeing a 25% mark increase through our coaching.",
+    name: "Proven Success",
+    desc: "25% average improvement. Students consistently rank top of their schools and secure Band 6's.",
   },
   {
     number: <TbHexagonNumber6 className="xl:size-10 lg:size-8 size-6" />,
     name: "Personalised Coaching",
-    desc: "Direct guidance from experienced tutors, offering tailored advice to meet your unique academic needs.",
+    desc: "Small classes with individual feedback and tailored guidance. Students receive personalised feedback on their essays and short answers.",
   },
 ];
 
-export const sectionName = "Specialty";
+export const sectionName = "The A1 Formula for Band 6 Success";
 export const sectionSubheading =
-  "Sydney’s top choice for Year 11–12 Economics. Small classes (12-people), real skills, proven results. Ready to level up?";
+  "Our proven methodology combines expert teaching, comprehensive resources, and personalized support to deliver consistent Band 6 results.";

@@ -7,9 +7,9 @@ export type MenuItem = {
 
 export const menuItems: MenuItem[] = [
   { name: "Home", to: "/" },
-  { name: "Specialty", to: "/specialty" },
-  { name: "Why Choose Us", to: "/why-choose-us" },
-  { name: "About Us", to: "/about-us" },
+  { name: "The A1 Formula", to: "/specialty" },
+  { name: "The A1 Difference", to: "/why-choose-us" },
+  { name: "About A1", to: "/about-us" },
   { name: "Pricing", to: "/pricing" },
 ];
 

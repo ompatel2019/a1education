@@ -13,8 +13,8 @@ import hero5 from "@/app/assets/images/hero5.webp";
 import { ReactElement } from "react";
 import { StaticImageData } from "next/image";
 
-export const heroTopText = "On-campus / Online Years 11-12 Economics Tutoring";
-export const heroHeading = "HSC Economics Specialists In Sydney";
+export const heroTopText = "Preliminary and HSC Economics Tutoring";
+export const heroHeading = "Maximise Your Potential. Master HSC Economics.";
 
 export type ThreeStep = {
   numberIcon: ReactElement;
@@ -52,6 +52,5 @@ export type HeroButton = {
   to: string;
 };
 export const heroButtons: HeroButton[] = [
-  { name: "Our Specialty", to: "/specialty" },
-  { name: "Book Free Trial", to: "/contact-us" },
+  { name: "Join Now", to: "/contact-us" },
 ];

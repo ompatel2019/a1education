@@ -9,9 +9,9 @@ import Schools from "@/components/Schools";
 import CTA from "@/components/CTA";
 
 export const metadata: Metadata = {
-  title: "Why Choose Us | A1 Education",
+  title: "The A1 Difference | A1 Education",
   description:
-    "Find out why top students choose A1 Education for HSC Economics. Results-driven approach, elite tutors, and personalised feedback.",
+    "Discover The A1 Difference - built by economists, community of high achievers, beyond tuition support, and trusted results across Sydney.",
   alternates: {
     canonical: "https://a1education.com.au/why-choose-us",
   },
@@ -21,9 +21,9 @@ export default function WhyChooseUsPage() {
   return (
     <>
       <PageTitle
-        heading="Why Choose Us"
-        subheading="Choose the best Economics tutors in Sydney; our track record of high student success rates speaks volumes about our teaching efficacy."
-        route="Home / Why Choose Us"
+        heading="The A1 Difference"
+        subheading="Discover what makes A1 Education the top choice for HSC Economics - built by economists, community of high achievers, and trusted results."
+        route="Home / The A1 Difference"
       />
 
       <WhyChooseUs />

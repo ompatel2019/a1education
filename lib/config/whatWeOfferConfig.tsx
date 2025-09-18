@@ -1,7 +1,14 @@
 // lib/config/whatWeOfferConfig.tsx
 
 import { ReactNode } from "react";
-import { AlarmClock, Book, Phone, Video, Info, Users } from "lucide-react";
+import {
+  Clock,
+  BookOpen,
+  MessageCircle,
+  PlayCircle,
+  FileText,
+  Target,
+} from "lucide-react";
 
 export type WhatWeOfferPerk = {
   icon: ReactNode;
@@ -11,37 +18,37 @@ export type WhatWeOfferPerk = {
 
 export const whatWeOfferPerks: WhatWeOfferPerk[] = [
   {
-    icon: <AlarmClock className="text-white" size={26} />,
-    perk: "Weekly 2-Hour Lessons",
-    desc: "Interactive classes covering syllabus content, practice questions, and exam strategies.",
+    icon: <Clock className="text-white" size={26} />,
+    perk: "Weekly Lessons",
+    desc: "Master the syllabus in interactive 2–3 hour classes built around theory, exam drills, and real-world economics",
   },
   {
-    icon: <Book className="text-white" size={26} />,
+    icon: <BookOpen className="text-white" size={26} />,
     perk: "Extensive Resources",
-    desc: "Past HSC-style multiple choice, short answer, and essay questions; band 6 exemplar responses; step-by-step solutions.",
+    desc: "Band 6 notes, 100+ past papers, exemplar essays, A1-predicted exams, quizzes, and up-to-date statistics — everything in one place.",
   },
   {
-    icon: <Phone className="text-white" size={26} />,
+    icon: <MessageCircle className="text-white" size={26} />,
     perk: "24/7 Support",
-    desc: "Students can ask questions anytime via email, messaging apps, or our online communication portal.",
+    desc: "Ask questions anytime. Instant feedback through our dedicated channels so you're never stuck.",
   },
   {
-    icon: <Video className="text-white" size={26} />,
-    perk: "Recorded Classes",
-    desc: "Miss a class or need to revisit a concept? All sessions are recorded for easy revision.",
+    icon: <PlayCircle className="text-white" size={26} />,
+    perk: "Recorded lessons",
+    desc: "Every lesson is recorded so you can revise, catch up, and revisit key concepts whenever you need.",
   },
   {
-    icon: <Info className="text-white" size={26} />,
+    icon: <FileText className="text-white" size={26} />,
     perk: "Personalised Feedback",
-    desc: "Detailed marking and feedback on essays, short answers, and assignment drafts.",
+    desc: "Detailed marking and tailored advice on essays, short answers, and assignments — feedback that drives results.",
   },
   {
-    icon: <Users className="text-white" size={26} />,
-    perk: "Supportive Environment",
-    desc: "Our supportive environment is crafted to build confidence and foster academic curiosity.",
+    icon: <Target className="text-white" size={26} />,
+    perk: "Exam Environments",
+    desc: "A supportive, high-achieving community that builds confidence and prepares you to think and write like a Band 6 economist.",
   },
 ];
 
-export const whatWeOfferHeading = "What we offer";
+export const whatWeOfferHeading = "Inside the A1 Experience";
 export const whatWeOfferSubheading =
   "At A1 Education, we combine proven teaching methodologies with comprehensive resources to help our students excel in Year 11–12 Economics in Sydney.";

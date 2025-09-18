@@ -2,7 +2,7 @@
 
 import aboutimg from "@/app/assets/images/aboutUs.webp";
 
-export const aboutHeading = "About Us";
+export const aboutHeading = "Sydney's #1 Specialists in HSC Economics";
 export const aboutSubheading =
   "Sydney’s specialist HSC Economics tutors for Years 11–12.";
 
@@ -14,24 +14,24 @@ export const aboutBottomDescription =
 
 export const aboutStats = [
   {
-    value: 20,
-    metric: "/20",
-    desc: "Top essay mark achieved in the 2024 HSC exam.",
+    value: 80,
+    metric: "%",
+    desc: "Students 1st in Schools",
   },
   {
     value: 97,
     metric: "%",
-    desc: "Highest trial exam score by our students.",
-  },
-  {
-    value: 90,
-    metric: "+",
-    desc: "All tutors achieved Band 6 in HSC Economics.",
+    desc: "Highest trial score",
   },
   {
     value: 100,
     metric: "%",
-    desc: "Students report higher confidence after joining.",
+    desc: "Satisfaction rate",
+  },
+  {
+    value: 100,
+    metric: "%",
+    desc: "Tutors achieved Band 6",
   },
 ];
 

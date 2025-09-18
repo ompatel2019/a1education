@@ -41,30 +41,30 @@ export const stats: statItem[] = [
   },
 ];
 
-export const sectionName = "Why Choose Us";
+export const sectionName = "The A1 Difference";
 export const sectionSubheading =
-  '"Karan is a knowledgeable and approachable tutor with clear expertise in economics. He explains complex concepts logically and with ease, showing genuine interest in student performance. His detailed marking and comprehensive resources, including band six notes and a question bank, significantly enhance response writing skills. Initially struggling with short answers and essay structures, I improved markedly under his guidance. Karan is also very responsive, always providing timely feedback. I highly recommend him as an exceptional economics tutor."';
+  '"Joined Karan recently and loving it. He simplifies concepts in an intriguing manner. Can\'t go wrong with his fast replies to any question."';
 
 // "Our Difference" Items
 export const ourDifference = [
   {
     icon: <FaRegHandshake />,
-    label: "Personal Connection",
-    desc: "We build lasting relationships and tailor our teaching for each student.",
+    label: "Built by Economists",
+    desc: "A1 was founded by economics specialists who live and breathe the subject.",
   },
   {
     icon: <FaRegLightbulb />,
-    label: "Expert Mentors",
-    desc: "All tutors scored Band 6 and have deep HSC experience.",
+    label: "Community of High Achievers",
+    desc: "You'll study alongside motivated peers who raise the standard every week.",
   },
   {
     icon: <FaRegClock />,
-    label: "Flexible Support",
-    desc: "Access 24/7 homework help and extra resources when you need it.",
+    label: "Beyond Tuition",
+    desc: "We mentor, predict, and prepare - not just teach.",
   },
   {
     icon: <FaRegStar />,
-    label: "Proven Outcomes",
-    desc: "Consistent mark improvements and positive feedback every year.",
+    label: "Trusted Results",
+    desc: "Schools across Sydney recognise A1 students as the best in Economics.",
   },
 ];

@@ -35,7 +35,7 @@ export const contacts: ContactCard[] = [
 ];
 
 export const contactFormHeadings = {
-  name: "Contact Form",
+  name: "Start Your A1 Journey",
   subheading: "Get in Touch / Start Your Free Trial",
   formSubheading:
     "Ready to join A1 Education or have questions about HSC Economics tutoring in Sydney? Reach out to us—our friendly team is here to help.",

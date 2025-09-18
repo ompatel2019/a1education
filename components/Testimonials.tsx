@@ -26,12 +26,12 @@ const Testimonials = () => {
       </BlurFade>
       <BlurFade delay={0.4} inView>
         <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-          <Marquee pauseOnHover className="[--duration:25s] mb-2">
+          <Marquee pauseOnHover className="[--duration:150s] mb-2">
             {firstRow.map((review) => (
               <ReviewCard key={review.name} {...review} />
             ))}
           </Marquee>
-          <Marquee reverse pauseOnHover className="[--duration:30s]">
+          <Marquee reverse pauseOnHover className="[--duration:150s]">
             {secondRow.map((review) => (
               <ReviewCard key={`dup-${review.name}`} {...review} />
             ))}
