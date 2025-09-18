@@ -56,7 +56,7 @@ const Pricing = () => {
                 activeTab === index ? "opacity-100 block" : "opacity-0 hidden"
               }`}
             >
-              <div className="w-[55%] flex flex-col justify-between bg-white/80 border-2 border-black rounded-xl shadow-lg p-6 md:p-8 mx-auto transition-all duration-200 hover:shadow-xl hover:-translate-y-1">
+              <div className="w-full lg:w-[55%] flex flex-col justify-between bg-white/80 border-2 border-black rounded-xl shadow-lg p-6 md:p-8 mx-auto transition-all duration-200 hover:shadow-xl hover:-translate-y-1">
                 <div>
                   <span className="inline-block text-xs font-semibold mb-2 px-3 py-1 rounded-full bg-blue-100 text-blue-900 tracking-widest uppercase">
                     {plan.year}
