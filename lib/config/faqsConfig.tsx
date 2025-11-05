@@ -22,7 +22,7 @@ export const faqsCategories = [
       {
         question: "What if I miss a class?",
         answer:
-          "Don't worry! Every lesson is recorded, so you can catch up at your own pace. We also provide catch-up resources and recordings for late joiners.",
+          "No Worries! Every lesson is recorded, so you can catch up at your own pace. We also provide catch-up resources and recordings for late joiners.",
       },
       {
         question: "What is your lesson structure?",
