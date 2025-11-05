@@ -19,7 +19,7 @@ export const stats: statItem[] = [
     statName: "Average Increase In Marks",
     stat: "25%",
     metric: "%",
-    desc: "students see at least a 25% improvement in scores after joining A1Education.",
+    desc: "students see at least a 25% improvement in scores after joining A1 Education.",
   },
   {
     statName: "Satisfaction Rate",
