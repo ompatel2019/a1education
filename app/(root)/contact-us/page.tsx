@@ -15,7 +15,7 @@ import PageTitle from "@/components/PageTitle";
 import ContactForm from "@/components/ContactForm";
 import WhatWeOffer from "@/components/WhatWeOffer";
 import FAQs from "@/components/FAQs";
-import CTA from "@/components/CTA";
+import LeadCollector from "@/components/LeadCollector";
 
 export default function ContactUsPage() {
   return (
@@ -32,7 +32,7 @@ export default function ContactUsPage() {
 
       <FAQs />
 
-      <CTA contactPage={true} />
+      <LeadCollector />
     </>
   );
 }

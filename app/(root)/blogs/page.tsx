@@ -3,7 +3,7 @@
 import React from "react";
 import type { Metadata } from "next";
 // import Specialty from "@/components/Specialty";
-import CTA from "@/components/CTA";
+import LeadCollector from "@/components/LeadCollector";
 import PageTitle from "@/components/PageTitle";
 // TODO: Replace with new blog fetching logic
 
@@ -29,7 +29,7 @@ export default async function BlogPage() {
       />
       {/* <Blogs posts={posts} /> */}
       {/* <Specialty /> */}
-      <CTA />
+      <LeadCollector />
     </>
   );
 }

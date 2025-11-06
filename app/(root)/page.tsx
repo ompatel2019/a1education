@@ -2,7 +2,7 @@
 
 import FAQs from "@/components/FAQs";
 import Hero from "@/components/Hero";
-import Pricing from "@/components/Pricing";
+import LeadCollector from "@/components/LeadCollector";
 import Schools from "@/components/Schools";
 import Specialty from "@/components/Specialty";
 import Testimonials from "@/components/Testimonials";
@@ -47,8 +47,8 @@ export default function HomePage() {
       <Hero />
       <Specialty />
       <WhyChooseUs />
-      <Pricing />
       <Testimonials />
+      <LeadCollector />
       <Schools />
       <FAQs />
     </>
