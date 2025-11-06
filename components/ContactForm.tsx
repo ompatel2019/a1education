@@ -21,19 +21,6 @@ const ContactForm: React.FC = () => {
 
     const formData = new FormData(event.currentTarget);
 
-    // Log form data for debugging
-    console.log("Form data being sent:", {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
-      school: formData.get("school"),
-      year: formData.get("year"),
-      howDidYouFindUs: formData.get("howDidYouFindUs"),
-      otherSource: formData.get("otherSource"),
-      whoReferredYou: formData.get("whoReferredYou"),
-      message: formData.get("message"),
-    });
-
     const formObject = {
       access_key: "1feabdc6-8f23-4db0-9697-f16d9c4de0ae",
       name: formData.get("name"),
@@ -57,9 +44,7 @@ const ContactForm: React.FC = () => {
         body: JSON.stringify(formObject),
       });
 
-      console.log("Response status:", response.status);
       const data = await response.json();
-      console.log("Response data:", data);
 
       if (data.success) {
         setResult("Form submitted successfully!");
@@ -71,9 +56,10 @@ const ContactForm: React.FC = () => {
         setResult(`Error: ${data.message || "Unknown error occurred"}`);
       }
     } catch (error) {
-      console.error("Form submission error:", error);
       setResult(
-        `Error submitting form: ${error instanceof Error ? error.message : "Unknown error"}`
+        `Error submitting form: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
       );
     }
   };
