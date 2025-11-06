@@ -2,11 +2,10 @@
 
 import React from "react";
 import type { Metadata } from "next";
-import Blogs from "@/components/Blogs";
 // import Specialty from "@/components/Specialty";
 import CTA from "@/components/CTA";
 import PageTitle from "@/components/PageTitle";
-import { fetchBlogs } from "@/sanity/lib/queries";
+// TODO: Replace with new blog fetching logic
 
 export const metadata: Metadata = {
   title: "Blog | A1 Education",
@@ -18,7 +17,8 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  const posts = await fetchBlogs();
+  // TODO: Replace with new blog fetching logic
+  // const posts = [];
 
   return (
     <>
@@ -27,7 +27,7 @@ export default async function BlogPage() {
         subheading="Insights, tips, and strategies for excelling in HSC Economics."
         route="Home / Blogs"
       />
-      <Blogs posts={posts} />
+      {/* <Blogs posts={posts} /> */}
       {/* <Specialty /> */}
       <CTA />
     </>

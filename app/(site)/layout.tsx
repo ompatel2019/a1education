@@ -8,7 +8,6 @@ import { Providers } from "../providers";
 import { generalSans } from "../fonts/fonts";
 import type { Metadata } from "next";
 import Script from "next/script";
-import hero1 from "@/app/assets/images/hero1.webp";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://a1education.com.au"),
