@@ -3,7 +3,7 @@
 import type { Metadata } from "next";
 import PageTitle from "@/components/PageTitle";
 import Specialty from "@/components/Specialty";
-import LeadCollector from "@/components/LeadCollector";
+// import LeadCollector from "@/components/LeadCollector";
 
 export const metadata: Metadata = {
   title: "The A1 Formula | A1 Education",
@@ -23,7 +23,7 @@ export default function SpecialtyPage() {
         route="Home / The A1 Formula"
       />
       <Specialty />
-      <LeadCollector />
+      {/* <LeadCollector /> */}
     </>
   );
 }

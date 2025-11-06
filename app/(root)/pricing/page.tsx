@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 import PageTitle from "@/components/PageTitle";
 import Pricing from "@/components/Pricing";
 import Faqs from "@/components/FAQs";
-import LeadCollector from "@/components/LeadCollector";
+// import LeadCollector from "@/components/LeadCollector";
 
 export default function PricingPage() {
   return (
@@ -31,7 +31,7 @@ export default function PricingPage() {
 
       <Faqs />
 
-      <LeadCollector />
+      {/* <LeadCollector /> */}
     </>
   );
 }

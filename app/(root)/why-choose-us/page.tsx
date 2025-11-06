@@ -6,7 +6,7 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import WhatWeOffer from "@/components/WhatWeOffer";
 import Testimonials from "@/components/Testimonials";
 import Schools from "@/components/Schools";
-import LeadCollector from "@/components/LeadCollector";
+// import LeadCollector from "@/components/LeadCollector";
 
 export const metadata: Metadata = {
   title: "The A1 Difference | A1 Education",
@@ -34,7 +34,7 @@ export default function WhyChooseUsPage() {
 
       <Schools />
 
-      <LeadCollector />
+      {/* <LeadCollector /> */}
     </>
   );
 }

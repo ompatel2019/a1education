@@ -6,7 +6,7 @@ import AboutUs from "@/components/AboutUs";
 import Testimonials from "@/components/Testimonials";
 import Schools from "@/components/Schools";
 import FAQs from "@/components/FAQs";
-import LeadCollector from "@/components/LeadCollector";
+// import LeadCollector from "@/components/LeadCollector";
 
 export const metadata: Metadata = {
   title: "About A1 | A1 Education",
@@ -34,7 +34,7 @@ export default function AboutUsPage() {
 
       <FAQs />
 
-      <LeadCollector />
+      {/* <LeadCollector /> */}
     </>
   );
 }

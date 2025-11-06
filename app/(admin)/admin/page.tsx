@@ -3,6 +3,9 @@
 import type { Metadata } from "next";
 import EmailSubmissionsTable from "../components/EmailSubmissionsTable";
 
+// Force dynamic rendering for admin pages
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Admin - Email Submissions | A1 Education",
   description: "Admin panel for viewing email marketing submissions.",

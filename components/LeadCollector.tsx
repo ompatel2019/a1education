@@ -5,7 +5,6 @@
 import React, { useState } from "react";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { sectionClass } from "@/lib/config/sharedclassesConfig";
-import { createClient } from "@/lib/supabase/client";
 
 const LeadCollector = () => {
   const [name, setName] = useState("");
@@ -22,30 +21,46 @@ const LeadCollector = () => {
     setSubmitStatus(null);
 
     try {
-      const supabase = createClient();
+      const response = await fetch("/api/lead-collector", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+        }),
+      });
 
-      const { error } = await supabase
-        .from("email_marketing_submissions")
-        .insert([
-          {
-            name: name.trim(),
-            email: email.trim(),
-            source: "lead_collector",
-          },
-        ]);
+      const result = await response.json();
 
-      if (error) {
-        console.error("Error submitting form:", error);
+      if (!response.ok) {
+        if (result?.duplicate) {
+          setSubmitStatus({
+            success: true,
+            message:
+              result?.error ||
+              "You're already on the list—thanks for staying connected!",
+          });
+          setName("");
+          setEmail("");
+          return;
+        }
+
+        console.error("Error submitting form:", result);
         setSubmitStatus({
           success: false,
-          message: "Failed to subscribe. Please try again.",
+          message:
+            result?.error ||
+            "Failed to subscribe. Please try again or contact support.",
         });
       } else {
         setSubmitStatus({
           success: true,
-          message: "Thank you for subscribing! We'll be in touch soon.",
+          message:
+            result?.message ||
+            "Thank you for subscribing! We'll be in touch soon.",
         });
-        // Clear form on success
         setName("");
         setEmail("");
       }

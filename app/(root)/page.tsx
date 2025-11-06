@@ -2,7 +2,7 @@
 
 import FAQs from "@/components/FAQs";
 import Hero from "@/components/Hero";
-import LeadCollector from "@/components/LeadCollector";
+// import LeadCollector from "@/components/LeadCollector";
 import Schools from "@/components/Schools";
 import Specialty from "@/components/Specialty";
 import Testimonials from "@/components/Testimonials";
@@ -48,7 +48,7 @@ export default function HomePage() {
       <Specialty />
       <WhyChooseUs />
       <Testimonials />
-      <LeadCollector />
+      {/* <LeadCollector /> */}
       <Schools />
       <FAQs />
     </>
