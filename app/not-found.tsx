@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 export default function NotFound() {
   return (
-    <section className="responsivePad flex flex-col items-center justify-center min-h-[70vh] text-center py-24 select-none">
+    <section className="responsivePad flex flex-col items-center justify-center text-center select-none h-screen">
       <motion.div
         initial={{ scale: 0.6, rotate: -10, opacity: 0.4 }}
         animate={{ scale: 1, rotate: 0, opacity: 1 }}

@@ -22,6 +22,7 @@ export interface BlogPost {
   excerpt?: string;
   body?: string;
   publishedAt: string;
+  draft?: boolean;
   author?: {
     name: string;
     image?: string;
@@ -33,7 +34,9 @@ export interface BlogPost {
 }
 
 export default function Blogs({ posts }: { posts: BlogPost[] }) {
-  if (!posts || posts.length === 0) {
+  const visiblePosts = (posts ?? []).filter((post) => post.draft !== true);
+
+  if (!visiblePosts || visiblePosts.length === 0) {
     return (
       <section className={sectionClass}>
         <h2 className={sectionNameClass}>
@@ -56,7 +59,7 @@ export default function Blogs({ posts }: { posts: BlogPost[] }) {
       </BlurFade>
 
       {/* <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 mt-8">
-        {posts.map((post, idx) => (
+        {visiblePosts.map((post, idx) => (
           <BlurFade key={post._id} delay={0.15 + idx * 0.1} inView>
             <Link
               href={`/blogs/${post.slug}`}
