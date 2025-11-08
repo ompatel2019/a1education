@@ -3,6 +3,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlogHeader from "@/components/BlogHeader";
+import BlogDownloadables, {
+  type BlogDownloadableResource,
+} from "@/components/BlogDownloadables";
 import { createServiceClient } from "@/lib/supabase/service";
 // import LeadCollector from "@/components/LeadCollector";
 
@@ -23,6 +26,7 @@ interface BlogPost {
     readTime?: string;
     publishedAt?: string;
   };
+  blog_downloadables: BlogDownloadableResource[];
   created_at: string;
   updated_at: string;
 }
@@ -92,6 +96,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     section_text: string;
   }>;
   const context = (blogData.blog_context || {}) as BlogPost["blog_context"];
+  const downloadables = ((blogData.blog_downloadables || []) as BlogDownloadableResource[]).filter(
+    (item) => typeof item?.title === "string" && typeof item?.asset_url === "string"
+  );
 
   return (
     <>
@@ -150,6 +157,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           )}
         </div>
       </article>
+
+      {downloadables.length > 0 && (
+        <BlogDownloadables items={downloadables} />
+      )}
 
       {/* <LeadCollector /> */}
     </>

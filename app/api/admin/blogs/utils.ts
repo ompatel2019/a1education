@@ -6,6 +6,7 @@ type RawPayload = {
   blog_tags?: unknown;
   blog_text?: unknown;
   blog_context?: unknown;
+  blog_downloadables?: unknown;
   draft?: unknown;
 };
 
@@ -20,6 +21,11 @@ type RawSection = {
   section_text?: unknown;
 };
 
+type RawDownloadable = {
+  title?: unknown;
+  asset_url?: unknown;
+};
+
 export type BlogSectionPayload = {
   section_heading: string;
   section_text: string;
@@ -31,6 +37,11 @@ export type BlogContextPayload = {
   readTime: string;
 };
 
+export type BlogDownloadablePayload = {
+  title: string;
+  asset_url: string;
+};
+
 export type BlogPayload = {
   slug: string;
   blog_hero: string | null;
@@ -39,6 +50,7 @@ export type BlogPayload = {
   blog_tags: string[];
   blog_text: BlogSectionPayload[];
   blog_context: BlogContextPayload;
+  blog_downloadables: BlogDownloadablePayload[];
   draft: boolean;
 };
 
@@ -72,6 +84,23 @@ const normalizeContext = (value: unknown): BlogContextPayload => {
   };
 };
 
+const normalizeDownloadables = (value: unknown): BlogDownloadablePayload[] => {
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .map((entry) => {
+      const raw = (entry ?? {}) as RawDownloadable;
+      const title = typeof raw?.title === "string" ? raw.title.trim() : "";
+      const assetUrl =
+        typeof raw?.asset_url === "string" ? raw.asset_url.trim() : "";
+      return {
+        title,
+        asset_url: assetUrl,
+      };
+    })
+    .filter((entry) => entry.title.length > 0 && entry.asset_url.length > 0);
+};
+
 export const normalizeBlogPayload = (input: unknown): BlogPayload => {
   const raw = input as RawPayload;
   const slug = typeof raw?.slug === "string" ? raw.slug.trim() : "";
@@ -97,6 +126,7 @@ export const normalizeBlogPayload = (input: unknown): BlogPayload => {
   const blog_tags = normalizeTags(raw?.blog_tags);
   const blog_text = normalizeSections(raw?.blog_text);
   const blog_context = normalizeContext(raw?.blog_context);
+  const blog_downloadables = normalizeDownloadables(raw?.blog_downloadables);
 
   return {
     slug,
@@ -106,6 +136,7 @@ export const normalizeBlogPayload = (input: unknown): BlogPayload => {
     blog_tags,
     blog_text,
     blog_context,
+    blog_downloadables,
     draft: Boolean(raw?.draft),
   };
 };

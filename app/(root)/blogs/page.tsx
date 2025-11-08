@@ -65,25 +65,28 @@ export default async function BlogPage() {
       />
 
       {/* Blog Display */}
-      <section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-16 pb-32 lg:pb-64 responsivePad">
+        <div className="max-w-2xl">
           {firstBlog ? (
             <article className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <Link href={`/blogs/${firstBlog.slug}`}>
+              <Link
+                href={`/blogs/${firstBlog.slug}`}
+                className="flex flex-col md:flex-row"
+              >
                 {/* Blog Hero Image or Placeholder */}
                 {firstBlog.blog_hero ? (
-                  <div className="relative h-64 w-full">
+                  <div className="relative w-full md:w-1/2 aspect-square">
                     <Image
                       src={firstBlog.blog_hero}
                       alt={firstBlog.blog_header}
                       fill
                       className="object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
                 ) : (
                   <div
-                    className={`relative h-64 ${gradBg} flex items-center justify-center`}
+                    className={`relative w-full md:w-1/2 aspect-square ${gradBg} flex items-center justify-center`}
                   >
                     <div className="text-white text-4xl opacity-50">
                       <svg
@@ -103,7 +106,7 @@ export default async function BlogPage() {
                 )}
 
                 {/* Content */}
-                <div className="p-6">
+                <div className="p-4 md:p-6 flex-1">
                   {/* Tags */}
                   {tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-3">

@@ -17,7 +17,18 @@ type BlogContext = {
   readTime: string;
 };
 
+type BlogDownloadable = {
+  id: string;
+  title: string;
+  asset_url: string;
+  fileName: string;
+  isUploading: boolean;
+  uploadError: string | null;
+};
+
 const nextSectionId = () => `section-${Math.random().toString(36).slice(2, 9)}`;
+const nextDownloadableId = () =>
+  `downloadable-${Math.random().toString(36).slice(2, 9)}`;
 
 const createSection = (): BlogSection => ({
   id: nextSectionId(),
@@ -25,9 +36,23 @@ const createSection = (): BlogSection => ({
   section_text: "",
 });
 
+const createDownloadable = (): BlogDownloadable => ({
+  id: nextDownloadableId(),
+  title: "",
+  asset_url: "",
+  fileName: "",
+  isUploading: false,
+  uploadError: null,
+});
+
 type RawSection = {
   section_heading?: unknown;
   section_text?: unknown;
+};
+
+type RawDownloadableRecord = {
+  title?: unknown;
+  asset_url?: unknown;
 };
 
 type BlogDraftRecord = {
@@ -39,6 +64,7 @@ type BlogDraftRecord = {
   blog_tags: unknown;
   blog_text: unknown;
   blog_context: unknown;
+  blog_downloadables: unknown;
   updated_at: string | null;
   draft: boolean;
 };
@@ -53,6 +79,7 @@ export default function BlogPostsPage() {
   const [tags, setTags] = useState<string[]>(["Education", "A1 Updates"]);
   const [tagInput, setTagInput] = useState("");
   const [sections, setSections] = useState<BlogSection[]>([createSection()]);
+  const [downloadables, setDownloadables] = useState<BlogDownloadable[]>([]);
   const [context, setContext] = useState<BlogContext>({
     date: "",
     author: "",
@@ -88,6 +115,19 @@ export default function BlogPostsPage() {
         section_heading,
         section_text,
       })),
+      blog_downloadables: downloadables
+        .map((rawEntry) => {
+          const entry = rawEntry ?? ({} as Partial<BlogDownloadable>);
+          const title =
+            typeof entry.title === "string" ? entry.title.trim() : "";
+          const assetUrl =
+            typeof entry.asset_url === "string" ? entry.asset_url.trim() : "";
+          return {
+            title,
+            asset_url: assetUrl,
+          };
+        })
+        .filter((entry) => entry.title && entry.asset_url),
       blog_context: context,
       draft: isDraft,
     }),
@@ -98,6 +138,7 @@ export default function BlogPostsPage() {
       blogSubheading,
       tags,
       sections,
+      downloadables,
       context,
       isDraft,
     ]
@@ -143,6 +184,68 @@ export default function BlogPostsPage() {
     );
   };
 
+  const addDownloadable = () => {
+    setDownloadables((prev) => [...prev, createDownloadable()]);
+  };
+
+  const patchDownloadable = (id: string, patch: Partial<BlogDownloadable>) => {
+    setDownloadables((prev) =>
+      prev.map((entry) => (entry.id === id ? { ...entry, ...patch } : entry))
+    );
+  };
+
+  const updateDownloadableTitle = (id: string, value: string) => {
+    patchDownloadable(id, { title: value });
+  };
+
+  const removeDownloadable = (id: string) => {
+    setDownloadables((prev) => prev.filter((entry) => entry.id !== id));
+  };
+
+  const handleUploadFile = async (id: string, file?: File | null) => {
+    if (!file) return;
+
+    patchDownloadable(id, { isUploading: true, uploadError: null });
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append(
+        "slug",
+        slug.trim().length > 0 ? slug.trim() : "blog-resource"
+      );
+
+      const response = await fetch("/api/admin/blogs/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const body = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(body?.error ?? "Upload failed.");
+      }
+
+      const fileUrl = body?.data?.url;
+      if (!fileUrl || typeof fileUrl !== "string") {
+        throw new Error("Upload did not return a file URL.");
+      }
+
+      patchDownloadable(id, {
+        asset_url: fileUrl,
+        fileName: file.name,
+        isUploading: false,
+        uploadError: null,
+      });
+    } catch (error) {
+      patchDownloadable(id, {
+        isUploading: false,
+        uploadError:
+          error instanceof Error ? error.message : "Unable to upload file.",
+      });
+    }
+  };
+
   const resetBuilder = () => {
     setSlug("new-blog-post");
     setBlogHero("");
@@ -151,6 +254,7 @@ export default function BlogPostsPage() {
     setTags(["Education", "A1 Updates"]);
     setTagInput("");
     setSections([createSection()]);
+    setDownloadables([]);
     setContext({ date: "", author: "", readTime: "" });
     setIsDraft(true);
     setCurrentDraftId(null);
@@ -226,6 +330,41 @@ export default function BlogPostsPage() {
     return [];
   };
 
+  const extractFileNameFromUrl = (url: string) => {
+    if (!url) return "";
+    try {
+      const parsed = new URL(url);
+      const name = parsed.pathname.split("/").pop();
+      return name ? decodeURIComponent(name) : "";
+    } catch {
+      const fallback = url.split("/").pop();
+      return fallback ? decodeURIComponent(fallback) : "";
+    }
+  };
+
+  const parseDownloadables = (value: unknown): RawDownloadableRecord[] => {
+    if (Array.isArray(value)) {
+      return value.filter(
+        (item): item is RawDownloadableRecord =>
+          !!item && typeof item === "object"
+      );
+    }
+    if (typeof value === "string") {
+      try {
+        const parsed = JSON.parse(value);
+        return Array.isArray(parsed)
+          ? parsed.filter(
+              (item): item is RawDownloadableRecord =>
+                !!item && typeof item === "object"
+            )
+          : [];
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  };
+
   const parseTags = (value: unknown): string[] => {
     if (Array.isArray(value)) {
       return value.filter((tag): tag is string => typeof tag === "string");
@@ -282,6 +421,21 @@ export default function BlogPostsPage() {
     }));
   };
 
+  const upsertDownloadablesFromDraft = (rawDownloadables: unknown) => {
+    const normalized = parseDownloadables(rawDownloadables);
+    if (!normalized.length) return [];
+    return normalized.map((entry) => ({
+      id: nextDownloadableId(),
+      title: typeof entry.title === "string" ? entry.title : "",
+      asset_url: typeof entry.asset_url === "string" ? entry.asset_url : "",
+      fileName: extractFileNameFromUrl(
+        typeof entry.asset_url === "string" ? entry.asset_url : ""
+      ),
+      isUploading: false,
+      uploadError: null,
+    }));
+  };
+
   const handleEditDraft = (draft: BlogDraftRecord) => {
     setSlug(draft.slug);
     setBlogHero(draft.blog_hero ?? "");
@@ -289,6 +443,7 @@ export default function BlogPostsPage() {
     setBlogSubheading(draft.blog_subheading);
     setTags(parseTags(draft.blog_tags));
     setSections(upsertSectionsFromDraft(draft.blog_text));
+    setDownloadables(upsertDownloadablesFromDraft(draft.blog_downloadables));
     setContext(parseJsonObject(draft.blog_context));
     setIsDraft(true);
     setCurrentDraftId(draft.id);
@@ -307,6 +462,13 @@ export default function BlogPostsPage() {
       section_heading: section.section_heading.trim(),
       section_text: section.section_text.trim(),
     })),
+    blog_downloadables: downloadables
+      .map((entry) => {
+        const title = entry.title.trim();
+        const assetUrl = entry.asset_url.trim();
+        return { title, asset_url: assetUrl };
+      })
+      .filter((entry) => entry.title && entry.asset_url),
     blog_context: {
       date: context.date,
       author: context.author,
@@ -494,6 +656,8 @@ export default function BlogPostsPage() {
                 const tagList = parseTags(draft.blog_tags);
                 const sectionsCount = parseJsonArray(draft.blog_text).length;
                 const contextMeta = parseJsonObject(draft.blog_context);
+                const resourcesCount =
+                  parseDownloadables(draft.blog_downloadables).length;
                 return (
                   <div
                     key={draft.id}
@@ -521,6 +685,9 @@ export default function BlogPostsPage() {
                       <span>Author: {contextMeta.author || "—"}</span>
                       <span>Read time: {contextMeta.readTime || "—"}</span>
                       <span>Sections: {sectionsCount}</span>
+                      {resourcesCount > 0 && (
+                        <span>Resources: {resourcesCount}</span>
+                      )}
                       {draft.updated_at && (
                         <span>
                           Updated:{" "}
@@ -612,6 +779,8 @@ export default function BlogPostsPage() {
                 const tagList = parseTags(post.blog_tags);
                 const sectionsCount = parseJsonArray(post.blog_text).length;
                 const contextMeta = parseJsonObject(post.blog_context);
+                const resourcesCount =
+                  parseDownloadables(post.blog_downloadables).length;
                 return (
                   <div
                     key={post.id}
@@ -639,6 +808,9 @@ export default function BlogPostsPage() {
                       <span>Author: {contextMeta.author || "—"}</span>
                       <span>Read time: {contextMeta.readTime || "—"}</span>
                       <span>Sections: {sectionsCount}</span>
+                      {resourcesCount > 0 && (
+                        <span>Resources: {resourcesCount}</span>
+                      )}
                       {post.updated_at && (
                         <span>
                           Updated:{" "}
@@ -758,6 +930,31 @@ export default function BlogPostsPage() {
                   ) : (
                     <div className="text-gray-600">
                       Add sections to see content here.
+                    </div>
+                  )}
+                  {previewPayload.blog_downloadables.length > 0 && (
+                    <div className="mt-10 space-y-4 rounded-2xl border border-gray-200 bg-gray-50/80 p-6">
+                      <h3 className="text-xl font-semibold text-gray-900">
+                        Downloadables preview
+                      </h3>
+                      <ul className="space-y-3">
+                        {previewPayload.blog_downloadables.map(
+                          (resource, index) => (
+                            <li
+                              key={`${resource.title}-${index}`}
+                              className="rounded-2xl border border-white/80 bg-white px-4 py-3"
+                            >
+                              <p className="text-base font-semibold text-gray-900">
+                                {resource.title}
+                              </p>
+                              <p className="text-xs text-gray-500 break-all">
+                                {extractFileNameFromUrl(resource.asset_url) ||
+                                  resource.asset_url}
+                              </p>
+                            </li>
+                          )
+                        )}
+                      </ul>
                     </div>
                   )}
                 </div>
@@ -945,6 +1142,202 @@ export default function BlogPostsPage() {
               </div>
             </div>
 
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">
+                    Downloadable resources
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    Each card captures the file name students see plus the asset
+                    you upload from your laptop.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={addDownloadable}
+                  className="rounded-2xl border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700 transition hover:-translate-y-[1px]"
+                >
+                  Add resource
+                </button>
+              </div>
+
+              {downloadables.length === 0 && (
+                <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50/70 px-4 py-3 text-sm text-gray-500">
+                  No files attached yet. Click “Add resource” to include PDFs,
+                  slides, or other study materials.
+                </div>
+              )}
+
+              {downloadables.some((resource) => resource.asset_url) && (
+                <div className="rounded-2xl border border-gray-100 bg-gray-50/70 px-4 py-3">
+                  <p className="text-sm font-semibold text-gray-800">
+                    Current downloadable files
+                  </p>
+                  <ul className="mt-3 space-y-2">
+                    {downloadables
+                      .filter((resource) => resource.asset_url)
+                      .map((resource) => (
+                        <li
+                          key={`${resource.id}-summary`}
+                          className="flex flex-wrap items-center gap-2 rounded-2xl border border-white/80 bg-white px-3 py-2 text-sm text-gray-700"
+                        >
+                          <div className="min-w-0 flex-1">
+                            <p className="font-semibold text-gray-900">
+                              {resource.title || "Untitled resource"}
+                            </p>
+                            <p className="text-xs text-gray-500 break-all">
+                              {extractFileNameFromUrl(resource.asset_url) ||
+                                resource.asset_url}
+                            </p>
+                          </div>
+                          <a
+                            href={resource.asset_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-xs font-semibold text-[#4668f7] hover:underline"
+                          >
+                            Open
+                          </a>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              )}
+
+              <div className="space-y-4">
+                {downloadables.map((resource, index) => {
+                  const titleId = `${resource.id}-title`;
+                  const uploadId = `${resource.id}-upload`;
+                  return (
+                    <div
+                      key={resource.id}
+                      className="space-y-3 rounded-2xl border border-gray-200 bg-white/80 p-4"
+                    >
+                      <div className="flex items-center justify-between text-xs font-semibold text-gray-500">
+                        <span>Resource {index + 1}</span>
+                        <button
+                          type="button"
+                          onClick={() => removeDownloadable(resource.id)}
+                          className="text-[#dc2626] transition hover:text-[#b91c1c]"
+                        >
+                          Remove
+                        </button>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label
+                          htmlFor={titleId}
+                          className="text-sm font-semibold text-gray-800"
+                        >
+                          Title
+                        </label>
+                        <input
+                          id={titleId}
+                          type="text"
+                          value={resource.title}
+                          onChange={(event) =>
+                            updateDownloadableTitle(
+                              resource.id,
+                              event.target.value
+                            )
+                          }
+                          placeholder="HSC Economics 2025 Solutions"
+                          className="w-full rounded-2xl border border-white/80 bg-white px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <p className="text-sm font-semibold text-gray-800">
+                          Upload file
+                        </p>
+                        <label
+                          htmlFor={uploadId}
+                          className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white/60 px-4 py-6 text-center text-sm text-gray-600 transition hover:border-[#4668f7]"
+                        >
+                          {resource.isUploading ? (
+                            <span className="font-semibold text-[#4668f7]">
+                              Uploading…
+                            </span>
+                          ) : resource.asset_url ? (
+                            <div className="flex w-full flex-col items-center gap-2">
+                              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 16 16"
+                                  fill="none"
+                                  className="h-4 w-4"
+                                >
+                                  <path
+                                    d="M4 8l2.5 2.5L12 5"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  />
+                                </svg>
+                                File uploaded
+                              </span>
+                              <p className="text-sm font-semibold text-gray-900">
+                                {resource.fileName ||
+                                  extractFileNameFromUrl(resource.asset_url)}
+                              </p>
+                              <p className="text-xs text-gray-500 break-all">
+                                {resource.asset_url}
+                              </p>
+                              <span className="text-xs font-semibold text-[#4668f7]">
+                                Click to replace file
+                              </span>
+                            </div>
+                          ) : (
+                            <>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="mb-2 h-6 w-6 text-[#4668f7]"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 9 12 4.5 7.5 9M12 4.5V15"
+                                />
+                              </svg>
+                              <span className="font-semibold text-[#4668f7]">
+                                Click to upload
+                              </span>
+                              <span className="text-xs text-gray-500">
+                                PDF, DOCX, PNG, etc.
+                              </span>
+                            </>
+                          )}
+                          <input
+                            id={uploadId}
+                            type="file"
+                            className="sr-only"
+                            onChange={(event) => {
+                              handleUploadFile(
+                                resource.id,
+                                event.target.files?.[0] ?? null
+                              );
+                              event.target.value = "";
+                            }}
+                          />
+                        </label>
+                        {resource.uploadError && (
+                          <p className="text-xs font-semibold text-red-500">
+                            {resource.uploadError}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="space-y-2">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
@@ -962,7 +1355,11 @@ export default function BlogPostsPage() {
                     onClick={() => handleSubmit("post")}
                     disabled={isSaving}
                   >
-                    {isSaving && saveMode === "post" ? "Posting..." : "Post"}
+                    {isSaving && saveMode === "post"
+                      ? "Posting..."
+                      : currentDraftId
+                      ? "Save and Post"
+                      : "Post"}
                   </button>
                   <button
                     className="rounded-2xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:-translate-y-[1px] disabled:cursor-not-allowed disabled:opacity-60"
@@ -972,6 +1369,8 @@ export default function BlogPostsPage() {
                   >
                     {isSaving && saveMode === "draft"
                       ? "Saving..."
+                      : currentDraftId
+                      ? "Save as Draft"
                       : "Save as draft"}
                   </button>
                   <button
