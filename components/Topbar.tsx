@@ -7,7 +7,7 @@ const Topbar = () => {
   const leftText =
     "A1 Education – Specialists in Year 11 & 12 Economics Tutoring in Sydney";
   const number = "0402 097 284";
-  const location = "207/30 Campbell Street, Blacktown NSW 2148";
+  const location = "4/30 Campbell Street, Blacktown NSW 2148";
 
   return (
     <header className="bg-primary text-white w-full">

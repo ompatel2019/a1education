@@ -27,7 +27,7 @@ export default function SiteLayout({
             priceRange: "60-70",
             address: {
               "@type": "PostalAddress",
-              streetAddress: "Suite 207/30 Campbell St, Blacktown",
+              streetAddress: "Suite 4/30 Campbell St, Blacktown",
               addressLocality: "Sydney",
               addressRegion: "NSW",
               postalCode: "2148",

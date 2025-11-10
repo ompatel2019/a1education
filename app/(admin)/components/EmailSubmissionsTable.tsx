@@ -73,10 +73,10 @@ export default function EmailSubmissionsTable() {
       <div className="flex flex-col gap-4 border-b border-slate-200/70 px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h3 className="text-lg font-semibold text-slate-900">
-            Email submissions
+            Email Notifications
           </h3>
           <p className="text-sm text-slate-500">
-            A chronological list of every lead captured through the site forms.
+            A chronological list of every email notification sent.
           </p>
         </div>
         <div className="flex items-center gap-3 text-sm font-medium text-[#4668f7]">
@@ -88,28 +88,18 @@ export default function EmailSubmissionsTable() {
 
       {submissions.length === 0 ? (
         <div className="px-6 py-12 text-center text-slate-500">
-          No email submissions found.
+          No email notifications found.
         </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-slate-200">
             <thead className="bg-slate-50/80 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
               <tr>
-                <th className="px-6 py-3">
-                  ID
-                </th>
-                <th className="px-6 py-3">
-                  Name
-                </th>
-                <th className="px-6 py-3">
-                  Email
-                </th>
-                <th className="px-6 py-3">
-                  Source
-                </th>
-                <th className="px-6 py-3">
-                  Submitted At
-                </th>
+                <th className="px-6 py-3">ID</th>
+                <th className="px-6 py-3">Name</th>
+                <th className="px-6 py-3">Email</th>
+                <th className="px-6 py-3">Source</th>
+                <th className="px-6 py-3">Submitted At</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 bg-white/80">

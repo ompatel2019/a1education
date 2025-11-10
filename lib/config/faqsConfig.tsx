@@ -170,7 +170,7 @@ export const faqsCategories = [
       {
         question: "Where are the classes held?",
         answer:
-          "We hold in-person classes at 207/30 Campbell St, Blacktown NSW 2148, plus online sessions. You can switch between formats as needed.",
+          "We hold in-person classes at 4/30 Campbell St, Blacktown NSW 2148, plus online sessions. You can switch between formats as needed.",
       },
       {
         question: "How do I access online classes?",

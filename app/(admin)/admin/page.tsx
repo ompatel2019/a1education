@@ -7,8 +7,8 @@ import EmailSubmissionsTable from "../components/EmailSubmissionsTable";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Admin - Email Submissions | A1 Education",
-  description: "Admin panel for viewing email marketing submissions.",
+  title: "Admin - Email Notifications | A1 Education",
+  description: "Admin panel for viewing email notifications.",
 };
 
 export default function AdminPage() {

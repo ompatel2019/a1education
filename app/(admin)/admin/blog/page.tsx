@@ -2,8 +2,9 @@
 
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import BlogHeader from "@/components/BlogHeader";
+import { DEFAULT_BLOG_SLUG, slugify } from "@/lib/utils/slug";
 
 type BlogSection = {
   id: string;
@@ -70,7 +71,12 @@ type BlogDraftRecord = {
 };
 
 export default function BlogPostsPage() {
-  const [slug, setSlug] = useState("new-blog-post");
+  const [slug, setSlug] = useState(DEFAULT_BLOG_SLUG);
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
+  const [slugStatus, setSlugStatus] = useState<{
+    state: "idle" | "checking" | "available" | "taken" | "error";
+    message?: string;
+  }>({ state: "idle" });
   const [blogHero, setBlogHero] = useState("");
   const [blogHeader, setBlogHeader] = useState("Untitled Blog Post");
   const [blogSubheading, setBlogSubheading] = useState(
@@ -103,6 +109,16 @@ export default function BlogPostsPage() {
   const [submissionMessage, setSubmissionMessage] = useState<string | null>(
     null
   );
+  const [panelLoading, setPanelLoading] = useState(true);
+  const [heroUploadState, setHeroUploadState] = useState<{
+    isUploading: boolean;
+    fileName: string;
+    error: string | null;
+  }>({
+    isUploading: false,
+    fileName: "",
+    error: null,
+  });
 
   const previewPayload = useMemo(
     () => ({
@@ -143,6 +159,12 @@ export default function BlogPostsPage() {
       isDraft,
     ]
   );
+
+  const handleSlugFieldChange = (value: string) => {
+    setSlugManuallyEdited(true);
+    setSlug(slugify(value, ""));
+    setSlugStatus({ state: "checking" });
+  };
 
   const handleAddTag = () => {
     const value = tagInput.trim();
@@ -202,6 +224,57 @@ export default function BlogPostsPage() {
     setDownloadables((prev) => prev.filter((entry) => entry.id !== id));
   };
 
+  const handleHeroUpload = async (file?: File | null) => {
+    if (!file) return;
+
+    setHeroUploadState({ isUploading: true, fileName: file.name, error: null });
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("slug", resolveUploadSlug());
+
+      const response = await fetch("/api/admin/blogs/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const body = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(body?.error ?? "Upload failed.");
+      }
+
+      const fileUrl = body?.data?.url;
+      if (!fileUrl || typeof fileUrl !== "string") {
+        throw new Error("Upload did not return a file URL.");
+      }
+
+      setBlogHero(fileUrl);
+      setHeroUploadState({
+        isUploading: false,
+        fileName: file.name,
+        error: null,
+      });
+    } catch (error) {
+      setHeroUploadState({
+        isUploading: false,
+        fileName: "",
+        error:
+          error instanceof Error ? error.message : "Unable to upload hero.",
+      });
+    }
+  };
+
+  const clearHeroImage = () => {
+    setBlogHero("");
+    setHeroUploadState({
+      isUploading: false,
+      fileName: "",
+      error: null,
+    });
+  };
+
   const handleUploadFile = async (id: string, file?: File | null) => {
     if (!file) return;
 
@@ -210,10 +283,7 @@ export default function BlogPostsPage() {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append(
-        "slug",
-        slug.trim().length > 0 ? slug.trim() : "blog-resource"
-      );
+      formData.append("slug", resolveUploadSlug());
 
       const response = await fetch("/api/admin/blogs/upload", {
         method: "POST",
@@ -247,7 +317,9 @@ export default function BlogPostsPage() {
   };
 
   const resetBuilder = () => {
-    setSlug("new-blog-post");
+    setSlug(DEFAULT_BLOG_SLUG);
+    setSlugManuallyEdited(false);
+    setSlugStatus({ state: "idle" });
     setBlogHero("");
     setBlogHeader("Untitled Blog Post");
     setBlogSubheading("Add a short hook for the article.");
@@ -260,9 +332,14 @@ export default function BlogPostsPage() {
     setCurrentDraftId(null);
     setSubmissionError(null);
     setSubmissionMessage(null);
+    setHeroUploadState({
+      isUploading: false,
+      fileName: "",
+      error: null,
+    });
   };
 
-  const loadDrafts = async () => {
+  const loadDrafts = useCallback(async () => {
     setDraftsLoading(true);
     setDraftsError(null);
     try {
@@ -281,9 +358,9 @@ export default function BlogPostsPage() {
     } finally {
       setDraftsLoading(false);
     }
-  };
+  }, []);
 
-  const loadPublished = async () => {
+  const loadPublished = useCallback(async () => {
     setPublishedLoading(true);
     setPublishedError(null);
     try {
@@ -302,12 +379,137 @@ export default function BlogPostsPage() {
     } finally {
       setPublishedLoading(false);
     }
-  };
+  }, []);
+
+  const resolveUploadSlug = () =>
+    slugify(slug || blogHeader || DEFAULT_BLOG_SLUG, DEFAULT_BLOG_SLUG);
+
+  const checkSlugAvailability = useCallback(
+    async (candidate: string) => {
+      const normalized = slugify(candidate);
+      if (!normalized) return false;
+
+      const params = new URLSearchParams({ slug: normalized });
+      if (currentDraftId !== null) {
+        params.set("excludeId", String(currentDraftId));
+      }
+
+      const response = await fetch(
+        `/api/admin/blogs/check-slug?${params.toString()}`,
+        { cache: "no-store" }
+      );
+
+      if (!response.ok) {
+        throw new Error("Unable to check slug availability.");
+      }
+
+      const body = await response.json().catch(() => ({}));
+      return Boolean(body?.data?.available);
+    },
+    [currentDraftId]
+  );
+
+  const ensureUniqueSlug = useCallback(
+    async (value: string) => {
+      const normalized = slugify(value, DEFAULT_BLOG_SLUG);
+      let attempt = normalized;
+      let suffix = 1;
+
+      while (suffix < 50) {
+        try {
+          const available = await checkSlugAvailability(attempt);
+          if (available) {
+            return attempt;
+          }
+        } catch (error) {
+          console.error("Slug check failed:", error);
+          return attempt;
+        }
+
+        attempt = `${normalized}-${suffix}`;
+        suffix += 1;
+      }
+
+      return `${normalized}-${Date.now()}`;
+    },
+    [checkSlugAvailability]
+  );
 
   useEffect(() => {
-    loadDrafts();
-    loadPublished();
-  }, []);
+    const bootstrap = async () => {
+      setPanelLoading(true);
+      await Promise.all([loadDrafts(), loadPublished()]);
+      setPanelLoading(false);
+    };
+    void bootstrap();
+  }, [loadDrafts, loadPublished]);
+
+  useEffect(() => {
+    if (slugManuallyEdited) return;
+
+    const title = blogHeader.trim();
+    if (!title) {
+      setSlug(DEFAULT_BLOG_SLUG);
+      return;
+    }
+
+    let cancelled = false;
+    const timeout = setTimeout(() => {
+      (async () => {
+        const uniqueSlug = await ensureUniqueSlug(title);
+        if (!cancelled && !slugManuallyEdited) {
+          setSlug(uniqueSlug);
+        }
+      })();
+    }, 300);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
+  }, [blogHeader, slugManuallyEdited, ensureUniqueSlug]);
+
+  useEffect(() => {
+    const normalized = slugify(slug, "").trim();
+
+    if (!normalized) {
+      setSlugStatus({
+        state: "error",
+        message: "Add a slug to continue.",
+      });
+      return;
+    }
+
+    let cancelled = false;
+    setSlugStatus({ state: "checking" });
+
+    const timeout = setTimeout(() => {
+      (async () => {
+        try {
+          const available = await checkSlugAvailability(normalized);
+          if (cancelled) return;
+          setSlugStatus(
+            available
+              ? { state: "available", message: "Slug looks good." }
+              : { state: "taken", message: "Slug already exists." }
+          );
+        } catch (error) {
+          console.error("Slug validation error:", error);
+          if (!cancelled) {
+            setSlugStatus({
+              state: "error",
+              message: "Unable to validate slug.",
+            });
+          }
+        }
+      })();
+    }, 250);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
+  }, [slug, checkSlugAvailability]);
 
   const parseJsonArray = (value: unknown): RawSection[] => {
     if (Array.isArray(value)) {
@@ -438,6 +640,8 @@ export default function BlogPostsPage() {
 
   const handleEditDraft = (draft: BlogDraftRecord) => {
     setSlug(draft.slug);
+    setSlugManuallyEdited(true);
+    setSlugStatus({ state: "available", message: "Using saved slug." });
     setBlogHero(draft.blog_hero ?? "");
     setBlogHeader(draft.blog_header);
     setBlogSubheading(draft.blog_subheading);
@@ -450,10 +654,17 @@ export default function BlogPostsPage() {
     setSubmissionError(null);
     setSubmissionMessage(null);
     setActiveView("create");
+    setHeroUploadState({
+      isUploading: false,
+      fileName: draft.blog_hero
+        ? extractFileNameFromUrl(draft.blog_hero)
+        : "",
+      error: null,
+    });
   };
 
-  const buildPayload = (draftFlag: boolean) => ({
-    slug: slug.trim(),
+  const buildPayload = (draftFlag: boolean, resolvedSlug: string) => ({
+    slug: resolvedSlug.trim(),
     blog_hero: blogHero.trim() ? blogHero.trim() : null,
     blog_header: blogHeader.trim(),
     blog_subheading: blogSubheading.trim(),
@@ -478,17 +689,39 @@ export default function BlogPostsPage() {
   });
 
   const handleSubmit = async (mode: "post" | "draft") => {
-    if (!slug.trim() || !blogHeader.trim() || !blogSubheading.trim()) {
+    const normalizedSlug = slugify(slug, "").trim();
+    if (!normalizedSlug || !blogHeader.trim() || !blogSubheading.trim()) {
       setSubmissionError("Slug, header, and subheading are required.");
       return;
     }
 
+    setSlug((current) => slugify(current, DEFAULT_BLOG_SLUG));
     setIsSaving(true);
     setSaveMode(mode);
     setSubmissionError(null);
     setSubmissionMessage(null);
 
-    const payload = buildPayload(mode === "draft");
+    try {
+      const slugAvailable = await checkSlugAvailability(normalizedSlug);
+      if (!slugAvailable) {
+        setSubmissionError("That slug already exists. Pick another one.");
+        setIsSaving(false);
+        setSaveMode(null);
+        return;
+      }
+    } catch (error) {
+      console.error("Slug verification failed:", error);
+      setSubmissionError(
+        error instanceof Error
+          ? error.message
+          : "Unable to verify the slug. Please try again."
+      );
+      setIsSaving(false);
+      setSaveMode(null);
+      return;
+    }
+
+    const payload = buildPayload(mode === "draft", normalizedSlug);
     const endpoint =
       currentDraftId !== null
         ? `/api/admin/blogs/${currentDraftId}`
@@ -535,6 +768,15 @@ export default function BlogPostsPage() {
     }
   };
 
+  const slugStatusTone =
+    slugStatus.state === "available"
+      ? "text-emerald-600"
+      : slugStatus.state === "taken" || slugStatus.state === "error"
+      ? "text-red-500"
+      : "text-gray-500";
+  const slugBlocked =
+    slugStatus.state === "taken" || slugStatus.state === "error";
+
   return (
     <div className="space-y-6">
       <div>
@@ -544,6 +786,12 @@ export default function BlogPostsPage() {
           publishing.
         </p>
       </div>
+
+      {panelLoading && (
+        <div className="rounded-3xl border border-dashed border-[#4668f7]/30 bg-[#4668f7]/5 px-4 py-3 text-sm font-medium text-[#18224b]">
+          Syncing drafts and published posts...
+        </div>
+      )}
 
       <div className="grid gap-4 md:grid-cols-3">
         <button
@@ -967,55 +1215,50 @@ export default function BlogPostsPage() {
       {activeView === "create" && (
         <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
           <div className="space-y-5 rounded-3xl border border-white/60 bg-white/80 p-5 shadow-sm backdrop-blur">
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="md:col-span-2 space-y-2">
                 <label
                   className="text-sm font-semibold text-gray-800"
-                  htmlFor="slug"
+                  htmlFor="blog-header"
                 >
-                  Slug
+                  Blog header
                 </label>
+                <input
+                  id="blog-header"
+                  type="text"
+                  value={blogHeader}
+                  onChange={(event) => {
+                    setBlogHeader(event.target.value);
+                    if (!slugManuallyEdited) {
+                      setSlugStatus({ state: "checking" });
+                    }
+                  }}
+                  className="w-full rounded-2xl border border-gray-200 bg-white/70 px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <label
+                    className="text-sm font-semibold text-gray-800"
+                    htmlFor="slug"
+                  >
+                    Slug
+                  </label>
+                  <span className="text-[11px] uppercase tracking-[0.2em] text-gray-500">
+                    Auto-generated
+                  </span>
+                </div>
                 <input
                   id="slug"
                   type="text"
                   value={slug}
-                  onChange={(event) => setSlug(event.target.value)}
+                  onChange={(event) => handleSlugFieldChange(event.target.value)}
                   className="w-full rounded-2xl border border-gray-200 bg-white/70 px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
                 />
-                <p className="text-xs text-gray-500">Used in the public URL.</p>
+                <p className={`text-xs ${slugStatusTone}`}>
+                  {slugStatus.message ?? "We will auto-build this from the title."}
+                </p>
               </div>
-              <div className="space-y-2">
-                <label
-                  className="text-sm font-semibold text-gray-800"
-                  htmlFor="hero"
-                >
-                  Hero image URL
-                </label>
-                <input
-                  id="hero"
-                  type="text"
-                  placeholder="https://cdn.a1education.com/blog/hero.jpg"
-                  value={blogHero}
-                  onChange={(event) => setBlogHero(event.target.value)}
-                  className="w-full rounded-2xl border border-gray-200 bg-white/70 px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label
-                className="text-sm font-semibold text-gray-800"
-                htmlFor="blog-header"
-              >
-                Blog header
-              </label>
-              <input
-                id="blog-header"
-                type="text"
-                value={blogHeader}
-                onChange={(event) => setBlogHeader(event.target.value)}
-                className="w-full rounded-2xl border border-gray-200 bg-white/70 px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
-              />
             </div>
 
             <div className="space-y-2">
@@ -1353,7 +1596,7 @@ export default function BlogPostsPage() {
                     className="rounded-2xl bg-[#4668f7] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#4668f7]/25 transition hover:-translate-y-[1px] disabled:cursor-not-allowed disabled:opacity-60"
                     type="button"
                     onClick={() => handleSubmit("post")}
-                    disabled={isSaving}
+                    disabled={isSaving || slugBlocked}
                   >
                     {isSaving && saveMode === "post"
                       ? "Posting..."
@@ -1365,7 +1608,7 @@ export default function BlogPostsPage() {
                     className="rounded-2xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:-translate-y-[1px] disabled:cursor-not-allowed disabled:opacity-60"
                     type="button"
                     onClick={() => handleSubmit("draft")}
-                    disabled={isSaving}
+                    disabled={isSaving || slugBlocked}
                   >
                     {isSaving && saveMode === "draft"
                       ? "Saving..."
@@ -1466,44 +1709,89 @@ export default function BlogPostsPage() {
             </div>
 
             <div className="space-y-3 rounded-2xl border border-gray-100 bg-gray-50/80 p-4">
-              <h3 className="text-sm font-semibold text-gray-800">
-                Hero upload helper
-              </h3>
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-semibold text-gray-800">
+                  Hero upload
+                </h3>
+                {blogHero && (
+                  <button
+                    type="button"
+                    onClick={clearHeroImage}
+                    className="text-xs font-semibold text-[#4668f7] transition hover:opacity-75"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
               <p className="text-sm text-gray-600">
-                Upload feature will store the asset and reference its public URL
-                automatically. For now, paste a CDN path or placeholder above.
+                Drop an image here to upload it to storage instantly. The public
+                URL is saved back to this draft.
               </p>
+              {blogHero && (
+                <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
+                  <div
+                    className="h-44 w-full bg-cover bg-center"
+                    style={{ backgroundImage: `url(${blogHero})` }}
+                  />
+                  <div className="border-t border-gray-100 px-3 py-2 text-xs text-gray-500 break-all">
+                    {blogHero}
+                  </div>
+                </div>
+              )}
+              {!blogHero && (
+                <div className="rounded-2xl border border-dashed border-gray-200 bg-white/50 px-3 py-4 text-center text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  No hero image selected
+                </div>
+              )}
+              {heroUploadState.fileName && (
+                <p className="text-xs text-gray-500">
+                  Linked file: {heroUploadState.fileName}
+                </p>
+              )}
               <label
                 htmlFor="hero-upload"
                 className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white/50 px-4 py-6 text-center text-sm text-gray-600 transition hover:border-[#4668f7]"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="mb-2 h-6 w-6 text-[#4668f7]"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 9L12 4.5 7.5 9M12 4.5V15"
-                  />
-                </svg>
-                Drop an image or click to pick
+                {heroUploadState.isUploading ? (
+                  <span className="font-semibold text-[#4668f7]">
+                    Uploading hero...
+                  </span>
+                ) : (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="mb-2 h-6 w-6 text-[#4668f7]"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 9L12 4.5 7.5 9M12 4.5V15"
+                      />
+                    </svg>
+                    Drop an image or click to pick
+                  </>
+                )}
                 <input
                   id="hero-upload"
                   type="file"
                   accept="image/*"
                   className="sr-only"
-                  onChange={(event) => {
+                  onChange={async (event) => {
                     const file = event.target.files?.[0];
-                    if (!file) return;
-                    setBlogHero((prev) => prev || `placeholder://${file.name}`);
+                    await handleHeroUpload(file);
+                    event.target.value = "";
                   }}
                 />
               </label>
+              {heroUploadState.error && (
+                <p className="text-xs font-semibold text-red-500">
+                  {heroUploadState.error}
+                </p>
+              )}
             </div>
 
             <div className="rounded-2xl border border-gray-100 bg-gray-50/80 p-4">

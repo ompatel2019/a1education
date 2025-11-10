@@ -4,7 +4,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signInClient } from "@/lib/supabase/auth-client";
+import { getClientUser, signInClient } from "@/lib/supabase/auth-client";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -13,29 +13,47 @@ export default function AdminLoginPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  const waitForSession = async (retries = 5, delay = 200) => {
+    for (let attempt = 0; attempt < retries; attempt++) {
+      const user = await getClientUser();
+      if (user) {
+        return true;
+      }
+      await new Promise((resolve) =>
+        setTimeout(resolve, delay * (attempt + 1))
+      );
+    }
+    return false;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
 
     try {
-      const { error } = await signInClient(email, password);
+      const { error } = await signInClient(email.trim(), password);
 
       if (error) {
         console.error("Login error:", error);
         setError("Invalid credentials. Please try again.");
-        setIsLoading(false);
       } else {
-        // Add a small delay to ensure session is established
-        setTimeout(() => {
-          router.push("/admin");
-        }, 100);
+        const sessionReady = await waitForSession();
+
+        if (!sessionReady) {
+          setError(
+            "We couldn't verify your session. Please try again in a moment."
+          );
+        } else {
+          router.replace("/admin");
+          router.refresh();
+        }
       }
     } catch (error) {
       console.error("Unexpected login error:", error);
       setError("An unexpected error occurred. Please try again.");
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -52,7 +70,7 @@ export default function AdminLoginPage() {
             A1 Education Admin
           </span>
           <h1 className="text-2xl font-semibold text-slate-900 md:text-3xl">
-            Welcome Karan, let&apos;s get you signed in.
+            Welcome, let&apos;s get you signed in.
           </h1>
           <p className="text-xs leading-relaxed text-slate-600 md:text-sm">
             Access your dashboard to manage submissions and stay on top of the

@@ -40,21 +40,14 @@ export const revalidate = 0;
 export default async function BlogPage() {
   const supabase = createServiceClient();
 
-  // Fetch the first published blog (ordered by created_at descending)
+  // Fetch all published blogs (ordered by created_at descending)
   const { data: blogs } = await supabase
     .from("blogs")
     .select(
       "slug, blog_hero, blog_header, blog_subheading, blog_tags, blog_context, draft"
     )
     .eq("draft", false)
-    .order("created_at", { ascending: false })
-    .limit(1);
-
-  const firstBlog = blogs && blogs.length > 0 ? (blogs[0] as BlogPost) : null;
-  const tags = firstBlog ? ((firstBlog.blog_tags || []) as string[]) : [];
-  const context = firstBlog
-    ? ((firstBlog.blog_context || {}) as BlogPost["blog_context"])
-    : null;
+    .order("created_at", { ascending: false });
 
   return (
     <>
@@ -66,118 +59,131 @@ export default async function BlogPage() {
 
       {/* Blog Display */}
       <section className="py-16 pb-32 lg:pb-64 responsivePad">
-        <div className="max-w-2xl">
-          {firstBlog ? (
-            <article className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <Link
-                href={`/blogs/${firstBlog.slug}`}
-                className="flex flex-col md:flex-row"
-              >
-                {/* Blog Hero Image or Placeholder */}
-                {firstBlog.blog_hero ? (
-                  <div className="relative w-full md:w-1/2 aspect-square">
-                    <Image
-                      src={firstBlog.blog_hero}
-                      alt={firstBlog.blog_header}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                  </div>
-                ) : (
-                  <div
-                    className={`relative w-full md:w-1/2 aspect-square ${gradBg} flex items-center justify-center`}
+        <div className="max-w-6xl mx-auto">
+          {blogs && blogs.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {blogs.map((blog) => {
+                const blogPost = blog as BlogPost;
+                const tags = (blogPost.blog_tags || []) as string[];
+                const context = (blogPost.blog_context || {}) as BlogPost["blog_context"];
+                
+                return (
+                  <article
+                    key={blogPost.slug}
+                    className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                   >
-                    <div className="text-white text-4xl opacity-50">
-                      <svg
-                        className="w-16 h-16"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                )}
-
-                {/* Content */}
-                <div className="p-4 md:p-6 flex-1">
-                  {/* Tags */}
-                  {tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      {tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full"
+                    <Link
+                      href={`/blogs/${blogPost.slug}`}
+                      className="flex flex-col"
+                    >
+                      {/* Blog Hero Image or Placeholder */}
+                      {blogPost.blog_hero ? (
+                        <div className="relative w-full aspect-video">
+                          <Image
+                            src={blogPost.blog_hero}
+                            alt={blogPost.blog_header}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          className={`relative w-full aspect-video ${gradBg} flex items-center justify-center`}
                         >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Author and Date */}
-                  {context && (context.author || context.date) && (
-                    <div className="flex items-center text-sm text-gray-500 mb-3">
-                      {context.author && (
-                        <>
-                          <span className="font-medium">{context.author}</span>
-                          {context.date && <span className="mx-2">•</span>}
-                        </>
+                          <div className="text-white text-4xl opacity-50">
+                            <svg
+                              className="w-16 h-16"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </div>
+                        </div>
                       )}
-                      {context.date && (
-                        <time dateTime={context.date}>
-                          {new Date(context.date).toLocaleDateString("en-AU", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })}
-                        </time>
-                      )}
-                      {context.readTime && (
-                        <>
-                          <span className="mx-2">•</span>
-                          <span>{context.readTime}</span>
-                        </>
-                      )}
-                    </div>
-                  )}
 
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary transition-colors">
-                    {firstBlog.blog_header}
-                  </h3>
+                      {/* Content */}
+                      <div className="p-4 md:p-6 flex-1">
+                        {/* Tags */}
+                        {tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mb-3">
+                            {tags.map((tag, index) => (
+                              <span
+                                key={index}
+                                className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
 
-                  <p className="text-gray-600 leading-relaxed line-clamp-3 mb-4">
-                    {firstBlog.blog_subheading}
-                  </p>
+                        {/* Author and Date */}
+                        {context && (context.author || context.date) && (
+                          <div className="flex items-center text-sm text-gray-500 mb-3">
+                            {context.author && (
+                              <>
+                                <span className="font-medium">{context.author}</span>
+                                {context.date && <span className="mx-2">•</span>}
+                              </>
+                            )}
+                            {context.date && (
+                              <time dateTime={context.date}>
+                                {new Date(context.date).toLocaleDateString("en-AU", {
+                                  month: "short",
+                                  day: "numeric",
+                                  year: "numeric",
+                                })}
+                              </time>
+                            )}
+                            {context.readTime && (
+                              <>
+                                <span className="mx-2">•</span>
+                                <span>{context.readTime}</span>
+                              </>
+                            )}
+                          </div>
+                        )}
 
-                  <div className="mt-4">
-                    <span className="inline-flex items-center text-primary font-medium hover:underline">
-                      Read more
-                      <svg
-                        className="ml-1 w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            </article>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary transition-colors">
+                          {blogPost.blog_header}
+                        </h3>
+
+                        <p className="text-gray-600 leading-relaxed line-clamp-3 mb-4">
+                          {blogPost.blog_subheading}
+                        </p>
+
+                        <div className="mt-4">
+                          <span className="inline-flex items-center text-primary font-medium hover:underline">
+                            Read more
+                            <svg
+                              className="ml-1 w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M9 5l7 7-7 7"
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  </article>
+                );
+              })}
+            </div>
           ) : (
             <div className="text-center py-16">
               <p className="text-gray-600 text-lg">
@@ -185,6 +191,20 @@ export default async function BlogPage() {
               </p>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Newsletter Text Container */}
+      <section className="py-12 responsivePad">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 rounded-2xl border border-primary/20 shadow-lg p-8 md:p-10">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-1 bg-primary rounded-full"></div>
+              <p className="text-lg md:text-xl text-gray-800 leading-relaxed font-medium">
+                Each week we send sharp insights, proven frameworks, and insider exam strategies designed to help you move confidently towards Band 6.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const navItems = [
   {
     href: "/admin",
-    label: "Email submissions",
+    label: "Email Notifications",
     description: "Monitor inbound leads from the marketing site.",
   },
   {
@@ -46,7 +46,9 @@ export default function AdminNav() {
                     : "border-white/80 bg-white/70 text-gray-700 hover:border-[#4668f7]/40 hover:text-[#4668f7]"
                 }`}
               >
-                <div className="text-sm font-semibold capitalize">{item.label}</div>
+                <div className="text-sm font-semibold capitalize">
+                  {item.label}
+                </div>
                 <p className="text-xs text-gray-500">{item.description}</p>
               </Link>
             </li>

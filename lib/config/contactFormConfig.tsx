@@ -22,7 +22,7 @@ export const contacts: ContactCard[] = [
     icon: <MapPin size={24} />,
     contactType: "Location",
     contactDesc: "Our in-person classes are in Blacktown.",
-    contactInformation: "207/30 Campbell Street, Blacktown NSW 2148",
+    contactInformation: "4/30 Campbell Street, Blacktown NSW 2148",
     contactRedirect: "https://g.co/kgs/vpV449u",
   },
   {
