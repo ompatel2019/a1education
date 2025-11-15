@@ -649,7 +649,7 @@ export default function BlogPostsPage() {
     setSections(upsertSectionsFromDraft(draft.blog_text));
     setDownloadables(upsertDownloadablesFromDraft(draft.blog_downloadables));
     setContext(parseJsonObject(draft.blog_context));
-    setIsDraft(true);
+    setIsDraft(draft.draft ?? true);
     setCurrentDraftId(draft.id);
     setSubmissionError(null);
     setSubmissionMessage(null);
@@ -745,13 +745,18 @@ export default function BlogPostsPage() {
 
       const savedRow = body?.data as BlogDraftRecord | undefined;
 
+      const refresh = async () => {
+        await Promise.all([loadDrafts(), loadPublished()]);
+      };
+
       if (mode === "draft") {
         setIsDraft(true);
         setCurrentDraftId(savedRow?.id ?? currentDraftId);
         setSubmissionMessage("Draft saved.");
-        await loadDrafts();
+        await refresh();
       } else {
-        await loadDrafts();
+        setSubmissionMessage("Post published.");
+        await refresh();
         resetBuilder();
         setActiveView("drafts");
       }
@@ -1727,6 +1732,16 @@ export default function BlogPostsPage() {
                 Drop an image here to upload it to storage instantly. The public
                 URL is saved back to this draft.
               </p>
+              <div className="rounded-2xl border border-gray-100 bg-white/60 p-3 text-xs text-gray-500">
+                <p className="font-semibold text-gray-700">
+                  Hero image guidelines
+                </p>
+                <ul className="mt-1 list-disc space-y-1 pl-4">
+                  <li>Displays full-bleed across the blog hero (approx. 16:9).</li>
+                  <li>Upload at least 1800×1000px for crisp rendering.</li>
+                  <li>Use JPG, PNG, or WEBP under 4&nbsp;MB to keep loads fast.</li>
+                </ul>
+              </div>
               {blogHero && (
                 <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
                   <div

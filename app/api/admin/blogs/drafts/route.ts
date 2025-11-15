@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/service";
 
 const selectFields =
-  "id, slug, blog_header, blog_subheading, blog_hero, blog_tags, blog_text, blog_context, blog_downloadables, updated_at";
+  "id, slug, blog_header, blog_subheading, blog_hero, blog_tags, blog_text, blog_context, blog_downloadables, updated_at, draft";
 
 export async function GET() {
   try {

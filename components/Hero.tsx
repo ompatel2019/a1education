@@ -41,16 +41,16 @@ const Hero = () => {
           </div>
           <div className="2xl:pt-16 lg:pt-12 md:pt-8 pt-4">
             <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-              <Marquee pauseOnHover className="[--duration:35s]">
+              <Marquee pauseOnHover className="[--duration:70s]">
                 {heroImages.map((image) => (
                   <figure
                     key={image.alt}
-                    className="relative h-full w-full cursor-pointer overflow-hidden text-black border-gray-950/[.1]"
+                    className="relative h-[280px] sm:h-[320px] md:h-[360px] lg:h-[380px] xl:h-[400px] cursor-pointer overflow-hidden text-black border-gray-950/[.1] flex-shrink-0"
                   >
                     <Image
                       src={image.src}
                       alt={image.alt}
-                      className="mb-2 h-auto hero-slide-img rounded-md"
+                      className="mb-2 hero-slide-img rounded-md w-full h-full"
                       width={800}
                       height={640}
                       loading="eager"

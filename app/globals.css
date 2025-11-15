@@ -368,33 +368,7 @@ body {
 
 .hero-slide-img {
   object-fit: cover;
-  width: auto;
-  flex-shrink: 0;
-  /* sizing (unchanged) */
-  height: 280px;
-}
-@media (min-width: 640px) {
-  .hero-slide-img {
-    height: 320px;
-  }
-}
-@media (min-width: 768px) {
-  .hero-slide-img {
-    height: 360px;
-  }
-}
-@media (min-width: 1024px) {
-  .hero-slide-img {
-    height: 380px;
-  }
-}
-@media (min-width: 1280px) {
-  .hero-slide-img {
-    height: 400px;
-  }
-}
-@media (min-width: 1440px) {
-  .hero-slide-img {
-    height: 400px;
-  }
+  object-position: center;
+  width: 100%;
+  height: 100%;
 }
