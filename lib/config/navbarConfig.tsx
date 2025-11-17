@@ -11,7 +11,7 @@ export const menuItems: MenuItem[] = [
   { name: "The A1 Difference", to: "/why-choose-us" },
   { name: "About A1", to: "/about-us" },
   { name: "Pricing", to: "/pricing" },
-  // { name: "Blogs", to: "/blogs" },
+  { name: "Blogs", to: "/blogs" },
 ];
 
 export const fullNavbarLinks: MenuItem[] = [
