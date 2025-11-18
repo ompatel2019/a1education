@@ -6,22 +6,6 @@ export const sectionSubheading =
 // Pricing plans for different year levels
 export const pricingPlans = [
   {
-    year: "Year 10",
-    price: "$30/hr",
-    duration: "2-hour class",
-    features: [
-      "Weekly 2-hour class lessons",
-      "Unlimited 24/7 help",
-      "Personalised assignment & exam support",
-      "Recorded lessons",
-      "Essay writing support",
-      "Mock exams",
-      "Head Start in core concepts",
-      "Early access to selected Year 11 resources",
-    ],
-    popular: false,
-  },
-  {
     year: "Year 11",
     price: "$30/hr",
     duration: "2-hour class",
