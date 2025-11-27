@@ -11,6 +11,12 @@ import { createServiceClient } from "@/lib/supabase/service";
 const gradBg =
   "bg-[linear-gradient(to_bottom,_#4569F7_0%,_#5296E3_50%,_#7A8BD1_100%)]";
 
+type TagStyle = {
+  label?: string;
+  bgColor?: string;
+  textColor?: string;
+};
+
 interface BlogPost {
   slug: string;
   blog_hero: string | null;
@@ -19,8 +25,17 @@ interface BlogPost {
   blog_tags: string[];
   blog_context: {
     date: string;
-    author: string;
+    author:
+      | string
+      | {
+          name?: string;
+          position?: string;
+          pfp?: string;
+        };
     readTime?: string;
+    headingColor?: string;
+    subheadingColor?: string;
+    tagStyles?: TagStyle[];
   };
   draft?: boolean;
 }
@@ -65,8 +80,42 @@ export default async function BlogPage() {
               {blogs.map((blog) => {
                 const blogPost = blog as BlogPost;
                 const tags = (blogPost.blog_tags || []) as string[];
-                const context = (blogPost.blog_context || {}) as BlogPost["blog_context"];
-                
+                const context = (blogPost.blog_context ||
+                  {}) as BlogPost["blog_context"];
+                const authorName =
+                  typeof context.author === "string"
+                    ? context.author
+                    : context.author?.name || "";
+                const tagStyles: TagStyle[] = Array.isArray(context.tagStyles)
+                  ? context.tagStyles
+                      .filter(
+                        (style): style is TagStyle =>
+                          !!style && typeof style === "object"
+                      )
+                      .map((style) => ({
+                        label:
+                          typeof style.label === "string" ? style.label : "",
+                        bgColor:
+                          typeof style.bgColor === "string"
+                            ? style.bgColor
+                            : undefined,
+                        textColor:
+                          typeof style.textColor === "string"
+                            ? style.textColor
+                            : undefined,
+                      }))
+                  : [];
+                const resolveTagStyle = (label: string) => {
+                  const match = tagStyles.find(
+                    (style) =>
+                      (style.label || "").toLowerCase() === label.toLowerCase()
+                  );
+                  return {
+                    backgroundColor: match?.bgColor || "rgba(70,104,247,0.12)",
+                    color: match?.textColor || "#4668f7",
+                  };
+                };
+
                 return (
                   <article
                     key={blogPost.slug}
@@ -116,7 +165,8 @@ export default async function BlogPage() {
                             {tags.map((tag, index) => (
                               <span
                                 key={index}
-                                className="px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full"
+                                className="px-3 py-1 text-xs font-semibold rounded-full border border-transparent"
+                                style={resolveTagStyle(tag)}
                               >
                                 {tag}
                               </span>
@@ -125,21 +175,28 @@ export default async function BlogPage() {
                         )}
 
                         {/* Author and Date */}
-                        {context && (context.author || context.date) && (
+                        {context && (authorName || context.date) && (
                           <div className="flex items-center text-sm text-gray-500 mb-3">
-                            {context.author && (
+                            {authorName && (
                               <>
-                                <span className="font-medium">{context.author}</span>
-                                {context.date && <span className="mx-2">•</span>}
+                                <span className="font-medium">
+                                  {authorName}
+                                </span>
+                                {context.date && (
+                                  <span className="mx-2">•</span>
+                                )}
                               </>
                             )}
                             {context.date && (
                               <time dateTime={context.date}>
-                                {new Date(context.date).toLocaleDateString("en-AU", {
-                                  month: "short",
-                                  day: "numeric",
-                                  year: "numeric",
-                                })}
+                                {new Date(context.date).toLocaleDateString(
+                                  "en-AU",
+                                  {
+                                    month: "short",
+                                    day: "numeric",
+                                    year: "numeric",
+                                  }
+                                )}
                               </time>
                             )}
                             {context.readTime && (
@@ -201,7 +258,9 @@ export default async function BlogPage() {
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-1 bg-primary rounded-full"></div>
               <p className="text-lg md:text-xl text-gray-800 leading-relaxed font-medium">
-                Each week we send sharp insights, proven frameworks, and insider exam strategies designed to help you move confidently towards Band 6.
+                Each week we send sharp insights, proven frameworks, and insider
+                exam strategies designed to help you move confidently towards
+                Band 6.
               </p>
             </div>
           </div>

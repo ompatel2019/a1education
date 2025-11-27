@@ -27,11 +27,28 @@ type Campaign = {
   message_body: string;
   recipients_count: number;
   opens_count: number;
-  clicks_count: number;
   status: string;
   sent_at: string | null;
   created_at: string;
 };
+
+type ModalTone = "info" | "success" | "error";
+
+type DialogState =
+  | {
+      type: "confirm";
+      title: string;
+      description: string;
+      confirmLabel?: string;
+      onConfirm: () => void;
+    }
+  | {
+      type: "feedback";
+      title: string;
+      description: string;
+      tone?: ModalTone;
+      confirmLabel?: string;
+    };
 
 function EmailCard({
   headline,
@@ -86,6 +103,81 @@ function EmailCard({
   );
 }
 
+function Dialog({
+  state,
+  onClose,
+  isProcessing = false,
+}: {
+  state: DialogState | null;
+  onClose: () => void;
+  isProcessing?: boolean;
+}) {
+  if (!state) return null;
+
+  const tone: ModalTone = state.type === "feedback" ? state.tone ?? "info" : "info";
+  const toneAccent: Record<ModalTone, string> = {
+    info: "border-blue-100 bg-blue-50 text-blue-700",
+    success: "border-green-100 bg-green-50 text-green-700",
+    error: "border-rose-100 bg-rose-50 text-rose-700",
+  };
+  const toneDot: Record<ModalTone, string> = {
+    info: "bg-blue-500",
+    success: "bg-green-500",
+    error: "bg-rose-500",
+  };
+  const toneLabel: Record<ModalTone, string> = {
+    info: "Heads up",
+    success: "Success",
+    error: "Action needed",
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 px-4 backdrop-blur-sm">
+      <div className="w-full max-w-md rounded-3xl border border-white/70 bg-white p-6 shadow-2xl">
+        <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold shadow-sm">
+          <span className={`h-2.5 w-2.5 rounded-full ${toneDot[tone]}`} />
+          <span className={`${toneAccent[tone]} rounded-full border px-2 py-0.5`}>
+            {toneLabel[tone]}
+          </span>
+        </div>
+        <h3 className="mt-4 text-lg font-semibold text-gray-900">{state.title}</h3>
+        <p className="mt-2 text-sm text-gray-600">{state.description}</p>
+
+        <div className="mt-6 flex justify-end gap-3">
+          {state.type === "confirm" ? (
+            <>
+              <button
+                type="button"
+                onClick={onClose}
+                disabled={isProcessing}
+                className="rounded-2xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:-translate-y-[1px] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={state.onConfirm}
+                disabled={isProcessing}
+                className="rounded-2xl bg-[#4668f7] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#4668f7]/25 transition hover:-translate-y-[1px] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isProcessing ? "Sending..." : state.confirmLabel ?? "Send now"}
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-2xl bg-gray-900 px-4 py-2 text-sm font-semibold text-white shadow transition hover:-translate-y-[1px]"
+            >
+              {state.confirmLabel ?? "Close"}
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function EmailBlastPage() {
   const [activeView, setActiveView] = useState<"new" | "previous">("new");
   const [senderName, setSenderName] = useState("A1 Education Team");
@@ -97,6 +189,7 @@ export default function EmailBlastPage() {
   const [isSendingTest, setIsSendingTest] = useState(false);
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [isLoadingCampaigns, setIsLoadingCampaigns] = useState(false);
+  const [dialogState, setDialogState] = useState<DialogState | null>(null);
 
   const fetchCampaigns = async () => {
     setIsLoadingCampaigns(true);
@@ -117,15 +210,8 @@ export default function EmailBlastPage() {
     }
   }, [activeView]);
 
-  const handleSendNow = async () => {
-    if (!subject.trim() || !messageBody.trim()) {
-      alert("Please fill in subject and message body");
-      return;
-    }
-
-    if (!confirm("Send this email to all subscribers immediately?")) {
-      return;
-    }
+  const sendCampaignNow = async () => {
+    if (isSending) return;
 
     setIsSending(true);
     try {
@@ -142,33 +228,84 @@ export default function EmailBlastPage() {
         }),
       });
 
-      if (response.ok) {
-        alert("Email blast sent successfully!");
-        // Reset form
+      const data = await response.json().catch(() => null);
+
+      if (response.ok && data?.success) {
+        const recipients = data.campaign?.recipients_count;
+        const recipientsCopy =
+          typeof recipients === "number"
+            ? recipients === 0
+              ? "No subscribers were found, so nothing was sent yet."
+              : `Sent to ${recipients} subscriber${recipients === 1 ? "" : "s"}.`
+            : "Sent to the subscriber list.";
+
         setSubject("");
         setPreviewText("");
         setMessageBody("");
-        // Switch to previous campaigns view
         setActiveView("previous");
         fetchCampaigns();
+
+        setDialogState({
+          type: "feedback",
+          tone: recipients === 0 || data.warning ? "info" : "success",
+          title: data.warning ? "Sent with warnings" : "Campaign sent",
+          description: data.warning ? `${data.warning} ${recipientsCopy}` : recipientsCopy,
+          confirmLabel: "Close",
+        });
       } else {
-        const data = await response.json();
-        alert(`Failed to send: ${data.error || "Unknown error"}`);
+        const errorMessage = data?.error || "Failed to send email blast";
+        throw new Error(errorMessage);
       }
     } catch (error) {
       console.error("Error sending campaign:", error);
-      alert("Failed to send email blast");
+      setDialogState({
+        type: "feedback",
+        tone: "error",
+        title: "Couldn't send campaign",
+        description:
+          error instanceof Error ? error.message : "Failed to send email blast. Please try again.",
+      });
     } finally {
       setIsSending(false);
     }
+  };
+
+  const handleSendNow = () => {
+    if (!subject.trim() || !messageBody.trim()) {
+      setDialogState({
+        type: "feedback",
+        tone: "error",
+        title: "Add subject and message",
+        description: "Please fill in both the subject and message body before sending.",
+        confirmLabel: "Got it",
+      });
+      return;
+    }
+
+    setDialogState({
+      type: "confirm",
+      title: "Send this campaign now?",
+      description:
+        "We'll email every subscriber immediately. Take a final glance at the copy before sending.",
+      confirmLabel: "Send now",
+      onConfirm: sendCampaignNow,
+    });
   };
 
   const handleSendTest = async () => {
     setIsSendingTest(true);
     await new Promise((resolve) => setTimeout(resolve, 900));
     setIsSendingTest(false);
-    alert("Test email functionality coming soon!");
+    setDialogState({
+      type: "feedback",
+      tone: "info",
+      title: "Test email coming soon",
+      description: "We'll wire up test sends next. For now, send to your own inbox via the main blast.",
+      confirmLabel: "Close",
+    });
   };
+
+  const closeDialog = () => setDialogState(null);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-AU", {
@@ -184,6 +321,7 @@ export default function EmailBlastPage() {
 
   return (
     <div className="space-y-6">
+      <Dialog state={dialogState} onClose={closeDialog} isProcessing={isSending} />
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Email Blast</h1>
         <p className="text-gray-600">
@@ -418,7 +556,7 @@ export default function EmailBlastPage() {
                       </div>
                     </div>
                     <div className="border-t border-gray-100 px-5 py-3">
-                      <div className="grid grid-cols-3 gap-3 text-center">
+                      <div className="grid grid-cols-2 gap-3 text-center">
                         <div>
                           <p className="text-lg font-semibold text-gray-900">
                             {campaign.recipients_count}
@@ -433,14 +571,6 @@ export default function EmailBlastPage() {
                           </p>
                           <p className="text-xs uppercase tracking-[0.2em] text-gray-500">
                             OPENS
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-lg font-semibold text-gray-900">
-                            {campaign.clicks_count}
-                          </p>
-                          <p className="text-xs uppercase tracking-[0.2em] text-gray-500">
-                            CLICKS
                           </p>
                         </div>
                       </div>

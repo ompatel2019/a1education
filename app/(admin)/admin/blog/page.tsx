@@ -3,19 +3,54 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import BlogHeader from "@/components/BlogHeader";
 import { DEFAULT_BLOG_SLUG, slugify } from "@/lib/utils/slug";
 
-type BlogSection = {
+// Dynamically import TipTap to avoid SSR issues
+const TipTapEditor = dynamic(() => import("@/components/TipTapEditor"), {
+  ssr: false,
+  loading: () => (
+    <div className="rounded-2xl border border-gray-200 bg-white/70 min-h-[400px] flex items-center justify-center text-gray-400">
+      Loading editor...
+    </div>
+  ),
+});
+
+type TagStyle = {
+  label: string;
+  bgColor: string;
+  textColor: string;
+};
+
+type AuthorInfo = {
+  name: string;
+  position: string;
+  pfp: string;
+  profileId?: string;
+  pfpPosition?: string;
+};
+
+type Contributor = {
   id: string;
-  section_heading: string;
-  section_text: string;
+  name: string;
+  position: string;
+  pfp: string;
+  profileId?: string;
+  pfpPosition?: string;
+  isUploading: boolean;
+  uploadError: string | null;
 };
 
 type BlogContext = {
   date: string;
-  author: string;
   readTime: string;
+  author: AuthorInfo;
+  contributors: Omit<Contributor, "id" | "isUploading" | "uploadError">[];
+  tagStyles: TagStyle[];
+  headingColor: string;
+  subheadingColor: string;
 };
 
 type BlogDownloadable = {
@@ -27,14 +62,20 @@ type BlogDownloadable = {
   uploadError: string | null;
 };
 
-const nextSectionId = () => `section-${Math.random().toString(36).slice(2, 9)}`;
+const nextContributorId = () =>
+  `contributor-${Math.random().toString(36).slice(2, 9)}`;
 const nextDownloadableId = () =>
   `downloadable-${Math.random().toString(36).slice(2, 9)}`;
 
-const createSection = (): BlogSection => ({
-  id: nextSectionId(),
-  section_heading: "",
-  section_text: "",
+const createContributor = (): Contributor => ({
+  id: nextContributorId(),
+  name: "",
+  position: "",
+  pfp: "",
+  profileId: "",
+  pfpPosition: "50% 50%",
+  isUploading: false,
+  uploadError: null,
 });
 
 const createDownloadable = (): BlogDownloadable => ({
@@ -46,10 +87,11 @@ const createDownloadable = (): BlogDownloadable => ({
   uploadError: null,
 });
 
-type RawSection = {
-  section_heading?: unknown;
-  section_text?: unknown;
-};
+const createTagStyle = (label: string): TagStyle => ({
+  label,
+  bgColor: "#EEF2FF",
+  textColor: "#1D4ED8",
+});
 
 type RawDownloadableRecord = {
   title?: unknown;
@@ -82,15 +124,31 @@ export default function BlogPostsPage() {
   const [blogSubheading, setBlogSubheading] = useState(
     "Add a short hook for the article."
   );
-  const [tags, setTags] = useState<string[]>(["Education", "A1 Updates"]);
+  const [tags, setTags] = useState<TagStyle[]>([
+    { label: "Education", bgColor: "#EEF2FF", textColor: "#1D4ED8" },
+    { label: "A1 Updates", bgColor: "#ECFDF3", textColor: "#047857" },
+  ]);
   const [tagInput, setTagInput] = useState("");
-  const [sections, setSections] = useState<BlogSection[]>([createSection()]);
+  const [blogContent, setBlogContent] = useState("<p></p>");
   const [downloadables, setDownloadables] = useState<BlogDownloadable[]>([]);
   const [context, setContext] = useState<BlogContext>({
     date: "",
-    author: "",
     readTime: "",
+    author: {
+      name: "",
+      position: "",
+      pfp: "",
+      profileId: "",
+      pfpPosition: "50% 50%",
+    },
+    contributors: [],
+    tagStyles: [],
+    headingColor: "#ffffff",
+    subheadingColor: "#e2e8f0",
   });
+  const [contributors, setContributors] = useState<Contributor[]>([]);
+  const [authorPfpUploading, setAuthorPfpUploading] = useState(false);
+  const [authorPfpError, setAuthorPfpError] = useState<string | null>(null);
   const [isDraft, setIsDraft] = useState(true);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [activeView, setActiveView] = useState<
@@ -119,7 +177,9 @@ export default function BlogPostsPage() {
     fileName: "",
     error: null,
   });
-  const [deleteConfirmBlogId, setDeleteConfirmBlogId] = useState<number | null>(null);
+  const [deleteConfirmBlogId, setDeleteConfirmBlogId] = useState<number | null>(
+    null
+  );
 
   const previewPayload = useMemo(
     () => ({
@@ -127,11 +187,8 @@ export default function BlogPostsPage() {
       blog_hero: blogHero,
       blog_header: blogHeader,
       blog_subheading: blogSubheading,
-      blog_tags: tags,
-      blog_text: sections.map(({ section_heading, section_text }) => ({
-        section_heading,
-        section_text,
-      })),
+      blog_tags: tags.map((tag) => tag.label),
+      blog_text: blogContent,
       blog_downloadables: downloadables
         .map((rawEntry) => {
           const entry = rawEntry ?? ({} as Partial<BlogDownloadable>);
@@ -145,7 +202,24 @@ export default function BlogPostsPage() {
           };
         })
         .filter((entry) => entry.title && entry.asset_url),
-      blog_context: context,
+      blog_context: {
+        ...context,
+        author: context.author,
+        contributors: contributors
+          .filter((c) => c.name.trim())
+          .map(({ name, position, pfp, profileId, pfpPosition }) => ({
+            name,
+            position,
+            pfp,
+            profileId,
+            pfpPosition,
+          })),
+        tagStyles: tags.map((tag) => ({
+          label: tag.label,
+          bgColor: tag.bgColor,
+          textColor: tag.textColor,
+        })),
+      },
       draft: isDraft,
     }),
     [
@@ -154,9 +228,10 @@ export default function BlogPostsPage() {
       blogHeader,
       blogSubheading,
       tags,
-      sections,
+      blogContent,
       downloadables,
       context,
+      contributors,
       isDraft,
     ]
   );
@@ -169,13 +244,13 @@ export default function BlogPostsPage() {
 
   const handleAddTag = () => {
     const value = tagInput.trim();
-    if (!value || tags.includes(value)) return;
-    setTags((prev) => [...prev, value]);
+    if (!value || tags.some((tag) => tag.label === value)) return;
+    setTags((prev) => [...prev, createTagStyle(value)]);
     setTagInput("");
   };
 
   const handleRemoveTag = (value: string) => {
-    setTags((prev) => prev.filter((tag) => tag !== value));
+    setTags((prev) => prev.filter((tag) => tag.label !== value));
   };
 
   const handleTagKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -185,28 +260,48 @@ export default function BlogPostsPage() {
     }
   };
 
-  const addSection = () => {
-    setSections((prev) => [...prev, createSection()]);
-  };
-
-  const updateSection = (
-    id: string,
-    field: keyof BlogSection,
-    value: string
+  const updateTagStyle = (
+    label: string,
+    patch: Partial<Omit<TagStyle, "label">>
   ) => {
-    setSections((prev) =>
-      prev.map((section) =>
-        section.id === id ? { ...section, [field]: value } : section
+    setTags((prev) =>
+      prev.map((tag) =>
+        tag.label === label
+          ? {
+              ...tag,
+              ...patch,
+            }
+          : tag
       )
     );
   };
 
-  const removeSection = (id: string) => {
-    setSections((prev) =>
-      prev.length === 1 ? prev : prev.filter((section) => section.id !== id)
+  // Contributors management
+  const addContributor = () => {
+    setContributors((prev) => [...prev, createContributor()]);
+  };
+
+  const updateContributor = (
+    id: string,
+    field: keyof Contributor,
+    value: string
+  ) => {
+    setContributors((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, [field]: value } : c))
     );
   };
 
+  const removeContributor = (id: string) => {
+    setContributors((prev) => prev.filter((c) => c.id !== id));
+  };
+
+  const patchContributor = (id: string, patch: Partial<Contributor>) => {
+    setContributors((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, ...patch } : c))
+    );
+  };
+
+  // Downloadables management
   const addDownloadable = () => {
     setDownloadables((prev) => [...prev, createDownloadable()]);
   };
@@ -225,32 +320,41 @@ export default function BlogPostsPage() {
     setDownloadables((prev) => prev.filter((entry) => entry.id !== id));
   };
 
+  const resolveUploadSlug = () =>
+    slugify(slug || blogHeader || DEFAULT_BLOG_SLUG, DEFAULT_BLOG_SLUG);
+
+  // Generic upload function
+  const uploadFile = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("slug", resolveUploadSlug());
+
+    const response = await fetch("/api/admin/blogs/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const body = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(body?.error ?? "Upload failed.");
+    }
+
+    const fileUrl = body?.data?.url;
+    if (!fileUrl || typeof fileUrl !== "string") {
+      throw new Error("Upload did not return a file URL.");
+    }
+
+    return fileUrl;
+  };
+
   const handleHeroUpload = async (file?: File | null) => {
     if (!file) return;
 
     setHeroUploadState({ isUploading: true, fileName: file.name, error: null });
 
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("slug", resolveUploadSlug());
-
-      const response = await fetch("/api/admin/blogs/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const body = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        throw new Error(body?.error ?? "Upload failed.");
-      }
-
-      const fileUrl = body?.data?.url;
-      if (!fileUrl || typeof fileUrl !== "string") {
-        throw new Error("Upload did not return a file URL.");
-      }
-
+      const fileUrl = await uploadFile(file);
       setBlogHero(fileUrl);
       setHeroUploadState({
         isUploading: false,
@@ -276,32 +380,51 @@ export default function BlogPostsPage() {
     });
   };
 
+  const handleAuthorPfpUpload = async (file?: File | null) => {
+    if (!file) return;
+
+    setAuthorPfpUploading(true);
+    setAuthorPfpError(null);
+
+    try {
+      const fileUrl = await uploadFile(file);
+      setContext((prev) => ({
+        ...prev,
+        author: { ...prev.author, pfp: fileUrl },
+      }));
+    } catch (error) {
+      setAuthorPfpError(
+        error instanceof Error ? error.message : "Unable to upload photo."
+      );
+    } finally {
+      setAuthorPfpUploading(false);
+    }
+  };
+
+  const handleContributorPfpUpload = async (id: string, file?: File | null) => {
+    if (!file) return;
+
+    patchContributor(id, { isUploading: true, uploadError: null });
+
+    try {
+      const fileUrl = await uploadFile(file);
+      patchContributor(id, { pfp: fileUrl, isUploading: false });
+    } catch (error) {
+      patchContributor(id, {
+        isUploading: false,
+        uploadError:
+          error instanceof Error ? error.message : "Unable to upload photo.",
+      });
+    }
+  };
+
   const handleUploadFile = async (id: string, file?: File | null) => {
     if (!file) return;
 
     patchDownloadable(id, { isUploading: true, uploadError: null });
 
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("slug", resolveUploadSlug());
-
-      const response = await fetch("/api/admin/blogs/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const body = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        throw new Error(body?.error ?? "Upload failed.");
-      }
-
-      const fileUrl = body?.data?.url;
-      if (!fileUrl || typeof fileUrl !== "string") {
-        throw new Error("Upload did not return a file URL.");
-      }
-
+      const fileUrl = await uploadFile(file);
       patchDownloadable(id, {
         asset_url: fileUrl,
         fileName: file.name,
@@ -324,11 +447,29 @@ export default function BlogPostsPage() {
     setBlogHero("");
     setBlogHeader("Untitled Blog Post");
     setBlogSubheading("Add a short hook for the article.");
-    setTags(["Education", "A1 Updates"]);
+    setTags([
+      { label: "Education", bgColor: "#EEF2FF", textColor: "#1D4ED8" },
+      { label: "A1 Updates", bgColor: "#ECFDF3", textColor: "#047857" },
+    ]);
     setTagInput("");
-    setSections([createSection()]);
+    setBlogContent("<p></p>");
     setDownloadables([]);
-    setContext({ date: "", author: "", readTime: "" });
+    setContext({
+      date: "",
+      readTime: "",
+      author: {
+        name: "",
+        position: "",
+        pfp: "",
+        profileId: "",
+        pfpPosition: "50% 50%",
+      },
+      contributors: [],
+      tagStyles: [],
+      headingColor: "#ffffff",
+      subheadingColor: "#e2e8f0",
+    });
+    setContributors([]);
     setIsDraft(true);
     setCurrentDraftId(null);
     setSubmissionError(null);
@@ -338,6 +479,8 @@ export default function BlogPostsPage() {
       fileName: "",
       error: null,
     });
+    setAuthorPfpUploading(false);
+    setAuthorPfpError(null);
   };
 
   const loadDrafts = useCallback(async () => {
@@ -381,9 +524,6 @@ export default function BlogPostsPage() {
       setPublishedLoading(false);
     }
   }, []);
-
-  const resolveUploadSlug = () =>
-    slugify(slug || blogHeader || DEFAULT_BLOG_SLUG, DEFAULT_BLOG_SLUG);
 
   const checkSlugAvailability = useCallback(
     async (candidate: string) => {
@@ -512,27 +652,6 @@ export default function BlogPostsPage() {
     };
   }, [slug, checkSlugAvailability]);
 
-  const parseJsonArray = (value: unknown): RawSection[] => {
-    if (Array.isArray(value)) {
-      return value.filter(
-        (item): item is RawSection => !!item && typeof item === "object"
-      );
-    }
-    if (typeof value === "string") {
-      try {
-        const parsed = JSON.parse(value);
-        return Array.isArray(parsed)
-          ? parsed.filter(
-            (item): item is RawSection => !!item && typeof item === "object"
-          )
-          : [];
-      } catch {
-        return [];
-      }
-    }
-    return [];
-  };
-
   const extractFileNameFromUrl = (url: string) => {
     if (!url) return "";
     try {
@@ -557,9 +676,9 @@ export default function BlogPostsPage() {
         const parsed = JSON.parse(value);
         return Array.isArray(parsed)
           ? parsed.filter(
-            (item): item is RawDownloadableRecord =>
-              !!item && typeof item === "object"
-          )
+              (item): item is RawDownloadableRecord =>
+                !!item && typeof item === "object"
+            )
           : [];
       } catch {
         return [];
@@ -585,43 +704,249 @@ export default function BlogPostsPage() {
     return [];
   };
 
+  const mergeTagStyles = (labels: string[], stored: TagStyle[]): TagStyle[] =>
+    labels.map((label) => {
+      const existing = stored.find(
+        (style) => style.label.toLowerCase() === label.toLowerCase()
+      );
+      if (existing) return { ...existing, label };
+      return createTagStyle(label);
+    });
+
+  const [pfpAdjustTarget, setPfpAdjustTarget] = useState<{
+    kind: "author" | "contributor";
+    id?: string;
+    src: string;
+    position: string;
+  } | null>(null);
+
+  const parsePosition = (value?: string) => {
+    const [rawX, rawY] = (value ?? "50% 50%").split(" ");
+    return {
+      x: Number.parseFloat(rawX) || 50,
+      y: Number.parseFloat(rawY) || 50,
+    };
+  };
+
+  const openPfpAdjustModal = (kind: "author" | "contributor", id?: string) => {
+    if (kind === "author") {
+      if (!context.author.pfp) return;
+      setPfpAdjustTarget({
+        kind,
+        src: context.author.pfp,
+        position: context.author.pfpPosition || "50% 50%",
+      });
+      return;
+    }
+
+    const target = contributors.find((c) => c.id === id);
+    if (!target || !target.pfp) return;
+    setPfpAdjustTarget({
+      kind,
+      id,
+      src: target.pfp,
+      position: target.pfpPosition || "50% 50%",
+    });
+  };
+
+  const handlePfpPositionSelect = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (!pfpAdjustTarget) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = Math.min(
+      100,
+      Math.max(0, ((event.clientX - rect.left) / rect.width) * 100)
+    ).toFixed(1);
+    const y = Math.min(
+      100,
+      Math.max(0, ((event.clientY - rect.top) / rect.height) * 100)
+    ).toFixed(1);
+    setPfpAdjustTarget((prev) =>
+      prev ? { ...prev, position: `${x}% ${y}%` } : null
+    );
+  };
+
+  const applyPfpPosition = () => {
+    if (!pfpAdjustTarget) return;
+    if (pfpAdjustTarget.kind === "author") {
+      setContext((prev) => ({
+        ...prev,
+        author: { ...prev.author, pfpPosition: pfpAdjustTarget.position },
+      }));
+    } else if (pfpAdjustTarget.kind === "contributor" && pfpAdjustTarget.id) {
+      patchContributor(pfpAdjustTarget.id, {
+        pfpPosition: pfpAdjustTarget.position,
+      });
+    }
+    setPfpAdjustTarget(null);
+  };
+
   const parseJsonObject = (value: unknown): BlogContext => {
-    const fallback = { date: "", author: "", readTime: "" };
+    const fallback: BlogContext = {
+      date: "",
+      readTime: "",
+      author: {
+        name: "",
+        position: "",
+        pfp: "",
+        profileId: "",
+        pfpPosition: "50% 50%",
+      },
+      contributors: [],
+      tagStyles: [],
+      headingColor: "#ffffff",
+      subheadingColor: "#e2e8f0",
+    };
+
     if (value && typeof value === "object") {
       const obj = value as Record<string, unknown>;
+
+      // Handle old format where author was just a string
+      let author: AuthorInfo = {
+        name: "",
+        position: "",
+        pfp: "",
+        profileId: "",
+        pfpPosition: "50% 50%",
+      };
+      if (typeof obj.author === "string") {
+        author = {
+          name: obj.author,
+          position: "",
+          pfp: "",
+          profileId: "",
+          pfpPosition: "50% 50%",
+        };
+      } else if (obj.author && typeof obj.author === "object") {
+        const a = obj.author as Record<string, unknown>;
+        author = {
+          name: typeof a.name === "string" ? a.name : "",
+          position: typeof a.position === "string" ? a.position : "",
+          pfp: typeof a.pfp === "string" ? a.pfp : "",
+          profileId: typeof a.profileId === "string" ? a.profileId : "",
+          pfpPosition:
+            typeof a.pfpPosition === "string" ? a.pfpPosition : "50% 50%",
+        };
+      }
+
+      let contributors: BlogContext["contributors"] = [];
+      if (Array.isArray(obj.contributors)) {
+        contributors = obj.contributors
+          .filter(
+            (c): c is Record<string, unknown> => !!c && typeof c === "object"
+          )
+          .map((c) => ({
+            name: typeof c.name === "string" ? c.name : "",
+            position: typeof c.position === "string" ? c.position : "",
+            pfp: typeof c.pfp === "string" ? c.pfp : "",
+            profileId: typeof c.profileId === "string" ? c.profileId : "",
+            pfpPosition:
+              typeof c.pfpPosition === "string" ? c.pfpPosition : "50% 50%",
+          }));
+      }
+
+      const tagStyles: TagStyle[] = Array.isArray(obj.tagStyles)
+        ? obj.tagStyles
+            .filter(
+              (t): t is Record<string, unknown> => !!t && typeof t === "object"
+            )
+            .map((t) => ({
+              label: typeof t.label === "string" ? t.label : "",
+              bgColor: typeof t.bgColor === "string" ? t.bgColor : "#EEF2FF",
+              textColor:
+                typeof t.textColor === "string" ? t.textColor : "#1D4ED8",
+            }))
+            .filter((t) => t.label)
+        : [];
+
       return {
         date: typeof obj.date === "string" ? obj.date : "",
-        author: typeof obj.author === "string" ? obj.author : "",
         readTime: typeof obj.readTime === "string" ? obj.readTime : "",
+        author,
+        contributors,
+        tagStyles,
+        headingColor:
+          typeof obj.headingColor === "string"
+            ? obj.headingColor
+            : fallback.headingColor,
+        subheadingColor:
+          typeof obj.subheadingColor === "string"
+            ? obj.subheadingColor
+            : fallback.subheadingColor,
       };
-    }
-    if (typeof value === "string") {
-      try {
-        const parsed = JSON.parse(value);
-        return {
-          date: typeof parsed?.date === "string" ? parsed.date : "",
-          author: typeof parsed?.author === "string" ? parsed.author : "",
-          readTime: typeof parsed?.readTime === "string" ? parsed.readTime : "",
-        };
-      } catch {
-        return fallback;
-      }
     }
     return fallback;
   };
 
-  const upsertSectionsFromDraft = (rawSections: unknown) => {
-    const normalized = parseJsonArray(rawSections);
-    if (!normalized.length) return [createSection()];
-    return normalized.map((section) => ({
-      id: nextSectionId(),
-      section_heading:
-        typeof section.section_heading === "string"
-          ? section.section_heading
-          : "",
-      section_text:
-        typeof section.section_text === "string" ? section.section_text : "",
-    }));
+  // Parse blog_text which could be old section format or new HTML string
+  const parseBlogText = (value: unknown): string => {
+    if (typeof value === "string") {
+      // Check if it's an empty or whitespace-only string
+      if (!value.trim()) return "<p></p>";
+
+      // Could be HTML string or JSON string of sections
+      try {
+        const parsed = JSON.parse(value);
+        if (Array.isArray(parsed)) {
+          // Empty array means no content
+          if (parsed.length === 0) return "<p></p>";
+
+          // Old format: array of sections, convert to HTML
+          const html = parsed
+            .map((section) => {
+              const heading =
+                typeof section?.section_heading === "string"
+                  ? section.section_heading
+                  : "";
+              const text =
+                typeof section?.section_text === "string"
+                  ? section.section_text
+                  : "";
+              let sectionHtml = "";
+              if (heading) sectionHtml += `<h2>${heading}</h2>`;
+              if (text)
+                sectionHtml += text
+                  .split("\n")
+                  .filter((p: string) => p.trim())
+                  .map((p: string) => `<p>${p}</p>`)
+                  .join("");
+              return sectionHtml;
+            })
+            .join("");
+          return html || "<p></p>";
+        }
+        // If parsed but not array, return original string (likely HTML)
+        return value;
+      } catch {
+        // Not JSON, treat as HTML
+        return value;
+      }
+    }
+    if (Array.isArray(value)) {
+      // Old format: array of sections
+      return value
+        .map((section) => {
+          const heading =
+            typeof section?.section_heading === "string"
+              ? section.section_heading
+              : "";
+          const text =
+            typeof section?.section_text === "string"
+              ? section.section_text
+              : "";
+          let html = "";
+          if (heading) html += `<h2>${heading}</h2>`;
+          if (text)
+            html += text
+              .split("\n")
+              .map((p: string) => `<p>${p}</p>`)
+              .join("");
+          return html;
+        })
+        .join("");
+    }
+    return "<p></p>";
   };
 
   const upsertDownloadablesFromDraft = (rawDownloadables: unknown) => {
@@ -646,10 +971,27 @@ export default function BlogPostsPage() {
     setBlogHero(draft.blog_hero ?? "");
     setBlogHeader(draft.blog_header);
     setBlogSubheading(draft.blog_subheading);
-    setTags(parseTags(draft.blog_tags));
-    setSections(upsertSectionsFromDraft(draft.blog_text));
+    const parsedContext = parseJsonObject(draft.blog_context);
+    const parsedTags = parseTags(draft.blog_tags);
+    setTags(mergeTagStyles(parsedTags, parsedContext.tagStyles));
+    setBlogContent(parseBlogText(draft.blog_text));
     setDownloadables(upsertDownloadablesFromDraft(draft.blog_downloadables));
-    setContext(parseJsonObject(draft.blog_context));
+    setContext(parsedContext);
+
+    // Convert contributors to editable format
+    setContributors(
+      parsedContext.contributors.map((c) => ({
+        id: nextContributorId(),
+        name: c.name,
+        position: c.position,
+        pfp: c.pfp,
+        profileId: c.profileId,
+        pfpPosition: c.pfpPosition,
+        isUploading: false,
+        uploadError: null,
+      }))
+    );
+
     setIsDraft(draft.draft ?? true);
     setCurrentDraftId(draft.id);
     setSubmissionError(null);
@@ -657,9 +999,7 @@ export default function BlogPostsPage() {
     setActiveView("create");
     setHeroUploadState({
       isUploading: false,
-      fileName: draft.blog_hero
-        ? extractFileNameFromUrl(draft.blog_hero)
-        : "",
+      fileName: draft.blog_hero ? extractFileNameFromUrl(draft.blog_hero) : "",
       error: null,
     });
   };
@@ -669,11 +1009,8 @@ export default function BlogPostsPage() {
     blog_hero: blogHero.trim() ? blogHero.trim() : null,
     blog_header: blogHeader.trim(),
     blog_subheading: blogSubheading.trim(),
-    blog_tags: tags.map((tag) => tag.trim()).filter(Boolean),
-    blog_text: sections.map((section) => ({
-      section_heading: section.section_heading.trim(),
-      section_text: section.section_text.trim(),
-    })),
+    blog_tags: tags.map((tag) => tag.label.trim()).filter(Boolean),
+    blog_text: blogContent,
     blog_downloadables: downloadables
       .map((entry) => {
         const title = entry.title.trim();
@@ -683,8 +1020,28 @@ export default function BlogPostsPage() {
       .filter((entry) => entry.title && entry.asset_url),
     blog_context: {
       date: context.date,
-      author: context.author,
       readTime: context.readTime,
+      author: {
+        ...context.author,
+        name: context.author.name.trim(),
+        position: context.author.position.trim(),
+      },
+      contributors: contributors
+        .filter((c) => c.name.trim())
+        .map(({ name, position, pfp, profileId, pfpPosition }) => ({
+          name: name.trim(),
+          position: position.trim(),
+          pfp,
+          profileId,
+          pfpPosition,
+        })),
+      tagStyles: tags.map((tag) => ({
+        label: tag.label.trim(),
+        bgColor: tag.bgColor,
+        textColor: tag.textColor,
+      })),
+      headingColor: context.headingColor,
+      subheadingColor: context.subheadingColor,
     },
     draft: draftFlag,
   });
@@ -793,10 +1150,10 @@ export default function BlogPostsPage() {
         setSubmissionMessage("Draft saved.");
         await refresh();
       } else {
-        setSubmissionMessage("Post published.");
+        setIsDraft(false);
+        setCurrentDraftId(savedRow?.id ?? currentDraftId);
+        setSubmissionMessage("Saved.");
         await refresh();
-        resetBuilder();
-        setActiveView("drafts");
       }
     } catch (error) {
       console.error("Failed to save blog:", error);
@@ -815,8 +1172,8 @@ export default function BlogPostsPage() {
     slugStatus.state === "available"
       ? "text-emerald-600"
       : slugStatus.state === "taken" || slugStatus.state === "error"
-        ? "text-red-500"
-        : "text-gray-500";
+      ? "text-red-500"
+      : "text-gray-500";
   const slugBlocked =
     slugStatus.state === "taken" || slugStatus.state === "error";
 
@@ -840,10 +1197,11 @@ export default function BlogPostsPage() {
         <button
           type="button"
           onClick={() => setActiveView("drafts")}
-          className={`rounded-3xl border p-5 text-left transition ${activeView === "drafts"
-            ? "border-[#4668f7] bg-[#4668f7]/10 text-[#18224b]"
-            : "border-white/70 bg-white/70 text-gray-700 hover:border-[#4668f7]/40"
-            }`}
+          className={`rounded-3xl border p-5 text-left transition ${
+            activeView === "drafts"
+              ? "border-[#4668f7] bg-[#4668f7]/10 text-[#18224b]"
+              : "border-white/70 bg-white/70 text-gray-700 hover:border-[#4668f7]/40"
+          }`}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">
             01
@@ -856,10 +1214,11 @@ export default function BlogPostsPage() {
         <button
           type="button"
           onClick={() => setActiveView("published")}
-          className={`rounded-3xl border p-5 text-left transition ${activeView === "published"
-            ? "border-[#4668f7] bg-[#4668f7]/10 text-[#18224b]"
-            : "border-white/70 bg-white/70 text-gray-700 hover:border-[#4668f7]/40"
-            }`}
+          className={`rounded-3xl border p-5 text-left transition ${
+            activeView === "published"
+              ? "border-[#4668f7] bg-[#4668f7]/10 text-[#18224b]"
+              : "border-white/70 bg-white/70 text-gray-700 hover:border-[#4668f7]/40"
+          }`}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">
             02
@@ -875,10 +1234,11 @@ export default function BlogPostsPage() {
             resetBuilder();
             setActiveView("create");
           }}
-          className={`rounded-3xl border p-5 text-left transition ${activeView === "create"
-            ? "border-[#4668f7] bg-[#4668f7]/10 text-[#18224b]"
-            : "border-white/70 bg-white/70 text-gray-700 hover:border-[#4668f7]/40"
-            }`}
+          className={`rounded-3xl border p-5 text-left transition ${
+            activeView === "create"
+              ? "border-[#4668f7] bg-[#4668f7]/10 text-[#18224b]"
+              : "border-white/70 bg-white/70 text-gray-700 hover:border-[#4668f7]/40"
+          }`}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">
             03
@@ -934,7 +1294,7 @@ export default function BlogPostsPage() {
 
             {!draftsLoading && !draftsError && drafts.length === 0 && (
               <div className="rounded-2xl border border-gray-100 bg-gray-50/80 p-4 text-sm text-gray-600">
-                No drafts yet. Click “Make a new post” to start one.
+                No drafts yet. Click &quot;Make a new post&quot; to start one.
               </div>
             )}
 
@@ -942,10 +1302,7 @@ export default function BlogPostsPage() {
               !draftsError &&
               drafts.map((draft) => {
                 const tagList = parseTags(draft.blog_tags);
-                const sectionsCount = parseJsonArray(draft.blog_text).length;
                 const contextMeta = parseJsonObject(draft.blog_context);
-                const resourcesCount =
-                  parseDownloadables(draft.blog_downloadables).length;
                 return (
                   <div
                     key={draft.id}
@@ -970,12 +1327,8 @@ export default function BlogPostsPage() {
                       )}
                     </div>
                     <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500">
-                      <span>Author: {contextMeta.author || "—"}</span>
+                      <span>Author: {contextMeta.author?.name || "—"}</span>
                       <span>Read time: {contextMeta.readTime || "—"}</span>
-                      <span>Sections: {sectionsCount}</span>
-                      {resourcesCount > 0 && (
-                        <span>Resources: {resourcesCount}</span>
-                      )}
                       {draft.updated_at && (
                         <span>
                           Updated:{" "}
@@ -1066,10 +1419,7 @@ export default function BlogPostsPage() {
               !publishedError &&
               published.map((post) => {
                 const tagList = parseTags(post.blog_tags);
-                const sectionsCount = parseJsonArray(post.blog_text).length;
                 const contextMeta = parseJsonObject(post.blog_context);
-                const resourcesCount =
-                  parseDownloadables(post.blog_downloadables).length;
                 return (
                   <div
                     key={post.id}
@@ -1094,12 +1444,8 @@ export default function BlogPostsPage() {
                       )}
                     </div>
                     <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500">
-                      <span>Author: {contextMeta.author || "—"}</span>
+                      <span>Author: {contextMeta.author?.name || "—"}</span>
                       <span>Read time: {contextMeta.readTime || "—"}</span>
-                      <span>Sections: {sectionsCount}</span>
-                      {resourcesCount > 0 && (
-                        <span>Resources: {resourcesCount}</span>
-                      )}
                       {post.updated_at && (
                         <span>
                           Updated:{" "}
@@ -1161,6 +1507,9 @@ export default function BlogPostsPage() {
                     "Add a subheading to set context."
                   }
                   tags={previewPayload.blog_tags}
+                  tagStyles={tags}
+                  headingColor={context.headingColor}
+                  subheadingColor={context.subheadingColor}
                   blogHero={
                     previewPayload.blog_hero ? previewPayload.blog_hero : null
                   }
@@ -1169,12 +1518,14 @@ export default function BlogPostsPage() {
 
               <article className="max-w-4xl mx-auto px-4 pb-6">
                 <div className="prose prose-lg max-w-none">
-                  {(context.author || context.date || context.readTime) && (
+                  {(context.author?.name ||
+                    context.date ||
+                    context.readTime) && (
                     <div className="mb-8 text-gray-600">
-                      {context.author && (
+                      {context.author?.name && (
                         <>
                           <span className="font-medium">
-                            By {context.author}
+                            By {context.author.name}
                           </span>
                           {(context.date || context.readTime) && (
                             <span className="mx-2">•</span>
@@ -1203,31 +1554,12 @@ export default function BlogPostsPage() {
                     </div>
                   )}
 
-                  {previewPayload.blog_text.length > 0 ? (
-                    <div className="text-gray-700 leading-relaxed space-y-10">
-                      {previewPayload.blog_text.map((section, index) => (
-                        <div
-                          key={`${section.section_heading || "section"
-                            }-${index}`}
-                        >
-                          {section.section_heading && (
-                            <h2 className="text-3xl font-bold mb-4 text-gray-900">
-                              {section.section_heading}
-                            </h2>
-                          )}
-                          {section.section_text && (
-                            <p className="mb-6 whitespace-pre-line text-lg">
-                              {section.section_text}
-                            </p>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="text-gray-600">
-                      Add sections to see content here.
-                    </div>
-                  )}
+                  {/* Render HTML content */}
+                  <div
+                    className="text-gray-700 leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: blogContent }}
+                  />
+
                   {previewPayload.blog_downloadables.length > 0 && (
                     <div className="mt-10 space-y-4 rounded-2xl border border-gray-200 bg-gray-50/80 p-6">
                       <h3 className="text-xl font-semibold text-gray-900">
@@ -1300,11 +1632,14 @@ export default function BlogPostsPage() {
                   id="slug"
                   type="text"
                   value={slug}
-                  onChange={(event) => handleSlugFieldChange(event.target.value)}
+                  onChange={(event) =>
+                    handleSlugFieldChange(event.target.value)
+                  }
                   className="w-full rounded-2xl border border-gray-200 bg-white/70 px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
                 />
                 <p className={`text-xs ${slugStatusTone}`}>
-                  {slugStatus.message ?? "We will auto-build this from the title."}
+                  {slugStatus.message ??
+                    "We will auto-build this from the title."}
                 </p>
               </div>
             </div>
@@ -1325,10 +1660,15 @@ export default function BlogPostsPage() {
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-800">
-                Tags
-              </label>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-semibold text-gray-800">
+                  Tags
+                </label>
+                <span className="text-xs text-gray-500">
+                  Customise background and text colour per tag
+                </span>
+              </div>
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -1346,91 +1686,84 @@ export default function BlogPostsPage() {
                   Add
                 </button>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="space-y-2">
+                {tags.length === 0 && (
+                  <p className="text-xs text-gray-500">
+                    No tags yet. Add one to start styling.
+                  </p>
+                )}
                 {tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center gap-2 rounded-2xl bg-[#4668f7]/10 px-3 py-1 text-xs font-semibold text-[#4668f7]"
+                  <div
+                    key={tag.label}
+                    className="flex flex-wrap items-center gap-3 rounded-2xl border border-gray-200 bg-white/70 px-4 py-3"
                   >
-                    {tag}
+                    <span
+                      className="inline-flex items-center rounded-xl px-3 py-1 text-xs font-semibold"
+                      style={{
+                        backgroundColor: tag.bgColor,
+                        color: tag.textColor,
+                      }}
+                    >
+                      {tag.label}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] uppercase tracking-wide text-gray-500">
+                        BG
+                      </span>
+                      <input
+                        type="color"
+                        value={tag.bgColor}
+                        onChange={(event) =>
+                          updateTagStyle(tag.label, {
+                            bgColor: event.target.value,
+                          })
+                        }
+                        className="h-9 w-14 rounded-lg border border-gray-200 bg-white"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] uppercase tracking-wide text-gray-500">
+                        Text
+                      </span>
+                      <input
+                        type="color"
+                        value={tag.textColor}
+                        onChange={(event) =>
+                          updateTagStyle(tag.label, {
+                            textColor: event.target.value,
+                          })
+                        }
+                        className="h-9 w-14 rounded-lg border border-gray-200 bg-white"
+                      />
+                    </div>
                     <button
                       type="button"
-                      onClick={() => handleRemoveTag(tag)}
-                      className="text-[#4668f7]/60 transition hover:text-[#4668f7]"
-                      aria-label={`Remove ${tag}`}
+                      onClick={() => handleRemoveTag(tag.label)}
+                      className="ml-auto text-xs font-semibold text-red-500 hover:text-red-600"
                     >
-                      ×
+                      Remove
                     </button>
-                  </span>
+                  </div>
                 ))}
               </div>
             </div>
 
-            <div className="space-y-3">
+            {/* Rich Text Editor */}
+            <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-semibold text-gray-800">
-                    Sections
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    Each section captures a heading and supporting copy.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={addSection}
-                  className="rounded-2xl border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-700 transition hover:-translate-y-[1px]"
-                >
-                  Add section
-                </button>
+                <label className="text-sm font-semibold text-gray-800">
+                  Blog Content
+                </label>
+                <span className="text-xs text-gray-500">
+                  Use the toolbar for headings, formatting, quotes, and more
+                </span>
               </div>
-
-              <div className="space-y-4">
-                {sections.map((section, index) => (
-                  <div
-                    key={section.id}
-                    className="space-y-3 rounded-2xl border border-gray-200 bg-gray-50/70 p-4"
-                  >
-                    <div className="flex items-center justify-between text-xs font-semibold text-gray-500">
-                      <span>Section {index + 1}</span>
-                      <button
-                        type="button"
-                        onClick={() => removeSection(section.id)}
-                        className="text-[#dc2626] transition hover:text-[#b91c1c]"
-                        disabled={sections.length === 1}
-                      >
-                        Remove
-                      </button>
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Section heading"
-                      value={section.section_heading}
-                      onChange={(event) =>
-                        updateSection(
-                          section.id,
-                          "section_heading",
-                          event.target.value
-                        )
-                      }
-                      className="w-full rounded-2xl border border-white/80 bg-white px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
-                    />
-                    <textarea
-                      placeholder="Section text"
-                      rows={4}
-                      value={section.section_text}
-                      onChange={(event) =>
-                        updateSection(
-                          section.id,
-                          "section_text",
-                          event.target.value
-                        )
-                      }
-                      className="w-full rounded-2xl border border-white/80 bg-white px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
-                    />
-                  </div>
-                ))}
-              </div>
+              <TipTapEditor
+                content={blogContent}
+                onChange={setBlogContent}
+                placeholder="Start writing your blog post..."
+                onUploadAsset={uploadFile}
+              />
             </div>
 
             <div className="space-y-3">
@@ -1455,8 +1788,8 @@ export default function BlogPostsPage() {
 
               {downloadables.length === 0 && (
                 <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50/70 px-4 py-3 text-sm text-gray-500">
-                  No files attached yet. Click “Add resource” to include PDFs,
-                  slides, or other study materials.
+                  No files attached yet. Click &quot;Add resource&quot; to
+                  include PDFs, slides, or other study materials.
                 </div>
               )}
 
@@ -1646,11 +1979,7 @@ export default function BlogPostsPage() {
                     onClick={() => handleSubmit("post")}
                     disabled={isSaving || slugBlocked}
                   >
-                    {isSaving && saveMode === "post"
-                      ? "Posting..."
-                      : currentDraftId
-                        ? "Save and Post"
-                        : "Post"}
+                    {isSaving && saveMode === "post" ? "Saving..." : "Save"}
                   </button>
                   <button
                     className="rounded-2xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:-translate-y-[1px] disabled:cursor-not-allowed disabled:opacity-60"
@@ -1660,9 +1989,7 @@ export default function BlogPostsPage() {
                   >
                     {isSaving && saveMode === "draft"
                       ? "Saving..."
-                      : currentDraftId
-                        ? "Save as Draft"
-                        : "Save as draft"}
+                      : "Save draft"}
                   </button>
                   <button
                     className="rounded-2xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:-translate-y-[1px]"
@@ -1687,6 +2014,7 @@ export default function BlogPostsPage() {
             </div>
           </div>
 
+          {/* Right Sidebar - Context & Metadata */}
           <div className="space-y-4 rounded-3xl border border-white/60 bg-white/80 p-5 shadow-sm backdrop-blur">
             <div className="space-y-3">
               <h2 className="text-lg font-semibold text-gray-900">
@@ -1715,27 +2043,6 @@ export default function BlogPostsPage() {
               <div className="space-y-2">
                 <label
                   className="text-sm font-semibold text-gray-800"
-                  htmlFor="context-author"
-                >
-                  Author
-                </label>
-                <input
-                  id="context-author"
-                  type="text"
-                  placeholder="Sarah Johnson"
-                  value={context.author}
-                  onChange={(event) =>
-                    setContext((prev) => ({
-                      ...prev,
-                      author: event.target.value,
-                    }))
-                  }
-                  className="w-full rounded-2xl border border-gray-200 bg-white/70 px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
-                />
-              </div>
-              <div className="space-y-2">
-                <label
-                  className="text-sm font-semibold text-gray-800"
                   htmlFor="context-readtime"
                 >
                   Read time
@@ -1754,8 +2061,320 @@ export default function BlogPostsPage() {
                   className="w-full rounded-2xl border border-gray-200 bg-white/70 px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
                 />
               </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-800">
+                    Heading color
+                  </label>
+                  <input
+                    type="color"
+                    value={context.headingColor}
+                    onChange={(event) =>
+                      setContext((prev) => ({
+                        ...prev,
+                        headingColor: event.target.value,
+                      }))
+                    }
+                    className="h-10 w-full rounded-xl border border-gray-200 bg-white"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-gray-800">
+                    Subheading color
+                  </label>
+                  <input
+                    type="color"
+                    value={context.subheadingColor}
+                    onChange={(event) =>
+                      setContext((prev) => ({
+                        ...prev,
+                        subheadingColor: event.target.value,
+                      }))
+                    }
+                    className="h-10 w-full rounded-xl border border-gray-200 bg-white"
+                  />
+                </div>
+              </div>
             </div>
 
+            {/* Author Section */}
+            <div className="space-y-3 rounded-2xl border border-gray-100 bg-gray-50/80 p-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-semibold text-gray-800">
+                  Written by
+                </h3>
+              </div>
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <label
+                    className="text-xs font-medium text-gray-600"
+                    htmlFor="author-name"
+                  >
+                    Name
+                  </label>
+                  <input
+                    id="author-name"
+                    type="text"
+                    placeholder="Sarah Johnson"
+                    value={context.author.name}
+                    onChange={(event) =>
+                      setContext((prev) => ({
+                        ...prev,
+                        author: { ...prev.author, name: event.target.value },
+                      }))
+                    }
+                    className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label
+                    className="text-xs font-medium text-gray-600"
+                    htmlFor="author-position"
+                  >
+                    Position
+                  </label>
+                  <input
+                    id="author-position"
+                    type="text"
+                    placeholder="Designer, Craft+Curiosity"
+                    value={context.author.position}
+                    onChange={(event) =>
+                      setContext((prev) => ({
+                        ...prev,
+                        author: {
+                          ...prev.author,
+                          position: event.target.value,
+                        },
+                      }))
+                    }
+                    className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-medium text-gray-600">
+                    Profile photo
+                  </label>
+                  <div className="flex items-center gap-3">
+                    {context.author.pfp ? (
+                      <div className="relative">
+                        <Image
+                          src={context.author.pfp}
+                          alt="Author"
+                          width={48}
+                          height={48}
+                          className="h-12 w-12 rounded-full object-cover border-2 border-white shadow"
+                          style={{
+                            objectPosition:
+                              context.author.pfpPosition || "50% 50%",
+                          }}
+                          unoptimized
+                        />
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setContext((prev) => ({
+                              ...prev,
+                              author: { ...prev.author, pfp: "" },
+                            }))
+                          }
+                          className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center hover:bg-red-600"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-400">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    )}
+                    <label className="flex-1 cursor-pointer">
+                      <span className="inline-block rounded-xl border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50">
+                        {authorPfpUploading ? "Uploading..." : "Upload photo"}
+                      </span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="sr-only"
+                        onChange={(event) => {
+                          handleAuthorPfpUpload(event.target.files?.[0]);
+                          event.target.value = "";
+                        }}
+                        disabled={authorPfpUploading}
+                      />
+                    </label>
+                  </div>
+                  {authorPfpError && (
+                    <p className="text-xs text-red-500">{authorPfpError}</p>
+                  )}
+                  {context.author.pfp && (
+                    <div className="pt-1">
+                      <button
+                        type="button"
+                        onClick={() => openPfpAdjustModal("author")}
+                        className="text-xs font-semibold text-[#4668f7] hover:text-[#3653cf]"
+                      >
+                        Adjust crop with cursor
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Contributors Section */}
+            <div className="space-y-3 rounded-2xl border border-gray-100 bg-gray-50/80 p-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-semibold text-gray-800">
+                  Contributors
+                </h3>
+                <button
+                  type="button"
+                  onClick={addContributor}
+                  className="rounded-lg border border-gray-200 bg-white px-2 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                >
+                  + Add
+                </button>
+              </div>
+
+              {contributors.length === 0 && (
+                <p className="text-xs text-gray-500">
+                  No contributors added yet.
+                </p>
+              )}
+
+              <div className="space-y-3">
+                {contributors.map((contributor, index) => (
+                  <div
+                    key={contributor.id}
+                    className="space-y-2 rounded-xl border border-gray-200 bg-white p-3"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium text-gray-500">
+                        Contributor {index + 1}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removeContributor(contributor.id)}
+                        className="text-xs text-red-500 hover:text-red-600"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      value={contributor.name}
+                      onChange={(e) =>
+                        updateContributor(
+                          contributor.id,
+                          "name",
+                          e.target.value
+                        )
+                      }
+                      className="w-full rounded-lg border border-gray-200 px-2 py-1.5 text-sm focus:border-[#4668f7] focus:outline-none"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Position"
+                      value={contributor.position}
+                      onChange={(e) =>
+                        updateContributor(
+                          contributor.id,
+                          "position",
+                          e.target.value
+                        )
+                      }
+                      className="w-full rounded-lg border border-gray-200 px-2 py-1.5 text-sm focus:border-[#4668f7] focus:outline-none"
+                    />
+                    <div className="flex items-center gap-2">
+                      {contributor.pfp ? (
+                        <div className="relative">
+                          <Image
+                            src={contributor.pfp}
+                            alt={contributor.name}
+                            width={32}
+                            height={32}
+                            className="h-8 w-8 rounded-full object-cover"
+                            style={{
+                              objectPosition:
+                                contributor.pfpPosition || "50% 50%",
+                            }}
+                            unoptimized
+                          />
+                          <button
+                            type="button"
+                            onClick={() =>
+                              updateContributor(contributor.id, "pfp", "")
+                            }
+                            className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 text-white text-[10px] flex items-center justify-center"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            className="w-4 h-4"
+                          >
+                            <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
+                          </svg>
+                        </div>
+                      )}
+                      <label className="cursor-pointer">
+                        <span className="text-xs text-[#4668f7] hover:underline">
+                          {contributor.isUploading ? "Uploading..." : "Upload"}
+                        </span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="sr-only"
+                          onChange={(e) => {
+                            handleContributorPfpUpload(
+                              contributor.id,
+                              e.target.files?.[0]
+                            );
+                            e.target.value = "";
+                          }}
+                          disabled={contributor.isUploading}
+                        />
+                      </label>
+                    </div>
+                    {contributor.uploadError && (
+                      <p className="text-xs text-red-500">
+                        {contributor.uploadError}
+                      </p>
+                    )}
+                    {contributor.pfp && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          openPfpAdjustModal("contributor", contributor.id)
+                        }
+                        className="text-xs font-semibold text-[#4668f7] hover:text-[#3653cf]"
+                      >
+                        Adjust crop with cursor
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Hero Upload */}
             <div className="space-y-3 rounded-2xl border border-gray-100 bg-gray-50/80 p-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-semibold text-gray-800">
@@ -1772,28 +2391,14 @@ export default function BlogPostsPage() {
                 )}
               </div>
               <p className="text-sm text-gray-600">
-                Drop an image here to upload it to storage instantly. The public
-                URL is saved back to this draft.
+                Drop an image here to upload it to storage instantly.
               </p>
-              <div className="rounded-2xl border border-gray-100 bg-white/60 p-3 text-xs text-gray-500">
-                <p className="font-semibold text-gray-700">
-                  Hero image guidelines
-                </p>
-                <ul className="mt-1 list-disc space-y-1 pl-4">
-                  <li>Displays full-bleed across the blog hero (approx. 16:9).</li>
-                  <li>Upload at least 1800×1000px for crisp rendering.</li>
-                  <li>Use JPG, PNG, or WEBP under 4&nbsp;MB to keep loads fast.</li>
-                </ul>
-              </div>
               {blogHero && (
                 <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
                   <div
-                    className="h-44 w-full bg-cover bg-center"
+                    className="h-32 w-full bg-cover bg-center"
                     style={{ backgroundImage: `url(${blogHero})` }}
                   />
-                  <div className="border-t border-gray-100 px-3 py-2 text-xs text-gray-500 break-all">
-                    {blogHero}
-                  </div>
                 </div>
               )}
               {!blogHero && (
@@ -1801,14 +2406,9 @@ export default function BlogPostsPage() {
                   No hero image selected
                 </div>
               )}
-              {heroUploadState.fileName && (
-                <p className="text-xs text-gray-500">
-                  Linked file: {heroUploadState.fileName}
-                </p>
-              )}
               <label
                 htmlFor="hero-upload"
-                className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white/50 px-4 py-6 text-center text-sm text-gray-600 transition hover:border-[#4668f7]"
+                className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white/50 px-4 py-4 text-center text-sm text-gray-600 transition hover:border-[#4668f7]"
               >
                 {heroUploadState.isUploading ? (
                   <span className="font-semibold text-[#4668f7]">
@@ -1822,7 +2422,7 @@ export default function BlogPostsPage() {
                       fill="none"
                       strokeWidth={1.5}
                       stroke="currentColor"
-                      className="mb-2 h-6 w-6 text-[#4668f7]"
+                      className="mb-2 h-5 w-5 text-[#4668f7]"
                     >
                       <path
                         strokeLinecap="round"
@@ -1830,7 +2430,7 @@ export default function BlogPostsPage() {
                         d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 9L12 4.5 7.5 9M12 4.5V15"
                       />
                     </svg>
-                    Drop an image or click to pick
+                    <span className="text-xs">Drop image or click to pick</span>
                   </>
                 )}
                 <input
@@ -1859,8 +2459,61 @@ export default function BlogPostsPage() {
               <ul className="mt-3 space-y-2 text-sm text-gray-600">
                 <li>• Hero image + slug added</li>
                 <li>• Tags cover topics and read time</li>
-                <li>• Sections reviewed in preview</li>
+                <li>• Author info filled in</li>
+                <li>• Content reviewed in preview</li>
               </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {pfpAdjustTarget && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6">
+          <div className="w-full max-w-xl rounded-2xl bg-white p-6 shadow-2xl">
+            <h3 className="text-lg font-semibold text-gray-900">
+              Adjust photo focus
+            </h3>
+            <p className="text-sm text-gray-600">
+              Click anywhere in the image to set the focal point.
+            </p>
+            {(() => {
+              const { x, y } = parsePosition(pfpAdjustTarget.position);
+              return (
+                <div
+                  className="relative mt-4 aspect-square w-full overflow-hidden rounded-2xl border border-gray-200 bg-gray-100"
+                  style={{
+                    backgroundImage: `url(${pfpAdjustTarget.src})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: pfpAdjustTarget.position,
+                  }}
+                  onClick={handlePfpPositionSelect}
+                >
+                  <div
+                    className="pointer-events-none absolute h-3 w-3 rounded-full border-2 border-white bg-[#4668f7]"
+                    style={{
+                      left: `${x}%`,
+                      top: `${y}%`,
+                      transform: "translate(-50%, -50%)",
+                    }}
+                  />
+                </div>
+              );
+            })()}
+            <div className="mt-4 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setPfpAdjustTarget(null)}
+                className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={applyPfpPosition}
+                className="rounded-lg bg-[#4668f7] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#3653cf]"
+              >
+                Save position
+              </button>
             </div>
           </div>
         </div>
@@ -1870,9 +2523,12 @@ export default function BlogPostsPage() {
       {deleteConfirmBlogId !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
           <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Confirm Deletion</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Confirm Deletion
+            </h3>
             <p className="text-sm text-gray-600 mb-6">
-              Are you sure you want to delete this blog post? This action cannot be undone.
+              Are you sure you want to delete this blog post? This action cannot
+              be undone.
             </p>
             <div className="flex gap-3 justify-end">
               <button

@@ -88,6 +88,17 @@ export async function POST(request: NextRequest) {
         );
       }
 
+      const fromEmailConfig = process.env.EMAIL_FROM || "";
+      const fromEmailMatch = fromEmailConfig.match(/<(.+)>/);
+      const baseFromEmail = fromEmailMatch ? fromEmailMatch[1] : fromEmailConfig;
+      const fromAddress = baseFromEmail
+        ? `${sanitizedSenderName} <${baseFromEmail}>`
+        : `${sanitizedSenderName} <${sanitizedReplyToEmail}>`;
+      const siteUrl =
+        process.env.SITE_URL ||
+        process.env.NEXT_PUBLIC_SITE_URL ||
+        "http://localhost:3000";
+
       try {
         // Send emails in batches to avoid rate limits
         const batchSize = 50;
@@ -96,10 +107,11 @@ export async function POST(request: NextRequest) {
           
           await Promise.all(
             batch.map(async (subscriber) => {
-              const unsubscribeLink = `${process.env.SITE_URL || 'http://localhost:3000'}/u?email=${encodeURIComponent(subscriber.email)}&name=${encodeURIComponent(subscriber.name || '')}`;
+              const unsubscribeLink = `${siteUrl}/u?email=${encodeURIComponent(subscriber.email)}&name=${encodeURIComponent(subscriber.name || '')}`;
+              const trackingPixel = `${siteUrl}/api/admin/email-campaigns/open?id=${campaign.id}&email=${encodeURIComponent(subscriber.email)}&t=${Date.now()}`;
               
               return resendClient.emails.send({
-                from: `${sanitizedSenderName} <${process.env.EMAIL_FROM}>`,
+                from: fromAddress,
                 to: subscriber.email,
                 replyTo: sanitizedReplyToEmail,
                 subject: sanitizedSubject,
@@ -131,6 +143,11 @@ ${sanitizedMessageBody}
         <p style="margin:12px 0 0;font-size:11px;">
           <a href="${unsubscribeLink}" style="display:inline-block;padding:6px 12px;background:#eff6ff;color:#4f46e5;text-decoration:none;border-radius:9999px;font-weight:500;">Unsubscribe</a>
         </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img src="${trackingPixel}" alt="" width="1" height="1" style="display:block;" />
       </td>
     </tr>
   </table>
