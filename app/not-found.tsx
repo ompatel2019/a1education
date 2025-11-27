@@ -24,16 +24,6 @@ export default function NotFound() {
       >
         404
       </motion.h1>
-      <motion.p
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.35, duration: 0.6 }}
-        className="text-lg md:text-xl text-primary/90 mb-5 h4 font-semibold"
-      >
-        Uh oh! We couldn’t find that page.
-        <br />
-        Maybe you took a wrong turn at Blacktown Station? 🚉
-      </motion.p>
       <motion.div
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}

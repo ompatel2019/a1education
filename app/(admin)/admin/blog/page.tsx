@@ -119,6 +119,7 @@ export default function BlogPostsPage() {
     fileName: "",
     error: null,
   });
+  const [deleteConfirmBlogId, setDeleteConfirmBlogId] = useState<number | null>(null);
 
   const previewPayload = useMemo(
     () => ({
@@ -522,8 +523,8 @@ export default function BlogPostsPage() {
         const parsed = JSON.parse(value);
         return Array.isArray(parsed)
           ? parsed.filter(
-              (item): item is RawSection => !!item && typeof item === "object"
-            )
+            (item): item is RawSection => !!item && typeof item === "object"
+          )
           : [];
       } catch {
         return [];
@@ -556,9 +557,9 @@ export default function BlogPostsPage() {
         const parsed = JSON.parse(value);
         return Array.isArray(parsed)
           ? parsed.filter(
-              (item): item is RawDownloadableRecord =>
-                !!item && typeof item === "object"
-            )
+            (item): item is RawDownloadableRecord =>
+              !!item && typeof item === "object"
+          )
           : [];
       } catch {
         return [];
@@ -688,6 +689,43 @@ export default function BlogPostsPage() {
     draft: draftFlag,
   });
 
+  const handleDeleteBlog = async (id: number) => {
+    try {
+      const response = await fetch(`/api/admin/blogs/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        await Promise.all([loadDrafts(), loadPublished()]);
+        setDeleteConfirmBlogId(null);
+      } else {
+        alert("Failed to delete blog");
+      }
+    } catch (error) {
+      console.error("Delete error:", error);
+      alert("Failed to delete blog");
+    }
+  };
+
+  const handleTurnToDraft = async (post: BlogDraftRecord) => {
+    try {
+      const response = await fetch(`/api/admin/blogs/${post.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...post, draft: true }),
+      });
+
+      if (response.ok) {
+        await Promise.all([loadDrafts(), loadPublished()]);
+      } else {
+        alert("Failed to convert to draft");
+      }
+    } catch (error) {
+      console.error("Turn to draft error:", error);
+      alert("Failed to convert to draft");
+    }
+  };
+
   const handleSubmit = async (mode: "post" | "draft") => {
     const normalizedSlug = slugify(slug, "").trim();
     if (!normalizedSlug || !blogHeader.trim() || !blogSubheading.trim()) {
@@ -777,8 +815,8 @@ export default function BlogPostsPage() {
     slugStatus.state === "available"
       ? "text-emerald-600"
       : slugStatus.state === "taken" || slugStatus.state === "error"
-      ? "text-red-500"
-      : "text-gray-500";
+        ? "text-red-500"
+        : "text-gray-500";
   const slugBlocked =
     slugStatus.state === "taken" || slugStatus.state === "error";
 
@@ -802,11 +840,10 @@ export default function BlogPostsPage() {
         <button
           type="button"
           onClick={() => setActiveView("drafts")}
-          className={`rounded-3xl border p-5 text-left transition ${
-            activeView === "drafts"
-              ? "border-[#4668f7] bg-[#4668f7]/10 text-[#18224b]"
-              : "border-white/70 bg-white/70 text-gray-700 hover:border-[#4668f7]/40"
-          }`}
+          className={`rounded-3xl border p-5 text-left transition ${activeView === "drafts"
+            ? "border-[#4668f7] bg-[#4668f7]/10 text-[#18224b]"
+            : "border-white/70 bg-white/70 text-gray-700 hover:border-[#4668f7]/40"
+            }`}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">
             01
@@ -819,11 +856,10 @@ export default function BlogPostsPage() {
         <button
           type="button"
           onClick={() => setActiveView("published")}
-          className={`rounded-3xl border p-5 text-left transition ${
-            activeView === "published"
-              ? "border-[#4668f7] bg-[#4668f7]/10 text-[#18224b]"
-              : "border-white/70 bg-white/70 text-gray-700 hover:border-[#4668f7]/40"
-          }`}
+          className={`rounded-3xl border p-5 text-left transition ${activeView === "published"
+            ? "border-[#4668f7] bg-[#4668f7]/10 text-[#18224b]"
+            : "border-white/70 bg-white/70 text-gray-700 hover:border-[#4668f7]/40"
+            }`}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">
             02
@@ -839,11 +875,10 @@ export default function BlogPostsPage() {
             resetBuilder();
             setActiveView("create");
           }}
-          className={`rounded-3xl border p-5 text-left transition ${
-            activeView === "create"
-              ? "border-[#4668f7] bg-[#4668f7]/10 text-[#18224b]"
-              : "border-white/70 bg-white/70 text-gray-700 hover:border-[#4668f7]/40"
-          }`}
+          className={`rounded-3xl border p-5 text-left transition ${activeView === "create"
+            ? "border-[#4668f7] bg-[#4668f7]/10 text-[#18224b]"
+            : "border-white/70 bg-white/70 text-gray-700 hover:border-[#4668f7]/40"
+            }`}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">
             03
@@ -966,9 +1001,10 @@ export default function BlogPostsPage() {
                       </button>
                       <button
                         type="button"
-                        className="rounded-2xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:-translate-y-[1px]"
+                        className="rounded-2xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-600 transition hover:-translate-y-[1px] hover:bg-red-100"
+                        onClick={() => setDeleteConfirmBlogId(draft.id)}
                       >
-                        Duplicate
+                        Delete
                       </button>
                     </div>
                   </div>
@@ -1086,9 +1122,17 @@ export default function BlogPostsPage() {
                       </button>
                       <button
                         type="button"
-                        className="rounded-2xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:-translate-y-[1px]"
+                        className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-700 transition hover:-translate-y-[1px] hover:bg-amber-100"
+                        onClick={() => handleTurnToDraft(post)}
                       >
-                        Duplicate
+                        Turn to Draft
+                      </button>
+                      <button
+                        type="button"
+                        className="rounded-2xl border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-600 transition hover:-translate-y-[1px] hover:bg-red-100"
+                        onClick={() => setDeleteConfirmBlogId(post.id)}
+                      >
+                        Delete
                       </button>
                     </div>
                   </div>
@@ -1163,9 +1207,8 @@ export default function BlogPostsPage() {
                     <div className="text-gray-700 leading-relaxed space-y-10">
                       {previewPayload.blog_text.map((section, index) => (
                         <div
-                          key={`${
-                            section.section_heading || "section"
-                          }-${index}`}
+                          key={`${section.section_heading || "section"
+                            }-${index}`}
                         >
                           {section.section_heading && (
                             <h2 className="text-3xl font-bold mb-4 text-gray-900">
@@ -1606,8 +1649,8 @@ export default function BlogPostsPage() {
                     {isSaving && saveMode === "post"
                       ? "Posting..."
                       : currentDraftId
-                      ? "Save and Post"
-                      : "Post"}
+                        ? "Save and Post"
+                        : "Post"}
                   </button>
                   <button
                     className="rounded-2xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:-translate-y-[1px] disabled:cursor-not-allowed disabled:opacity-60"
@@ -1618,8 +1661,8 @@ export default function BlogPostsPage() {
                     {isSaving && saveMode === "draft"
                       ? "Saving..."
                       : currentDraftId
-                      ? "Save as Draft"
-                      : "Save as draft"}
+                        ? "Save as Draft"
+                        : "Save as draft"}
                   </button>
                   <button
                     className="rounded-2xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:-translate-y-[1px]"
@@ -1818,6 +1861,32 @@ export default function BlogPostsPage() {
                 <li>• Tags cover topics and read time</li>
                 <li>• Sections reviewed in preview</li>
               </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirmBlogId !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Confirm Deletion</h3>
+            <p className="text-sm text-gray-600 mb-6">
+              Are you sure you want to delete this blog post? This action cannot be undone.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setDeleteConfirmBlogId(null)}
+                className="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDeleteBlog(deleteConfirmBlogId)}
+                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
