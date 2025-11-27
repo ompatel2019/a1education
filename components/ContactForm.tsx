@@ -20,6 +20,7 @@ const ContactForm: React.FC = () => {
     setResult("Sending...");
 
     const formData = new FormData(event.currentTarget);
+    const isNewsletterChecked = formData.get("newsletter") === "on";
 
     const formObject = {
       access_key: "1feabdc6-8f23-4db0-9697-f16d9c4de0ae",
@@ -32,9 +33,11 @@ const ContactForm: React.FC = () => {
       otherSource: formData.get("otherSource"),
       whoReferredYou: formData.get("whoReferredYou"),
       message: formData.get("message"),
+      newsletter: isNewsletterChecked ? "Yes" : "No",
     };
 
     try {
+      // 1. Submit to Web3Forms (Contact Inquiry)
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
@@ -47,6 +50,24 @@ const ContactForm: React.FC = () => {
       const data = await response.json();
 
       if (data.success) {
+        // 2. If newsletter checked, submit to our API
+        if (isNewsletterChecked) {
+          try {
+            await fetch("/api/contact-newsletter", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name: formData.get("name"),
+                email: formData.get("email"),
+                source: "Inquiry",
+              }),
+            });
+          } catch (newsletterError) {
+            console.error("Newsletter subscription failed silently:", newsletterError);
+            // We don't block the success message for this
+          }
+        }
+
         setResult("Form submitted successfully!");
         if (formRef.current) {
           formRef.current.reset();
@@ -57,8 +78,7 @@ const ContactForm: React.FC = () => {
       }
     } catch (error) {
       setResult(
-        `Error submitting form: ${
-          error instanceof Error ? error.message : "Unknown error"
+        `Error submitting form: ${error instanceof Error ? error.message : "Unknown error"
         }`
       );
     }
@@ -266,6 +286,19 @@ const ContactForm: React.FC = () => {
                   required
                 />
               </div>
+              <div className="flex items-center space-x-3 py-2">
+                <input
+                  type="checkbox"
+                  id="newsletter"
+                  name="newsletter"
+                  className="w-5 h-5 rounded border-white/30 bg-white/10 text-primary focus:ring-white/50 focus:ring-offset-0"
+                  defaultChecked
+                />
+                <label htmlFor="newsletter" className="text-sm text-white/90 select-none cursor-pointer">
+                  Join the A1 Newsletter Community
+                </label>
+              </div>
+
               <button
                 type="submit"
                 className="flex items-center justify-center w-full py-3 px-8 rounded-md bg-white text-primary font-semibold transition-all hover:scale-[1.02] hover:bg-purple-50 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-white/50"

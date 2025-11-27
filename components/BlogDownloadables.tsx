@@ -25,10 +25,55 @@ const getFileLabel = (url: string) => {
 export default function BlogDownloadables({ items }: BlogDownloadablesProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formState, setFormState] = useState({ name: "", email: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   if (!items.length) {
     return null;
   }
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setStatus("loading");
+    setErrorMessage("");
+
+    const formData = new FormData(event.target as HTMLFormElement);
+    const newsletter = formData.get("newsletter") === "on";
+
+    // Get slug from URL
+    const pathParts = window.location.pathname.split("/");
+    const slug = pathParts[pathParts.length - 1];
+
+    try {
+      const response = await fetch("/api/blog-resources", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formState.name,
+          email: formState.email,
+          slug,
+          newsletter,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus("success");
+        setTimeout(() => {
+          setIsModalOpen(false);
+          setStatus("idle");
+          setFormState({ name: "", email: "" });
+        }, 3000);
+      } else {
+        setStatus("error");
+        setErrorMessage(data.error || "Something went wrong");
+      }
+    } catch {
+      setStatus("error");
+      setErrorMessage("Failed to connect to server");
+    }
+  };
 
   const modal = isModalOpen ? (
     <div
@@ -58,68 +103,87 @@ export default function BlogDownloadables({ items }: BlogDownloadablesProps) {
             as marketing automation is connected.
           </p>
         </div>
-        <form
-          className="mt-6 space-y-4"
-          onSubmit={(event) => {
-            event.preventDefault();
-            // Intentionally left blank until email_marketing_submissions integration
-          }}
-        >
-          <div className="space-y-1">
-            <label
-              htmlFor="resource-name"
-              className="text-sm font-medium text-gray-800"
-            >
-              Full name
-            </label>
-            <input
-              id="resource-name"
-              name="name"
-              type="text"
-              placeholder="Taylor Jones"
-              value={formState.name}
-              onChange={(event) =>
-                setFormState((prev) => ({
-                  ...prev,
-                  name: event.target.value,
-                }))
-              }
-              className="w-full rounded-2xl border border-gray-200 px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
-            />
+
+        {status === "success" ? (
+          <div className="mt-6 rounded-2xl bg-green-50 p-6 text-center">
+            <p className="text-lg font-semibold text-green-800">Resources Sent!</p>
+            <p className="text-sm text-green-600 mt-2">Check your inbox for the download links.</p>
           </div>
-          <div className="space-y-1">
-            <label
-              htmlFor="resource-email"
-              className="text-sm font-medium text-gray-800"
+        ) : (
+          <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+            <div className="space-y-1">
+              <label
+                htmlFor="resource-name"
+                className="text-sm font-medium text-gray-800"
+              >
+                Full name
+              </label>
+              <input
+                id="resource-name"
+                name="name"
+                type="text"
+                placeholder="Taylor Jones"
+                value={formState.name}
+                onChange={(event) =>
+                  setFormState((prev) => ({
+                    ...prev,
+                    name: event.target.value,
+                  }))
+                }
+                className="w-full rounded-2xl border border-gray-200 px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
+                required
+              />
+            </div>
+            <div className="space-y-1">
+              <label
+                htmlFor="resource-email"
+                className="text-sm font-medium text-gray-800"
+              >
+                Email address
+              </label>
+              <input
+                id="resource-email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                value={formState.email}
+                onChange={(event) =>
+                  setFormState((prev) => ({
+                    ...prev,
+                    email: event.target.value,
+                  }))
+                }
+                className="w-full rounded-2xl border border-gray-200 px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
+                required
+              />
+            </div>
+
+            <div className="flex items-center space-x-3 py-2">
+              <input
+                type="checkbox"
+                id="newsletter"
+                name="newsletter"
+                className="w-5 h-5 rounded border-gray-300 text-[#4668f7] focus:ring-[#4668f7]"
+                defaultChecked
+              />
+              <label htmlFor="newsletter" className="text-sm text-gray-600 select-none cursor-pointer">
+                Join the A1 Newsletter Community
+              </label>
+            </div>
+
+            {status === "error" && (
+              <p className="text-sm text-red-600">{errorMessage}</p>
+            )}
+
+            <button
+              type="submit"
+              disabled={status === "loading"}
+              className="w-full rounded-2xl bg-[#4668f7] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#4668f7]/30 transition hover:-translate-y-[1px] disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Email address
-            </label>
-            <input
-              id="resource-email"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              value={formState.email}
-              onChange={(event) =>
-                setFormState((prev) => ({
-                  ...prev,
-                  email: event.target.value,
-                }))
-              }
-              className="w-full rounded-2xl border border-gray-200 px-3 py-2 text-sm text-gray-900 focus:border-[#4668f7] focus:outline-none focus:ring-2 focus:ring-[#4668f7]/30"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full rounded-2xl bg-[#4668f7] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#4668f7]/30 transition hover:-translate-y-[1px]"
-          >
-            Get access
-          </button>
-          <p className="text-xs text-gray-500">
-            This button is intentionally inactive until submissions are hooked
-            up to email_marketing_submissions.
-          </p>
-        </form>
+              {status === "loading" ? "Sending..." : "Get Resources"}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   ) : null;

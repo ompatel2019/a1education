@@ -52,6 +52,24 @@ export default function EmailSubmissionsTable() {
     return new Date(dateString).toLocaleString();
   };
 
+  const formatSource = (source: string) => {
+    if (!source) return "";
+
+    // Specific mappings
+    if (source === "lead_collector") return "Lead Collector";
+    if (source === "Inquiry") return "Inquiry Form";
+
+    // Handle "Blog Resources: slug"
+    if (source.startsWith("Blog Resources:")) {
+      return "Blog Resource";
+    }
+
+    // Generic fallback: replace underscores/hyphens with spaces and Title Case
+    return source
+      .replace(/[_-]/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
   if (isLoading) {
     return (
       <div className="rounded-3xl border border-white/70 bg-white/80 p-8 text-center text-slate-500 shadow-lg backdrop-blur">
@@ -120,7 +138,7 @@ export default function EmailSubmissionsTable() {
                   <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-900">
                     {submission.source ? (
                       <span className="inline-flex items-center rounded-full border border-[#4668f7]/30 bg-[#4668f7]/10 px-2.5 py-1 text-xs font-medium text-[#4668f7]">
-                        {submission.source}
+                        {formatSource(submission.source)}
                       </span>
                     ) : (
                       <span className="text-slate-400">—</span>

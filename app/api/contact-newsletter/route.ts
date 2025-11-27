@@ -7,9 +7,10 @@ function sanitizeInput(value: unknown) {
 }
 
 export async function POST(request: NextRequest) {
-  const { name, email } = await request.json();
+  const { name, email, source } = await request.json();
   const sanitizedName = sanitizeInput(name);
   const sanitizedEmail = sanitizeInput(email).toLowerCase();
+  const submissionSource = sanitizeInput(source) || "Inquiry";
 
   if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
     console.error("SUPABASE_SERVICE_ROLE_KEY environment variable is not set");
@@ -50,7 +51,7 @@ export async function POST(request: NextRequest) {
       .insert({
         name: sanitizedName,
         email: sanitizedEmail,
-        source: "lead_collector",
+        source: submissionSource,
       })
       .select()
       .single();
