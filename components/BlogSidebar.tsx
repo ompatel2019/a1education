@@ -104,9 +104,9 @@ export default function BlogSidebar({
           </h3>
           <nav>
             <ul className="space-y-2">
-              {headings.map((heading) => (
+              {headings.map((heading, index) => (
                 <li
-                  key={heading.id}
+                  key={`${heading.id}-${index}`}
                   className={
                     heading.level === 1
                       ? "font-medium"
