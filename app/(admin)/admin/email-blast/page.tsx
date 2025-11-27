@@ -385,7 +385,7 @@ export default function EmailBlastPage() {
               </div>
             ) : campaigns.length === 0 ? (
               <div className="rounded-2xl border border-gray-100 bg-gray-50/80 p-8 text-center text-gray-600">
-                No campaigns sent yet. Create your first campaign from the "New Campaign" tab.
+                No campaigns sent yet. Create your first campaign from the &quot;New Campaign&quot; tab.
               </div>
             ) : (
               <div className="space-y-4">

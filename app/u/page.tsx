@@ -32,7 +32,7 @@ function UnsubscribeContent() {
                     setStatus("error");
                     setMessage("Failed to unsubscribe. Please try again.");
                 }
-            } catch (error) {
+            } catch {
                 setStatus("error");
                 setMessage("An unexpected error occurred.");
             }
@@ -60,7 +60,7 @@ function UnsubscribeContent() {
                 setStatus("error");
                 setMessage("Failed to re-subscribe. Please try again.");
             }
-        } catch (error) {
+        } catch {
             setStatus("error");
             setMessage("An unexpected error occurred.");
         }
