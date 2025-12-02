@@ -6,7 +6,7 @@ import React from "react";
 const Topbar = () => {
   const leftText =
     "A1 Education – Specialists in Year 11 & 12 Economics Tutoring in Sydney";
-  const number = "0402 097 284";
+  const number = "02 9621 4508";
   const location = "4/30 Campbell Street, Blacktown NSW 2148";
 
   return (
@@ -22,7 +22,7 @@ const Topbar = () => {
           <a
             target="_blank"
             rel="noreferrer"
-            href="tel:0402097284"
+            href="tel:0296214508"
             className="flex items-center gap-2 hover:underline"
             aria-label="Call A1 Education"
           >
