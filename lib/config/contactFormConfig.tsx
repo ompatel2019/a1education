@@ -29,8 +29,8 @@ export const contacts: ContactCard[] = [
     icon: <Phone size={24} />,
     contactType: "Phone",
     contactDesc: "Mon - Fri 8am to 5pm",
-    contactInformation: "0402 097 284",
-    contactRedirect: "tel:0402 097 284",
+    contactInformation: "02 9621 4508",
+    contactRedirect: "tel:02 9621 4508",
   },
 ];
 

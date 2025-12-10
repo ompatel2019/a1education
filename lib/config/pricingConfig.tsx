@@ -7,7 +7,7 @@ export const sectionSubheading =
 export const pricingPlans = [
   {
     year: "Year 11",
-    price: "$30/hr",
+    price: "$35/hr",
     duration: "2-hour class",
     features: [
       "Weekly 2-hour class lessons",
