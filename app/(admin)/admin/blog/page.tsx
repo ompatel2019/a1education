@@ -167,6 +167,10 @@ export default function BlogPostsPage() {
   const [submissionMessage, setSubmissionMessage] = useState<string | null>(
     null
   );
+  const [publishConfirmOpen, setPublishConfirmOpen] = useState(false);
+  const [subscriberCount, setSubscriberCount] = useState<number | null>(null);
+  const [isFetchingSubscriberCount, setIsFetchingSubscriberCount] =
+    useState(false);
   const [panelLoading, setPanelLoading] = useState(true);
   const [heroUploadState, setHeroUploadState] = useState<{
     isUploading: boolean;
@@ -1083,6 +1087,41 @@ export default function BlogPostsPage() {
     }
   };
 
+  const fetchSubscriberCount = useCallback(async () => {
+    setIsFetchingSubscriberCount(true);
+    try {
+      const response = await fetch("/api/admin/email-subscribers/count");
+      const body = await response.json().catch(() => ({}));
+
+      if (response.ok && typeof body.count === "number") {
+        setSubscriberCount(body.count);
+      } else {
+        setSubscriberCount(null);
+        console.error("Subscriber count fetch error:", body?.error);
+      }
+    } catch (error) {
+      console.error("Subscriber count error:", error);
+      setSubscriberCount(null);
+    } finally {
+      setIsFetchingSubscriberCount(false);
+    }
+  }, []);
+
+  const openPublishConfirm = () => {
+    setPublishConfirmOpen(true);
+    setSubscriberCount(null);
+    fetchSubscriberCount();
+  };
+
+  const handleConfirmPublish = () => {
+    setPublishConfirmOpen(false);
+    handleSubmit("post");
+  };
+
+  const handleCancelPublish = () => {
+    setPublishConfirmOpen(false);
+  };
+
   const handleSubmit = async (mode: "post" | "draft") => {
     const normalizedSlug = slugify(slug, "").trim();
     if (!normalizedSlug || !blogHeader.trim() || !blogSubheading.trim()) {
@@ -1976,7 +2015,7 @@ export default function BlogPostsPage() {
                   <button
                     className="rounded-2xl bg-[#4668f7] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#4668f7]/25 transition hover:-translate-y-[1px] disabled:cursor-not-allowed disabled:opacity-60"
                     type="button"
-                    onClick={() => handleSubmit("post")}
+                    onClick={openPublishConfirm}
                     disabled={isSaving || slugBlocked}
                   >
                     {isSaving && saveMode === "post" ? "Saving..." : "Save"}
@@ -2513,6 +2552,75 @@ export default function BlogPostsPage() {
                 className="rounded-lg bg-[#4668f7] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#3653cf]"
               >
                 Save position
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Publish Confirmation Modal */}
+      {publishConfirmOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl">
+            <div className="flex items-start gap-3">
+              <div className="mt-1 rounded-full bg-[#4668f7]/10 p-2 text-[#4668f7]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  className="h-5 w-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6.75v4.5m0 4.5h.008v.008H12v-.008z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                  Send blog to marketing list
+                </h3>
+                <p className="text-sm text-gray-600 mb-3">
+                  This will be sent to everyone in the marketing list when you publish.
+                </p>
+                <div className="rounded-xl border border-gray-200 bg-gray-50/70 px-3 py-2 text-sm text-gray-700">
+                  {isFetchingSubscriberCount ? (
+                    <span>Loading subscriber count…</span>
+                  ) : (
+                    <span>
+                      Current subscribers:{" "}
+                      <span className="font-semibold">
+                        {subscriberCount !== null ? subscriberCount : "—"}
+                      </span>
+                    </span>
+                  )}
+                </div>
+                <p className="mt-3 text-xs text-gray-500">
+                  The blog publish email uses the latest content and includes an unsubscribe link.
+                </p>
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                onClick={handleCancelPublish}
+                className="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmPublish}
+                disabled={isSaving}
+                className="rounded-lg bg-[#4668f7] px-4 py-2 text-sm font-semibold text-white shadow-md hover:bg-[#3557e6] disabled:opacity-60"
+              >
+                {isSaving && saveMode === "post" ? "Sending..." : "Send and publish"}
               </button>
             </div>
           </div>

@@ -74,9 +74,9 @@ export default async function BlogPage() {
 
       {/* Blog Display */}
       <section className="py-16 pb-32 lg:pb-64 responsivePad">
-        <div className="max-w-6xl mx-auto">
+        <div className="">
           {blogs && blogs.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {blogs.map((blog) => {
                 const blogPost = blog as BlogPost;
                 const tags = (blogPost.blog_tags || []) as string[];
@@ -133,7 +133,7 @@ export default async function BlogPage() {
                             alt={blogPost.blog_header}
                             fill
                             className="object-cover"
-                            sizes="(max-width: 768px) 100vw, 50vw"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           />
                         </div>
                       ) : (

@@ -29,21 +29,24 @@ const StatCard = ({ statName, stat, metric, desc, index }: StatCardProps) => (
   <BlurFade delay={0.1 + index * 0.1} inView>
     <div
       className={cn(
-        "flex flex-col justify-between rounded-xl border border-black/10 bg-white px-6 py-7 shadow-sm group transition-all",
-        "hover:-translate-y-2 hover:shadow-xl"
+        "flex flex-col gap-4 rounded-2xl border border-primary/10 bg-white/95 px-7 py-7 shadow-[0_18px_50px_-40px_rgba(28,36,66,0.45)]",
+        "hover-card group"
       )}
     >
-      <div className="text-xs uppercase tracking-wide text-gray-400 font-bold mb-2">
+      <div className="text-[11px] uppercase tracking-[0.14em] text-slate-500 font-semibold flex items-center gap-2">
+        <span className="h-1.5 w-1.5 rounded-full bg-primary/70" aria-hidden />
         {statName}
       </div>
-      <div className="flex items-end gap-1">
+      <div className="flex items-end gap-2">
         <NumberTicker
           value={parseInt(stat.replace(/%|\+/g, ""))}
-          className="text-4xl font-extrabold text-primary group-hover:scale-110 transition"
+          className="text-4xl md:text-5xl font-black text-primary group-hover:scale-110 transition"
         />
-        <span className="text-2xl font-bold text-primary/70">{metric}</span>
+        <span className="text-2xl md:text-3xl font-semibold text-primary/70">
+          {metric}
+        </span>
       </div>
-      <div className="text-gray-500 text-[15px] mt-3">{desc}</div>
+      <div className="text-slate-600 text-[15px] leading-relaxed">{desc}</div>
     </div>
   </BlurFade>
 );
@@ -52,12 +55,24 @@ const StatCard = ({ statName, stat, metric, desc, index }: StatCardProps) => (
 
 const Testimonial = () => (
   <BlurFade delay={0.35} inView>
-    <div className="flex flex-col h-full w-full items-start rounded-xl border border-black/10 bg-white px-7 py-8 shadow-sm hover:shadow-lg transition-all relative overflow-hidden group min-h-[220px]">
-      <div className="text-lg font-medium text-gray-800 leading-relaxed">
+    <div className="flex h-full w-full flex-col rounded-2xl border border-primary/10 bg-white/95 px-8 py-9 shadow-[0_18px_50px_-40px_rgba(28,36,66,0.45)] hover-card relative overflow-hidden min-h-[240px]">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/40 via-primary to-primary/40" />
+      <div className="text-5xl text-primary/20 leading-none">“</div>
+      <p className="mt-2 text-lg font-medium text-slate-900 leading-relaxed">
         {sectionSubheading}
-      </div>
-      <div className="text-sm text-gray-500 mt-4 font-semibold">
-        — Arnav Lamba, 55% Y11 Prelim → 96% Y12 Trial
+      </p>
+      <div className="mt-6 flex items-center gap-3">
+        <div className="h-11 w-11 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
+          A1
+        </div>
+        <div>
+          <div className="text-sm font-semibold text-slate-900">
+            Arnav Lamba
+          </div>
+          <div className="text-xs text-slate-600">
+            55% Y11 Prelim → 96% Y12 Trial
+          </div>
+        </div>
       </div>
     </div>
   </BlurFade>
@@ -67,14 +82,21 @@ const Testimonial = () => (
 
 const DifferenceCard = () => (
   <BlurFade delay={0.45} inView>
-    <div className="flex flex-col h-full w-full rounded-xl border border-black/10 bg-white px-7 py-8 shadow-sm hover:shadow-lg transition-all min-h-[220px]">
-      <div className="flex flex-col justify-around gap-5 flex-1">
+    <div className="flex h-full w-full flex-col rounded-2xl border border-primary/10 bg-white/95 px-8 py-9 shadow-[0_18px_50px_-40px_rgba(28,36,66,0.45)] hover-card min-h-[240px]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
         {ourDifference.map((item) => (
-          <div key={item.label} className="flex items-start gap-4">
-            <span className="mt-1 text-primary text-2xl">{item.icon}</span>
-            <div>
-              <div className="font-bold text-md">{item.label}</div>
-              <div className="text-gray-500 text-sm">{item.desc}</div>
+          <div
+            key={item.label}
+            className="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white/80 px-4 py-3 hover:bg-primary/[0.03] transition-colors"
+          >
+            <span className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary text-xl">
+              {item.icon}
+            </span>
+            <div className="space-y-1">
+              <div className="font-semibold text-slate-900">{item.label}</div>
+              <div className="text-sm text-slate-600 leading-relaxed">
+                {item.desc}
+              </div>
             </div>
           </div>
         ))}

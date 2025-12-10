@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/service";
 import { normalizeBlogPayload } from "../utils";
+import { sendPublishNotificationIfNeeded } from "../notify";
 
 export async function PUT(
   request: Request,
@@ -18,6 +19,19 @@ export async function PUT(
     const payload = normalizeBlogPayload(raw);
 
     const supabase = createServiceClient();
+
+    // Fetch current draft state to detect publish transition
+    const { data: existing, error: existingError } = await supabase
+      .from("blogs")
+      .select("draft")
+      .eq("id", blogId)
+      .maybeSingle();
+
+    if (existingError) {
+      console.error("Failed to load existing blog for update:", existingError);
+      return NextResponse.json({ error: "Blog not found." }, { status: 404 });
+    }
+
     const { data, error } = await supabase
       .from("blogs")
       .update(payload)
@@ -28,6 +42,16 @@ export async function PUT(
     if (error) {
       console.error("Failed to update blog:", error);
       return NextResponse.json({ error: error.message }, { status: 400 });
+    }
+
+    // Send notification only on first publish (draft -> published)
+    const wasDraft = existing?.draft ?? true;
+    if (wasDraft && data && !data.draft) {
+      try {
+        await sendPublishNotificationIfNeeded(data);
+      } catch (notifyError) {
+        console.error("Blog publish notification error (update):", notifyError);
+      }
     }
 
     return NextResponse.json({ data });
