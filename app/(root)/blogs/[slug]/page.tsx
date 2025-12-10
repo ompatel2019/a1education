@@ -3,12 +3,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Script from "next/script";
 import BlogHeader from "@/components/BlogHeader";
 import BlogDownloadables, {
   type BlogDownloadableResource,
 } from "@/components/BlogDownloadables";
 import BlogSidebar from "@/components/BlogSidebar";
 import { createServiceClient } from "@/lib/supabase/service";
+
+const siteUrl = "https://a1education.com.au";
 
 type TagStyle = {
   label: string;
@@ -155,6 +158,12 @@ function slugify(text: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
+function toAbsoluteUrl(pathOrUrl: string | null | undefined): string | null {
+  if (!pathOrUrl) return null;
+  if (pathOrUrl.startsWith("http")) return pathOrUrl;
+  return `${siteUrl}${pathOrUrl}`;
+}
+
 // Extract headings from HTML for table of contents
 function extractHeadings(
   html: string
@@ -194,7 +203,7 @@ export async function generateMetadata({
 
   const { data: blog } = await supabase
     .from("blogs")
-    .select("blog_header, blog_subheading, blog_context")
+    .select("blog_header, blog_subheading, blog_context, blog_hero")
     .eq("slug", slug)
     .eq("draft", false)
     .single();
@@ -207,16 +216,41 @@ export async function generateMetadata({
 
   const context = blog.blog_context as BlogContext;
   const author = normalizeAuthor(context?.author);
+  const blogUrl = `${siteUrl}/blogs/${slug}`;
+  const heroUrl =
+    toAbsoluteUrl(blog.blog_hero) || `${siteUrl}/web-app-manifest-512x512.png`;
+  const publishedDate =
+    context?.date || context?.publishedAt || new Date().toISOString();
 
   return {
     title: `${blog.blog_header} | A1 Education`,
     description: blog.blog_subheading,
+    alternates: {
+      canonical: blogUrl,
+    },
     openGraph: {
       title: blog.blog_header,
       description: blog.blog_subheading,
+      url: blogUrl,
+      images: heroUrl
+        ? [
+            {
+              url: heroUrl,
+              width: 1200,
+              height: 630,
+              alt: blog.blog_header,
+            },
+          ]
+        : undefined,
       type: "article",
-      publishedTime: context?.publishedAt || context?.date,
+      publishedTime: publishedDate,
       authors: author.name ? [author.name] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog.blog_header,
+      description: blog.blog_subheading,
+      images: heroUrl ? [heroUrl] : undefined,
     },
   };
 }
@@ -267,9 +301,90 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const rawHtml = contentToHtml(blogData.blog_text);
   const htmlContent = addHeadingIds(rawHtml);
   const headings = extractHeadings(htmlContent);
+  const blogUrl = `${siteUrl}/blogs/${slug}`;
+  const heroUrl =
+    toAbsoluteUrl(blogData.blog_hero) ||
+    `${siteUrl}/web-app-manifest-512x512.png`;
+  const publishedDate =
+    context.date ||
+    context.publishedAt ||
+    blogData.created_at ||
+    blogData.updated_at ||
+    new Date().toISOString();
+  const modifiedDate =
+    blogData.updated_at ||
+    context.publishedAt ||
+    context.date ||
+    blogData.created_at ||
+    new Date().toISOString();
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: blogData.blog_header,
+    description: blogData.blog_subheading,
+    image: heroUrl ? [heroUrl] : undefined,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": blogUrl,
+    },
+    author: author.name
+      ? {
+          "@type": "Person",
+          name: author.name,
+        }
+      : undefined,
+    datePublished: publishedDate,
+    dateModified: modifiedDate,
+    publisher: {
+      "@type": "Organization",
+      name: "A1 Education",
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteUrl}/favicon-96x96.png`,
+      },
+    },
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blogs",
+        item: `${siteUrl}/blogs`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: blogData.blog_header,
+        item: blogUrl,
+      },
+    ],
+  };
 
   return (
     <>
+      <Script
+        id="article-jsonld"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <Script
+        id="breadcrumb-jsonld"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <BlogHeader
         title={blogData.blog_header}
         subheading={blogData.blog_subheading}
@@ -296,7 +411,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         width={48}
                         height={48}
                         className="w-12 h-12 rounded-full object-cover"
-                        style={{ objectPosition: author.pfpPosition || "50% 50%" }}
+                        style={{
+                          objectPosition: author.pfpPosition || "50% 50%",
+                        }}
                         unoptimized
                       />
                     )}

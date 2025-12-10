@@ -48,22 +48,22 @@ export const sectionSubheading =
 // "Our Difference" Items
 export const ourDifference = [
   {
-    icon: <FaRegHandshake />,
+    icon: <FaRegHandshake className="h-6 w-6" />,
     label: "Built by Economists",
     desc: "A1 was founded by economics specialists who live and breathe the subject.",
   },
   {
-    icon: <FaRegLightbulb />,
+    icon: <FaRegLightbulb className="h-6 w-6" />,
     label: "Community of High Achievers",
     desc: "You'll study alongside motivated peers who raise the standard every week.",
   },
   {
-    icon: <FaRegClock />,
+    icon: <FaRegClock className="h-6 w-6" />,
     label: "Beyond Tuition",
     desc: "We mentor, predict, and prepare - not just teach.",
   },
   {
-    icon: <FaRegStar />,
+    icon: <FaRegStar className="h-6 w-6" />,
     label: "Trusted Results",
     desc: "Schools across Sydney recognise A1 students as the best in Economics.",
   },

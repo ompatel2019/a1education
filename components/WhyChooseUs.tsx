@@ -83,13 +83,13 @@ const Testimonial = () => (
 const DifferenceCard = () => (
   <BlurFade delay={0.45} inView>
     <div className="flex h-full w-full flex-col rounded-2xl border border-primary/10 bg-white/95 px-8 py-9 shadow-[0_18px_50px_-40px_rgba(28,36,66,0.45)] hover-card min-h-[240px]">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 flex-1">
         {ourDifference.map((item) => (
           <div
             key={item.label}
-            className="flex items-start gap-3 rounded-xl border border-slate-200/80 bg-white/80 px-4 py-3 hover:bg-primary/[0.03] transition-colors"
+            className="flex h-full items-start gap-4 rounded-xl border border-slate-200/80 bg-white/90 px-5 py-4 hover:bg-primary/[0.04] transition-colors"
           >
-            <span className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary text-xl">
+            <span className="mt-0 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary text-2xl">
               {item.icon}
             </span>
             <div className="space-y-1">

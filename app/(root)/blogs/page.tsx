@@ -41,16 +41,15 @@ interface BlogPost {
 }
 
 export const metadata: Metadata = {
-  title: "Blog | A1 Education",
+  title: "Blogs | A1 Education",
   description:
     "Stay up to date with A1 Education's expert tips, study strategies, and HSC Economics resources.",
   alternates: {
-    canonical: "https://a1education.com.au/blog",
+    canonical: "https://a1education.com.au/blogs",
   },
 };
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 600;
 
 export default async function BlogPage() {
   const supabase = createServiceClient();

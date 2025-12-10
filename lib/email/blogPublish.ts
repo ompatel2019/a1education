@@ -35,6 +35,22 @@ const stripHtml = (value: string) =>
     .replace(/\s+/g, " ")
     .trim();
 
+const escapeHtml = (value: string) =>
+  String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+// Escape for use inside HTML attributes without altering URL separators
+const escapeAttributeUrl = (value: string) =>
+  String(value)
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
 const buildSnippet = (blog: BlogRecord) => {
   if (blog.blog_subheading?.trim()) {
     return blog.blog_subheading.trim().slice(0, MAX_SNIPPET_LENGTH);
@@ -74,7 +90,7 @@ const buildFromAddress = (senderName: string) => {
   return senderName;
 };
 
-const buildEmailHtml = ({
+export const buildEmailHtml = ({
   blogTitle,
   snippet,
   hero,
@@ -90,10 +106,15 @@ const buildEmailHtml = ({
   recipientName?: string | null;
 }) => {
   const greeting = recipientName?.trim()
-    ? `Hi ${recipientName.trim()},`
+    ? `Hi ${escapeHtml(recipientName.trim())},`
     : "Hi there,";
-  const safeSnippet =
-    snippet || "We just published a new blog post we think you’ll like.";
+  const safeSnippet = escapeHtml(
+    snippet || "We just published a new blog post we think you’ll like."
+  );
+  const safeBlogTitle = escapeHtml(blogTitle);
+  const safeHero = hero ? escapeAttributeUrl(hero) : null;
+  const safeCtaUrl = escapeAttributeUrl(ctaUrl);
+  const safeUnsubscribeUrl = escapeAttributeUrl(unsubscribeUrl);
 
   return `
 <!DOCTYPE html>
@@ -110,15 +131,15 @@ const buildEmailHtml = ({
             <tr>
               <td style="padding:44px 44px 32px;background:linear-gradient(135deg,#4f46e5,#818cf8);color:#ffffff;">
                 <p style="margin:0;font-size:12px;letter-spacing:0.24em;text-transform:uppercase;opacity:0.85;font-weight:700;">New blog</p>
-                <h1 style="margin:14px 0 0;font-size:30px;line-height:38px;font-weight:700;">${blogTitle}</h1>
+                <h1 style="margin:14px 0 0;font-size:30px;line-height:38px;font-weight:700;">${safeBlogTitle}</h1>
               </td>
             </tr>
             ${
-              hero
+              safeHero
                 ? `
             <tr>
               <td style="background:#111827;">
-                <img src="${hero}" alt="" width="100%" style="display:block;max-height:320px;object-fit:cover;" />
+                <img src="${safeHero}" alt="${safeBlogTitle}" width="100%" style="display:block;max-height:320px;object-fit:cover;" />
               </td>
             </tr>`
                 : ""
@@ -132,7 +153,7 @@ const buildEmailHtml = ({
                 <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 0 28px;">
                   <tr>
                     <td style="border-radius:9999px;overflow:hidden;">
-                      <a href="${ctaUrl}" style="display:inline-block;background:#4f46e5;color:#ffffff;text-decoration:none;padding:12px 20px;font-weight:700;font-size:15px;border-radius:9999px;">
+                      <a href="${safeCtaUrl}" style="display:inline-block;background:#4f46e5;color:#ffffff;text-decoration:none;padding:12px 20px;font-weight:700;font-size:15px;border-radius:9999px;">
                         Read the full blog
                       </a>
                     </td>
@@ -142,7 +163,7 @@ const buildEmailHtml = ({
                   You’re receiving this because you joined the A1 Education mailing list.
                 </p>
                 <p style="margin:0 0 26px;font-size:13px;line-height:22px;">
-                  <a href="${unsubscribeUrl}" style="color:#4f46e5;font-weight:600;text-decoration:none;">Unsubscribe</a>
+                  <a href="${safeUnsubscribeUrl}" style="color:#4f46e5;font-weight:600;text-decoration:none;">Unsubscribe</a>
                 </p>
               </td>
             </tr>

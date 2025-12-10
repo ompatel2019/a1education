@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "node --test --loader tsx",
     "postbuild": "next-sitemap"
   },
   "dependencies": {
@@ -52,6 +53,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.6",
     "tailwindcss": "^4",
+    "tsx": "^4.19.2",
     "tw-animate-css": "^1.3.4",
     "typescript": "^5"
   }
