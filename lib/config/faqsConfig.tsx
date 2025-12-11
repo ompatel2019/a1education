@@ -97,7 +97,7 @@ export const faqsCategories = [
       {
         question: "What are your prices?",
         answer:
-          "Year 10 and 11: $30/hr (2-hour classes). Year 12: $35/hr (3-hour classes). All prices are inclusive with no hidden fees.",
+          "Year 11: $35/hr (2-hour classes). Year 12: $35/hr (3-hour classes). All prices are inclusive of GST with no hidden fees.",
       },
       {
         question: "How does payment work?",
