@@ -41,7 +41,7 @@ const PageTitle = ({
               {heading}
             </h1>
             {subheading && (
-              <p className="h6 text-white/90 max-w-2xl mx-auto drop-shadow font-semibold">
+              <p className="h6 text-white/90 max-w-2xl mx-auto drop-shadow font-semibold px-4">
                 {subheading}
               </p>
             )}

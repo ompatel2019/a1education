@@ -596,9 +596,4 @@ body {
   color: #9a3412;
 }
 
-.hero-slide-img {
-  object-fit: cover;
-  object-position: center;
-  width: 100%;
-  height: 100%;
-}
+

@@ -50,7 +50,7 @@ const Hero = () => {
                     <Image
                       src={image.src}
                       alt={image.alt}
-                      className="mb-2 hero-slide-img rounded-md w-full h-full"
+                      className="mb-2 rounded-md w-auto h-full object-cover object-center"
                       width={800}
                       height={640}
                       loading={index === 0 ? "eager" : "lazy"}

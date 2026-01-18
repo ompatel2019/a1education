@@ -16,7 +16,7 @@ const Topbar = () => {
         px-4 sm:px-6 lg:px-12 2xl:px-24 py-4 md:py-6 2xl:py-8
         gap-2 md:gap-4 text-sm md:text-base max-lg:justify-center font-semibold"
       >
-        <p>{leftText}</p>
+        <p className="text-center lg:text-left">{leftText}</p>
 
         <div className="max-lg:hidden flex flex-col sm:flex-row sm:items-center sm:gap-6 text-center md:text-left">
           <a
