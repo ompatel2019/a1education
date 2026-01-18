@@ -41,7 +41,7 @@ const Hero = () => {
           </div>
           <div className="2xl:pt-16 lg:pt-12 md:pt-8 pt-4">
             <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-              <Marquee pauseOnHover className="[--duration:20s]">
+              <Marquee pauseOnHover className="[--duration:40s]">
                 {heroImages.map((image, index) => (
                   <figure
                     key={image.alt}
