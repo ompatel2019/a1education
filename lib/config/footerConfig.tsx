@@ -1,7 +1,5 @@
 // lib/config/footerConfig.tsx
 
-import { FaInstagram, FaGoogle } from "react-icons/fa";
-
 export const footerSections = {
   about: {
     title: "About Us",

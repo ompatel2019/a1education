@@ -96,7 +96,7 @@ const DifferenceCard = () => (
             className="flex flex-col gap-3 group"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-              {React.cloneElement(item.icon as React.ReactElement, { size: 20 })}
+              {item.icon}
             </div>
             <div className="space-y-1">
               <h4 className="font-semibold text-gray-900">{item.label}</h4>
