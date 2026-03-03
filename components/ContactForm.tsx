@@ -1,7 +1,7 @@
 // components/ContactForm.tsx
 
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { contacts, contactFormHeadings } from "@/lib/config/contactFormConfig";
 import {
@@ -11,78 +11,7 @@ import {
 } from "@/lib/config/sharedclassesConfig";
 
 const ContactForm: React.FC = () => {
-  const [result, setResult] = useState("");
   const [howDidYouFindUs, setHowDidYouFindUs] = useState("");
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setResult("Sending...");
-
-    const formData = new FormData(event.currentTarget);
-    const isNewsletterChecked = formData.get("newsletter") === "on";
-
-    const formObject = {
-      access_key: "1feabdc6-8f23-4db0-9697-f16d9c4de0ae",
-      name: formData.get("name"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
-      school: formData.get("school"),
-      year: formData.get("year"),
-      howDidYouFindUs: formData.get("howDidYouFindUs"),
-      otherSource: formData.get("otherSource"),
-      whoReferredYou: formData.get("whoReferredYou"),
-      message: formData.get("message"),
-      newsletter: isNewsletterChecked ? "Yes" : "No",
-    };
-
-    try {
-      // 1. Submit to Web3Forms (Contact Inquiry)
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(formObject),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        // 2. If newsletter checked, submit to our API
-        if (isNewsletterChecked) {
-          try {
-            await fetch("/api/contact-newsletter", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                name: formData.get("name"),
-                email: formData.get("email"),
-                source: "Inquiry",
-              }),
-            });
-          } catch (newsletterError) {
-            console.error("Newsletter subscription failed silently:", newsletterError);
-            // We don't block the success message for this
-          }
-        }
-
-        setResult("Form submitted successfully!");
-        if (formRef.current) {
-          formRef.current.reset();
-        }
-        setHowDidYouFindUs("");
-      } else {
-        setResult(`Error: ${data.message || "Unknown error occurred"}`);
-      }
-    } catch (error) {
-      setResult(
-        `Error submitting form: ${error instanceof Error ? error.message : "Unknown error"
-        }`
-      );
-    }
-  };
 
   return (
     <section id="contact" className={sectionClass}>
@@ -127,12 +56,16 @@ const ContactForm: React.FC = () => {
               </h3>
             </div>
             <form
-              onSubmit={onSubmit}
               className="space-y-4 text-base relative z-10"
               method="POST"
+              action="https://api.web3forms.com/submit"
               aria-label="Contact Form"
-              ref={formRef}
             >
+              <input
+                type="hidden"
+                name="access_key"
+                value="1feabdc6-8f23-4db0-9697-f16d9c4de0ae"
+              />
               <div className="lg:flex gap-4 max-lg:space-y-4">
                 <div className="flex flex-col w-full">
                   <label htmlFor="name" className="mb-1">
@@ -305,7 +238,6 @@ const ContactForm: React.FC = () => {
               >
                 Send Inquiry
               </button>
-              {result && <p className="mt-2 text-sm text-white/80">{result}</p>}
             </form>
           </div>
         </div>
