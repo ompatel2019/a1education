@@ -1,22 +1,19 @@
 // components/ContactForm.tsx
 
 "use client";
-import React, { useState } from "react";
+import React from "react";
+import Script from "next/script";
 import { BlurFade } from "@/components/magicui/blur-fade";
-import { contacts, contactFormHeadings } from "@/lib/config/contactFormConfig";
+import { contacts } from "@/lib/config/contactFormConfig";
 import {
   sectionClass,
-  sectionNameClass,
-  sectionSubheadingClass,
 } from "@/lib/config/sharedclassesConfig";
 
 const ContactForm: React.FC = () => {
-  const [howDidYouFindUs, setHowDidYouFindUs] = useState("");
-
   return (
     <section id="contact" className={sectionClass}>
       <BlurFade delay={0.2} inView>
-        <div className="grid grid-cols-3 max-md:flex max-md:flex-col 2xl:gap-20 lg:gap-14 md:gap-10 gap-6">
+        <div className="grid grid-cols-2 max-md:flex max-md:flex-col gap-6">
           {/* CONTACT CARDS */}
           <div className="flex flex-col justify-between max-md:order-2">
             <div className="space-y-8">
@@ -45,200 +42,18 @@ const ContactForm: React.FC = () => {
           </div>
 
           {/* CONTACT FORM */}
-          <div className="col-span-2 max-md:col-span-2 bg-primary/80 backdrop-blur-xl rounded-2xl text-white 2xl:p-16 lg:p-12 md:p-10 p-8 shadow-2xl border border-white/20 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-purple-500/20 rounded-2xl pointer-events-none" />
-            <div className="relative z-10 text-left mb-7 space-y-1">
-              <h2 className={sectionNameClass}>
-                {contactFormHeadings.name.toUpperCase()}
-              </h2>
-              <h3 className={sectionSubheadingClass}>
-                {contactFormHeadings.subheading}
-              </h3>
-            </div>
-            <form
-              className="space-y-4 text-base relative z-10"
-              method="POST"
-              action="https://api.web3forms.com/submit"
-              aria-label="Contact Form"
-            >
-              <input
-                type="hidden"
-                name="access_key"
-                value="1feabdc6-8f23-4db0-9697-f16d9c4de0ae"
-              />
-              <div className="lg:flex gap-4 max-lg:space-y-4">
-                <div className="flex flex-col w-full">
-                  <label htmlFor="name" className="mb-1">
-                    Full Name
-                  </label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    placeholder="John Doe"
-                    className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 placeholder:text-gray-200"
-                    required
-                  />
-                </div>
-                <div className="flex flex-col w-full">
-                  <label htmlFor="email" className="mb-1">
-                    Email
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="johndoe@gmail.com"
-                    className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 placeholder:text-gray-200"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <label htmlFor="phone" className="mb-1">
-                  Phone
-                </label>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  placeholder="0412345678"
-                  className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 placeholder:text-gray-200"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label htmlFor="school" className="mb-1">
-                  School
-                </label>
-                <input
-                  id="school"
-                  name="school"
-                  type="text"
-                  placeholder="Penrith High School"
-                  className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 placeholder:text-gray-200"
-                />
-              </div>
-              <div className="lg:flex gap-4 max-lg:space-y-4">
-                <div className="flex flex-col w-full">
-                  <label htmlFor="year" className="mb-1">
-                    Year
-                  </label>
-                  <select
-                    id="year"
-                    name="year"
-                    className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 text-white"
-                    required
-                  >
-                    <option value="" disabled className="text-gray-800">
-                      Select Year
-                    </option>
-                    <option value="10" className="text-gray-800">
-                      Year 10
-                    </option>
-                    <option value="11" className="text-gray-800">
-                      Year 11
-                    </option>
-                    <option value="12" className="text-gray-800">
-                      Year 12
-                    </option>
-                  </select>
-                </div>
-                <div className="flex flex-col w-full">
-                  <label htmlFor="howDidYouFindUs" className="mb-1">
-                    How did you find us?
-                  </label>
-                  <select
-                    id="howDidYouFindUs"
-                    name="howDidYouFindUs"
-                    value={howDidYouFindUs}
-                    onChange={(e) => setHowDidYouFindUs(e.target.value)}
-                    className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 text-white"
-                    required
-                  >
-                    <option value="" disabled className="text-gray-800">
-                      Select option
-                    </option>
-                    <option value="Social Media" className="text-gray-800">
-                      Social Media
-                    </option>
-                    <option value="Website" className="text-gray-800">
-                      Website
-                    </option>
-                    <option value="Referral" className="text-gray-800">
-                      Referral
-                    </option>
-                    <option value="Seminar" className="text-gray-800">
-                      Seminar
-                    </option>
-                    <option value="Other" className="text-gray-800">
-                      Other
-                    </option>
-                  </select>
-                </div>
-              </div>
-              {howDidYouFindUs === "Referral" && (
-                <div className="flex flex-col">
-                  <label htmlFor="whoReferredYou" className="mb-1">
-                    Who referred you?
-                  </label>
-                  <input
-                    id="whoReferredYou"
-                    name="whoReferredYou"
-                    type="text"
-                    placeholder="Name of person who referred you"
-                    className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 placeholder:text-gray-200"
-                    required
-                  />
-                </div>
-              )}
-              {howDidYouFindUs === "Other" && (
-                <div className="flex flex-col">
-                  <label htmlFor="otherSource" className="mb-1">
-                    Please specify
-                  </label>
-                  <input
-                    id="otherSource"
-                    name="otherSource"
-                    type="text"
-                    placeholder="How did you hear about us?"
-                    className="w-full bg-white/10 border border-white/30 rounded-md py-3 px-4 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 placeholder:text-gray-200"
-                    required
-                  />
-                </div>
-              )}
-              <div className="flex flex-col">
-                <label htmlFor="message" className="mb-1">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={7}
-                  placeholder="I'd love to get a free trial for Year 12 Economics!"
-                  className="bg-white/10 border border-white/30 rounded-md py-3 px-4 w-full transition-all focus:outline-none focus:ring-2 focus:ring-white/50 placeholder:text-gray-200"
-                  required
-                />
-              </div>
-              <div className="flex items-center space-x-3 py-2">
-                <input
-                  type="checkbox"
-                  id="newsletter"
-                  name="newsletter"
-                  className="w-5 h-5 rounded border-white/30 bg-white/10 text-primary focus:ring-white/50 focus:ring-offset-0"
-                  defaultChecked
-                />
-                <label htmlFor="newsletter" className="text-sm text-white/90 select-none cursor-pointer">
-                  Join the A1 Newsletter Community
-                </label>
-              </div>
-
-              <button
-                type="submit"
-                className="flex items-center justify-center w-full py-3 px-8 rounded-md bg-white text-primary font-semibold transition-all hover:scale-[1.02] hover:bg-purple-50 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-white/50"
-              >
-                Send Inquiry
-              </button>
-            </form>
+          <div className="p-2 border rounded-md bg-[#6a7dfa]">
+            <Script
+              src="https://js-ap1.hsforms.net/forms/embed/442828550.js"
+              strategy="afterInteractive"
+              defer
+            />
+            <div
+              className="hs-form-frame space-y-4 text-base relative z-10"
+              data-region="ap1"
+              data-form-id="0beba757-8d30-4cc0-a3df-f7e497bbb847"
+              data-portal-id="442828550"
+            />
           </div>
         </div>
       </BlurFade>

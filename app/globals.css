@@ -596,4 +596,64 @@ body {
   color: #9a3412;
 }
 
+/* HubSpot contact form embed overrides */
+.contact-form-embed .hs-form,
+.contact-form-embed .hs-form * {
+  font-family: var(--font-general-sans), system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif !important;
+  box-shadow: none;
+}
+
+.contact-form-embed .hs-form,
+.contact-form-embed .hs-form fieldset,
+.contact-form-embed .hs-form .hs-form-field > div {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.contact-form-embed .hs-form .hs-form-field {
+  margin-bottom: 0.5rem !important;
+}
+
+.contact-form-embed .hs-form input,
+.contact-form-embed .hs-form select,
+.contact-form-embed .hs-form textarea {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  padding: 0.75rem 0.9rem !important;
+  color: #ffffff !important;
+}
+
+.contact-form-embed .hs-form input::placeholder,
+.contact-form-embed .hs-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.contact-form-embed .hs-form label {
+  color: #ffffff !important;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.contact-form-embed .hs-form .hs-button.primary,
+.contact-form-embed .hs-form input[type="submit"] {
+  width: 100%;
+  border-radius: 0.5rem !important;
+  padding: 0.9rem 1.5rem !important;
+  background-color: #ffffff !important;
+  color: var(--primary) !important;
+  font-weight: 600 !important;
+  border: none !important;
+}
+
+.contact-form-embed .hs-form .hs-button.primary:hover,
+.contact-form-embed .hs-form input[type="submit"]:hover {
+  background-color: #ede9fe !important;
+}
+
+
 
