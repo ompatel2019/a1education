@@ -25,8 +25,7 @@ export const footerSections = {
       },
       {
         label: "Privacy Policy",
-        href: "https://drive.google.com/file/d/1BF1z-fMGrbdK6iQQulVW4Xug31L-xkTj/view",
-        external: true,
+        href: "/privacy-policy",
       },
       { label: "Sitemap", href: "/sitemap.xml", external: true },
     ],

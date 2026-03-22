@@ -2,8 +2,7 @@
 
 export const termUrl =
   "https://drive.google.com/file/d/14it9qMWyvAu8MiKZpY-nI_Y6kIBVucoZ/view?ts=67b00b7b";
-export const privacyUrl =
-  "https://drive.google.com/file/d/1BF1z-fMGrbdK6iQQulVW4Xug31L-xkTj/view?ts=67b00c59";
+export const privacyUrl = "/privacy-policy";
 
 export const faqsCategories = [
   {
